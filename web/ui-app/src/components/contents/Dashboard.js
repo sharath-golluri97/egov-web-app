@@ -207,7 +207,6 @@ class Dashboard extends Component {
       hasData: false,
       workflowResult: {},
     };
-    this.onClickServiceGroup = this.onClickServiceGroup.bind(this);
   }
 
   componentDidMount() {
@@ -216,7 +215,14 @@ class Dashboard extends Component {
 
     let current = this;
     let self = this;
-    let currentUser = JSON.parse(localStorage.userRequest);
+    let currentUser = null;
+
+    try {
+      currentUser = JSON.parse(window.localStorage.userRequest);
+    } catch (error) {
+      console.log(error);
+    }
+
     let count = 4,
       _state = {};
 

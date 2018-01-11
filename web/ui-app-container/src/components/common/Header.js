@@ -152,8 +152,6 @@ class Header extends Component {
     );
   };
 
-  initDat() {}
-
   componentDidMount() {
     var self = this;
     let menuItems = [];

@@ -132,13 +132,13 @@ module.exports = {
           } else if (response && response.response && !response.response.data && response.response.status === 400) {
             if (counter == 0) {
               document.title = 'eGovernments';
-              var locale = localStorage.getItem('locale');
-              var _tntId = localStorage.getItem('tenantId') || 'default';
-              var lang_response = localStorage.getItem('lang_response');
-              localStorage.clear();
-              localStorage.setItem('locale', locale);
-              localStorage.setItem('tenantId', _tntId);
-              localStorage.setItem('lang_response', lang_response);
+              // var locale = localStorage.getItem('locale');
+              // var _tntId = localStorage.getItem('tenantId') || 'default';
+              // var lang_response = localStorage.getItem('lang_response');
+              // localStorage.clear();
+              // localStorage.setItem('locale', locale);
+              // localStorage.setItem('tenantId', _tntId);
+              // localStorage.setItem('lang_response', lang_response);
               _err = 'Session expired. Please login again.';
             }
           } else if (response) {

@@ -232,7 +232,7 @@ class Login extends Component {
       }
 
       const actions = actionResponse.actions || [];
-      var roles = JSON.parse(localStorage.userRequest).roles;
+      const roles = JSON.parse(localStorage.userRequest).roles;
       actions.unshift({
         id: 12299,
         name: 'SearchRequest',

@@ -34,8 +34,6 @@ class App extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.redirectTo) {
-      console.log('Redirect Url');
-      console.log(nextProps.redirectTo);
       this.props.history.replace(nextProps.redirectTo);
       this.props.onRedirect();
     }

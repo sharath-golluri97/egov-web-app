@@ -32,9 +32,9 @@ export default (state = defaultState, action) => {
     case 'REDIRECT':
       return { ...state, redirectTo: null };
     case 'LOGOUT':
+      window.location.replace('/');
       return {
         ...state,
-        redirectTo: '/loadComponent?url=http://localhost:3000/#/' + action.tenantId,
         token: null,
         currentUser: null,
         showMenu: false,
