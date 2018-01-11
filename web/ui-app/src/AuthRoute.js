@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Redirect, Route } from 'react-router-dom';
 
 const isAuthenticated = () => {
-  return true;
+  return window.localStorage.getItem('token') ? true : false;
 };
 
 const base = '';

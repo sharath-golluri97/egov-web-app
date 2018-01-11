@@ -537,7 +537,6 @@ class grievanceCreate extends Component {
   handleError = msg => {
     let { toggleDailogAndSetText, toggleSnackbarAndSetText } = this.props;
     toggleDailogAndSetText(true, msg);
-    //toggleSnackbarAndSetText(true, "Could not able to create complaint. Try again")
   };
 
   handleTouchTap = () => {
@@ -590,7 +589,6 @@ class grievanceCreate extends Component {
               axios
                 .post('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + formatted_lat + ',' + formatted_long + '&sensor=true')
                 .then(function(response) {
-                  //console.log(response.data.results[0].formatted_address);
                   _this.props.handleMap(formatted_lat, formatted_long, 'address');
                 });
             }

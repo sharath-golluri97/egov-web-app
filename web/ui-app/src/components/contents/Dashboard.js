@@ -136,25 +136,8 @@ const style = {
 };
 
 const styles = {
-  headline: {
-    fontSize: 24,
-    paddingTop: 16,
-    marginBottom: 12,
-    fontWeight: 400,
-  },
   headerStyle: {
     fontSize: 19,
-  },
-  slide: {
-    padding: 10,
-  },
-  status: {
-    fontSize: 14,
-    background: '#5f5c62',
-    display: 'inline-block',
-    padding: '4px 8px',
-    borderRadius: 4,
-    color: '#fff',
   },
 };
 
@@ -162,35 +145,6 @@ const getDate = function(val) {
   var _date = new Date(Number(val));
   return ('0' + _date.getDate()).slice(-2) + '/' + ('0' + (_date.getMonth() + 1)).slice(-2) + '/' + _date.getFullYear();
 };
-
-const sR = [
-  {
-    tenantId: 'default',
-    serviceRequestId: 'ServiceReq1',
-    serviceCode: null,
-    lat: null,
-    lang: null,
-    address: null,
-    addressId: null,
-    email: null,
-    deviceId: null,
-    accountId: null,
-    firstName: null,
-    lastName: null,
-    phone: null,
-    description: null,
-    attributeValues: null,
-    status: null,
-    assignedTo: null,
-    comments: null,
-    backendServiceDetails:
-      '{\n\t"RequestInfo": {\n    "apiId": "org.egov.pt",\n    "ver": "1.0",\n    "ts": 1502890899493,\n    "action": "asd",\n    "did": "4354648646",\n    "key": "xyz",\n    "msgId": "654654",\n    "requesterId": "61",\n    "authToken": "e04855b2-4378-4ade-9189-6d33b1893390",\n    "userInfo":{\n    \t"id":73\n    }\n  }\n}',
-    auditDetails: null,
-    action: null,
-    consumerCode: null,
-    applicationFee: null,
-  },
-];
 
 class Dashboard extends Component {
   constructor(props) {

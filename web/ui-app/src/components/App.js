@@ -12,11 +12,8 @@ import Api from '../api/api';
 import UiLogo from './framework/components/UiLogo';
 
 class App extends Component {
-  state = {
-    tokenRecieved: process.env.NODE_ENV === 'development' ? false : true,
-  };
-
-  componentDidMount() {
+  constructor(props) {
+    super(props);
     window.addEventListener('message', this.handleFrameTasks);
   }
 
@@ -30,8 +27,11 @@ class App extends Component {
       }
     });
 
-    if (window.localStorage.token && window.localStorage.userRequest) {
-      this.setState({ tokenRecieved: true });
+    const token = e.data.token;
+    const userRequest = e.data.userRequest;
+
+    if (token && userRequest) {
+      this.props.login(token, userRequest);
     }
   };
 
@@ -59,13 +59,13 @@ class App extends Component {
       isError,
     } = this.props;
 
-    const { tokenRecieved } = this.state;
+    const { authenticated } = this.props;
 
     const actions = [<FlatButton label="Ok" primary={true} onTouchTap={this.handleClose} />];
     return (
       <div className="App">
         <div className="app-content">
-          {tokenRecieved ? router : <LoadingIndicator status={'loading'} />}
+          {authenticated ? router : <LoadingIndicator status={'loading'} />}
           <div className="row">
             <div className="col-md-12 text-right">
               <UiLogo src={require('../images/logo.png')} alt="logo" />
@@ -105,6 +105,7 @@ class App extends Component {
 }
 
 const mapStateToProps = state => ({
+  authenticated: state.auth.authenticated,
   redirectTo: state.common.redirectTo,
   token: state.common.token,
   isDialogOpen: state.form.dialogOpen,
@@ -120,6 +121,7 @@ const mapDispatchToProps = dispatch => ({
   onLoad: (payload, token) => dispatch({ type: 'APP_LOAD', payload, token, skipTracking: true }),
   onRedirect: () => dispatch({ type: 'REDIRECT' }),
   setRoute: route => dispatch({ type: 'SET_ROUTE', route }),
+  login: (token, currentUser) => dispatch({ type: 'LOGIN', token, currentUser }),
   toggleDailogAndSetText: (dailogState, msg) => {
     dispatch({ type: 'TOGGLE_DAILOG_AND_SET_TEXT', dailogState, msg });
   },
