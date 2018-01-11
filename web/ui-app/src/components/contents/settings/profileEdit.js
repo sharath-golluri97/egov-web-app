@@ -15,7 +15,7 @@ import MenuItem from 'material-ui/MenuItem';
 import Dialog from 'material-ui/Dialog';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
-import Api from '../../../api/commonAPIS';
+import Api from '../../../api/api';
 
 var flag = 0;
 const styles = {

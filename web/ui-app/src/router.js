@@ -2,7 +2,6 @@ import React from 'react';
 import { Switch } from 'react-router-dom';
 import Route from './AuthRoute';
 
-import Login from './components/contents/Login';
 import Dashboard from './components/contents/Dashboard';
 import ProfileEdit from './components/contents/settings/profileEdit';
 
@@ -14,9 +13,6 @@ import updateUserRole from './components/contents/administration/userManagement/
 import VisibleNewServiceRequest from './components/contents/citizenServices/VisibleNewServiceRequest';
 
 //PGR
-import grievanceCreate from './components/contents/pgr/grievanceCreate';
-import grievanceView from './components/contents/pgr/grievanceView';
-import grievanceSearch from './components/contents/pgr/grievanceSearch';
 import ReceivingCenterCreate from './components/contents/pgr/master/receivingCenter/receivingCenterCreate';
 import ViewEditReceivingCenter from './components/contents/pgr/master/receivingCenter/viewEditReceivingCenter';
 import ViewReceivingCenter from './components/contents/pgr/master/receivingCenter/viewReceivingCenter';
@@ -42,62 +38,9 @@ import Report from './components/contents/reports/report';
 import PGRDashboard from './components/contents/pgr/dashboards/index';
 import PgrAnalytics from './components/contents/pgr/dashboards/PgrAnalytics';
 
-//WC
-// import CategoryTypeCreate from './components/contents/wc/master/categoryType/categoryTypeCreate';
-// import ViewEditCategoryType from './components/contents/wc/master/categoryType/viewEditCategoryType';
-// import ViewCategoryType from './components/contents/wc/master/categoryType/viewCategoryType';
-//
-// import WaterSourceTypeCreate from './components/contents/wc/master/waterSourceType/waterSourceTypeCreate';
-// import ViewEditWaterSourceType from './components/contents/wc/master/waterSourceType/viewEditWaterSourceType';
-// import ViewWaterSourceType from './components/contents/wc/master/waterSourceType/viewWaterSourceType';
-//
-// import SupplyTypeCreate from './components/contents/wc/master/supplyType/supplyTypeCreate';
-// import ViewEditSupplyType from './components/contents/wc/master/supplyType/viewEditSupplyType';
-// import ViewSupplyType from './components/contents/wc/master/supplyType/viewSupplyType';
-//
-// import PipeSizeCreate from './components/contents/wc/master/pipeSize/pipeSizeCreate';
-// import ViewEditPipeSize from './components/contents/wc/master/pipeSize/viewEditPipeSize';
-// import ViewPipeSize from './components/contents/wc/master/pipeSize/viewPipeSize';
-//
-// import DocumentTypeCreate from './components/contents/wc/master/documentType/documentTypeCreate';
-// import ViewEditDocumentType from './components/contents/wc/master/documentType/viewEditDocumentType';
-// import ViewDocumentType from './components/contents/wc/master/documentType/viewDocumentType';
-//
-// import DocumentTypeApplicationTypeCreate from './components/contents/wc/master/documentTypeApplicationType/documentTypeApplicationTypeCreate';
-// import ViewEditDocumentTypeApplicationType from './components/contents/wc/master/documentTypeApplicationType/viewEditDocumentTypeApplicationType';
-// import ViewDocumentTypeApplicationType from './components/contents/wc/master/documentTypeApplicationType/viewDocumentTypeApplicationType';
-//
-// import AddDemandWc from './components/contents/wc/master/addDemand';
 import ViewLegacy from './components/non-framework/wc/viewLegacy';
 import AddDemand from './components/contents/propertyTax/master/addDemand';
-
-//Property tax
-// import PropertyTaxSearch from './components/contents/propertyTax/master/PropertyTaxSearch';
-// import Test from './components/contents/propertyTax/master/Test';
-// import FloorType from './components/contents/propertyTax/master/FloorType';
-// import RoofType from './components/contents/propertyTax/master/RoofType';
-// import WallType from './components/contents/propertyTax/master/WallType';
-// import WoodType from './components/contents/propertyTax/master/WoodType';
-// import UsageType from './components/contents/propertyTax/master/UsageType';
-// import PropertyType from './components/contents/propertyTax/master/PropertyType';
-// import EditDemands from './components/non-framework/wc/editDemands';
-
-// import Occupancy from './components/contents/propertyTax/master/Occupancy';
-// import  from './components/contents/propertyTax/master/';
-// import BuildingClassification from './components/contents/propertyTax/master/BuildingClassification';
-// import CreateProperty from './components/contents/propertyTax/master/CreateProperty';
-// import DataEntry from './components/contents/propertyTax/master/DataEntry';
-// import ViewProperty from './components/contents/propertyTax/master/viewProperty';
-// import ViewDCB from './components/non-framework/pt/viewDCB';
-// import Workflow from './components/contents/propertyTax/master/workflow';
-// import Acknowledgement from './components/contents/propertyTax/master/Acknowledgement';
-// import DataEntryAcknowledgement from './components/contents/propertyTax/master/Acknowledgement_dataEntry';
-// import DemandAcknowledgement from './components/contents/propertyTax/master/Acknowledgement_demand';
-// import InboxAcknowledgement from './components/contents/propertyTax/master/Acknowledgement_inbox';
-
-// import CreateVacantLand from'./components/contents/propertyTax/master/CreateVacantLand';
 import Create from './components/framework/create';
-// import CreateTwo from './components/framework/createTwo';
 
 import PayTaxCreate from './components/non-framework/collection/master/paytax/PayTaxCreate';
 import View from './components/framework/view';
@@ -170,7 +113,6 @@ import assetImmovableView from './components/non-framework/asset/master/assetImm
 import assetMovableView from './components/non-framework/asset/master/assetMovableView';
 import assetCategoryCreate from './components/non-framework/asset/master/assetCategoryCreate';
 import assetCategorySearch from './components/non-framework/asset/master/assetCategorySearch';
-import ComponentLoader from './components/framework/pure-components/ComponentLoader.js';
 import assetCategoryView from './components/non-framework/asset/master/assetCategoryView';
 
 //inventory
@@ -198,17 +140,12 @@ import KPIDashboard from './components/non-framework/perfManagement/dashboard/kp
 
 import MdmsComponent from './components/framework/mdms/list';
 
-// iframe component
-import IframeLoader from './components/framework/iframeloader';
-
 const base = '';
 
 const Main = () => {
   return (
     <main style={{ marginBottom: '50px' }}>
       <Switch>
-        <Route exact path={base + '/iframeLoader'} component={IframeLoader} />
-        <Route exact path={base + '/:tenantId?'} component={Login} />
         <Route exact path={base + '/service/request/search'} component={ServiceRequests} />
         <Route exact path={base + '/coming/soon'} component={ComingSoon} />
         <Route exact path={base + '/view/:moduleName/:master?/:id'} component={View} />
@@ -220,9 +157,6 @@ const Main = () => {
         <Route exact path={base + '/administration/updateUserRole/:userId'} component={updateUserRole} />
         <Route exact path={base + '/services/apply/:serviceCode/:serviceName'} component={VisibleNewServiceRequest} />
         <Route exact path={base + '/pgr/analytics'} component={PgrAnalytics} />
-        <Route exact path={base + '/pgr/createGrievance'} component={grievanceCreate} />
-        <Route exact path={base + '/pgr/viewGrievance/:srn'} component={grievanceView} />
-        <Route exact path={base + '/pgr/searchGrievance'} component={grievanceSearch} />
         <Route exact name="createReceivingCenter" path={base + '/pgr/createReceivingCenter/:id?'} component={ReceivingCenterCreate} />
         <Route exact path={base + '/pgr/createReceivingCenter'} component={ReceivingCenterCreate} />
         <Route exact path={base + '/pgr/receivingCenter/view'} component={ViewEditReceivingCenter} />
@@ -253,7 +187,6 @@ const Main = () => {
         <Route exact path={base + '/pgr/createServiceType'} component={ServiceTypeCreate} />
         <Route exact path={base + '/report/:moduleName/:reportName'} component={Report} />
         <Route exact path={base + '/pgr/dashboard'} component={PGRDashboard} />
-        <Route exact path={base + '/component/:componentName?'} component={ComponentLoader} />
         <Route exact path={base + '/update/:moduleName/:master?/:id?'} component={Create} />
         <Route exact path={base + '/transaction/:moduleName/:page/:businessService?/:consumerCode?'} component={Transaction} />
         <Route exact path={base + '/views/:moduleName/:master?/:id'} component={Inbox} />

@@ -1,5 +1,3 @@
-// const actions = JSON.parse(window.localStorage.getItem('actions')) || [];
-
 const defaultState = {
   appName: 'common',
   token: null,
@@ -8,8 +6,7 @@ const defaultState = {
   complaintsLength: 0,
   pleaseWait: false,
   showMenu: false,
-  actionList:[],
-  // actionList: actions,
+  actionList: [],
   showHome: false,
   tenantInfo: [],
 };
@@ -30,21 +27,8 @@ export default (state = defaultState, action) => {
         tenantInfo: action.tenantInfo,
       };
 
-      break;
-
     case 'REDIRECT':
       return { ...state, redirectTo: null };
-    case 'LOGOUT':
-      return {
-        ...state,
-        redirectTo: '/' + action.tenantId,
-        token: null,
-        currentUser: null,
-        showMenu: false,
-        actionList: [],
-      };
-    case 'FORCE_LOGOUT':
-      return { token: null, showMenu: false, showHome: false };
     case 'SETTINGS_SAVED':
       return {
         ...state,
@@ -105,10 +89,8 @@ export default (state = defaultState, action) => {
         ...state,
         actionList: action.actionList,
       };
-      break;
+
     default:
       return state;
   }
-
-  return state;
 };

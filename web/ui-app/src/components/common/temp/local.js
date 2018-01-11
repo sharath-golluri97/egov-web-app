@@ -11,6 +11,6 @@ var tenantName = {
 };
 
 module.exports = {
-  tenantName: tenantName,
-  logo: logo,
+  tenantName,
+  logo,
 };

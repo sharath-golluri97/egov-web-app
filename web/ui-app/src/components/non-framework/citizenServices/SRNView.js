@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Grid, Row, Col, Table, DropdownButton } from 'react-bootstrap';
 import { Card, CardHeader, CardText } from 'material-ui/Card';
-import UiButton from '../../framework/components/UiButton';
-import { translate } from '../../common/common';
-import Api from '../../../api/api';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
-import { getFullDate } from '../../framework/utility/utility';
+import { translate } from '../common/common';
+import Api from '../../api/api';
+import { getFullDate } from '../framework/utility/utility';
+import UiButton from '../framework/components/UiButton';
 
 let nameMap = {
   CREATED: 'Created',
@@ -61,25 +61,6 @@ const renderProperty = function(floors) {
     });
   } else return '';
 };
-
-// const getFullDate = function(dat,isTimeStamp=false) {
-//   if(!dat) return "-";
-//   var _date = new Date(dat);
-//   if (isTimeStamp) {
-//     return ('0' + _date.getDate()).slice(-2) + '/'
-//                  + ('0' + (_date.getMonth()+1)).slice(-2) + '/'
-//                  + _date.getFullYear() + " "
-//                  + ('0' + _date.getHours()).slice(-2) + ":"
-//                  + ('0' + _date.getMinutes()).slice(-2) + ":"
-//                  + ('0' + _date.getSeconds()).slice(-2)
-//   } else {
-//     return ('0' + _date.getDate()).slice(-2) + '/'
-//                  + ('0' + (_date.getMonth()+1)).slice(-2) + '/'
-//                  + _date.getFullYear()
-//   }
-//
-//
-// }
 
 class CertificateView extends Component {
   static isPrivate = false;
@@ -165,17 +146,6 @@ class CertificateView extends Component {
   };
 
   generatePdf = id => {
-    /*const input = document.getElementById('CertificateForWc');
-    html2canvas(input)
-      .then((canvas) => {
-        const imgData = canvas.toDataURL('image/jpeg');
-        const pdf = new jsPDF();
-        pdf.addImage(imgData, 'JPEG', 0, 0, 210,130);
-        pdf.save("receipt.pdf");
-      });
-
-    let {tenantInfo,formData}=this.props;
-    let {getVal,getGrandTotal,getTotal,getPurposeTotal}=this;*/
     var mywindow = window.open('', 'PRINT', 'height=400,width=600');
 
     var cdn = `
@@ -199,138 +169,6 @@ class CertificateView extends Component {
     }, 1000);
 
     return true;
-    return;
-
-    // let x=5,y=5,w=200,h=90,rectGap=10,originalX=5,originalY=10,dublicateX=5,dublicateY=5,triplicateX=5,triplicateY=5;
-    //
-    // const input = document.getElementById('DownloadReceipt');
-    // html2canvas(input)
-    //   .then((canvas) => {
-    //     const imgData = canvas.toDataURL('image/jpeg');
-    //     const pdf = new jsPDF();
-    //     pdf.addImage(imgData, 'JPEG', 0, 0, 210,130);
-    //     pdf.save("receipt.pdf");
-    //   });
-
-    // var doc = new jsPDF();
-    // doc.rect(x, y, w, h)
-    // doc.rect(x, (h*1)+rectGap, w, h)
-    // doc.rect(x, (h*2)+rectGap+5, w, h)
-    // doc.setFontSize(14);
-    // doc.setFontType("bold");
-    // doc.text(originalX+100, originalY+5,translate(tenantInfo[0].city.name), 'center');
-    // doc.text(originalX+170, originalY+5,"Original");
-    // doc.setFontType("normal");
-    // doc.setFontSize(10);
-    // doc.text(originalX+100, originalY+10, "Receipt", 'center');
-
-    // var elem = document.getElementById("ReceiptForWcAPartOne");
-    // var res = doc.autoTableHtmlToJson(elem);
-    // doc.autoTable(res.columns, res.data, {startY: originalY+12});
-    //
-    // elem = document.getElementById("ReceiptForWcAPartTwo");
-    // res = doc.autoTableHtmlToJson(elem);
-    // doc.autoTable(res.columns, res.data, {startY: doc.autoTable.previous.finalY});
-    //
-    // elem = document.getElementById("basic-table3");
-    // res = doc.autoTableHtmlToJson(elem);
-    // doc.autoTable(res.columns, res.data, {showHeader:"never",startY: doc.autoTable.previous.finalY});
-    //
-    // doc.setLineWidth(0.5)
-    // doc.line(doc.autoTable.previous.finalX+12.5, 25, 210, 25)
-    //
-    // doc.setFontSize(14);
-    // doc.setFontType("bold");
-    // doc.text(originalX+100, doc.autoTable.previous.finalY+25,translate(tenantInfo[0].city.name), 'center');
-    // doc.text(originalX+170, doc.autoTable.previous.finalY+25,"Duplicate");
-    // doc.setFontType("normal");
-    // doc.setFontSize(10);
-    // doc.text(originalX+100, doc.autoTable.previous.finalY+30, "Receipt", 'center');
-    //
-    // var elem = document.getElementById("basic-table1");
-    // var res = doc.autoTableHtmlToJson(elem);
-    // doc.autoTable(res.columns, res.data, {showHeader:"never",startY: doc.autoTable.previous.finalY+32});
-    //
-    // elem = document.getElementById("basic-table2");
-    // res = doc.autoTableHtmlToJson(elem);
-    // doc.autoTable(res.columns, res.data, {startY: doc.autoTable.previous.finalY,theme: "striped"});
-    //
-    // elem = document.getElementById("basic-table3");
-    // res = doc.autoTableHtmlToJson(elem);
-    // doc.autoTable(res.columns, res.data, {showHeader:"never",startY: doc.autoTable.previous.finalY});
-    //
-    // doc.setLineWidth(0.5)
-    // doc.line(doc.autoTable.previous.finalX+12.5, 25, 210, 25)
-    //
-    // doc.setFontSize(14);
-    // doc.setFontType("bold");
-    // doc.text(originalX+100, doc.autoTable.previous.finalY+25,translate(tenantInfo[0].city.name), 'center');
-    // doc.text(originalX+170, doc.autoTable.previous.finalY+25,"Triplicate");
-    // doc.setFontType("normal");
-    // doc.setFontSize(10);
-    // doc.text(originalX+100, doc.autoTable.previous.finalY+30, "Receipt", 'center');
-    //
-    // var elem = document.getElementById("basic-table1");
-    // var res = doc.autoTableHtmlToJson(elem);
-    // doc.autoTable(res.columns, res.data, {showHeader:"never",startY: doc.autoTable.previous.finalY+32});
-    //
-    // elem = document.getElementById("basic-table2");
-    // res = doc.autoTableHtmlToJson(elem);
-    // doc.autoTable(res.columns, res.data, {startY: doc.autoTable.previous.finalY,theme: "striped"});
-    //
-    // elem = document.getElementById("basic-table3");
-    // res = doc.autoTableHtmlToJson(elem);
-    // doc.autoTable(res.columns, res.data, {showHeader:"never",startY: doc.autoTable.previous.finalY});
-
-    // doc.setFontSize(14);
-    // doc.setFontType("bold");
-    // doc.text(originalX+100, doc.autoTable.previous.finalY+25, "Receipt"+" Duplicate" , 'center');
-    // doc.setFontType("normal");
-    // doc.text(originalX+100, doc.autoTable.previous.finalY+30,translate(tenantInfo[0].city.name), 'center');
-    // doc.setFontSize(10);
-    //
-    // var elem = document.getElementById("basic-table1");
-    // var res = doc.autoTableHtmlToJson(elem);
-    // doc.autoTable(res.columns, res.data, {showHeader:"never",startY: doc.autoTable.previous.finalY+37,columnStyles: {
-    //       "Payee Name": {fillColor: [41, 128, 185], textColor: 255, fontStyle: 'bold'}
-    //   }});
-    //
-    // elem = document.getElementById("basic-table2");
-    // res = doc.autoTableHtmlToJson(elem);
-    // doc.autoTable(res.columns, res.data, {startY: doc.autoTable.previous.finalY,theme: "striped"});
-    //
-    //
-    // //duplicate
-    // doc.setFontSize(14);
-    // doc.setFontType("bold");
-    // doc.text(originalX+100, doc.autoTable.previous.finalY+25, "Receipt"+" Triplicate" , 'center');
-    // doc.setFontType("normal");
-    // doc.text(originalX+100, doc.autoTable.previous.finalY+30,translate(tenantInfo[0].city.name), 'center');
-    // doc.setFontSize(10);
-    //
-    // var elem = document.getElementById("basic-table1");
-    // var res = doc.autoTableHtmlToJson(elem);
-    // doc.autoTable(res.columns, res.data, {showHeader:"never",startY:doc.autoTable.previous.finalY+ 37,columnStyles: {
-    //       "Payee Name": {fillColor: [41, 128, 185], textColor: 255, fontStyle: 'bold'}
-    //   }});
-    //
-    // elem = document.getElementById("basic-table2");
-    // res = doc.autoTableHtmlToJson(elem);
-    // doc.autoTable(res.columns, res.data, {startY:doc.autoTable.previous.finalY,theme: "striped"});
-
-    //
-    //
-    //  doc.save("Receipt"+'-' + getVal("Receipt[0].transactionId") + '.pdf');
-    //
-    //  doc=new jsPDF();
-    //  //
-    // //  var elem = document.getElementById("CertificateForWc");
-    // //  var res = doc.autoTableHtmlToJson(elem);
-    // //  doc.autoTable(res.columns, res.data, {startY: originalY+12});
-    //  //
-    //  doc.save("Receipt"+'-' + getVal("Receipt[0].transactionId") + '.pdf');
-
-    //doc.save(id+'-' + getVal("Receipt[0].transactionId") + '.pdf');
   };
 
   render() {
@@ -698,30 +536,11 @@ class CertificateView extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  formData: state.frameworkForm.form,
-});
-
 const mapDispatchToProps = dispatch => ({
-  setMockData: mockData => {
-    dispatch({ type: 'SET_MOCK_DATA', mockData });
-  },
-  setFormData: data => {
-    dispatch({ type: 'SET_FORM_DATA', data });
-  },
   setLoadingStatus: loadingStatus => {
     dispatch({ type: 'SET_LOADING_STATUS', loadingStatus });
-  },
-  toggleSnackbarAndSetText: (snackbarState, toastMsg, isSuccess, isError) => {
-    dispatch({
-      type: 'TOGGLE_SNACKBAR_AND_SET_TEXT',
-      snackbarState,
-      toastMsg,
-      isSuccess,
-      isError,
-    });
   },
   setRoute: route => dispatch({ type: 'SET_ROUTE', route }),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(CertificateView);
+export default connect(null, mapDispatchToProps)(CertificateView);

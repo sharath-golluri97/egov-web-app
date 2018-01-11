@@ -1,11 +1,5 @@
-// var store=require('../store');
-
 var common = require('../components/common/common');
 var axios = require('axios');
-
-// console.log(store.getState);
-
-// var store = require('configureStore').configure();
 
 var instance = axios.create({
   baseURL: window.location.origin,
@@ -17,11 +11,8 @@ var instance = axios.create({
 
 var counter = 0;
 
-//document.cookie = "SESSIONID=75dedd21-1145-4745-a8aa-1790a737b7c5; JSESSIONID=Nw2kKeNF6Eu42vtXypb3kP4fER1ghjXNMNISiIF5.ip-10-0-0-100; Authorization=Basic Og==";
-
 var authToken = localStorage.getItem('token');
 
-//request info from cookies
 var requestInfo = {
   apiId: 'org.egov.pt',
   ver: '1.0',
@@ -41,6 +32,10 @@ function extractErrorMsg(errorObj, localeCode, descriptionCode) {
   if (errorObj[localeCode] === translatedErrorMsg) return errorObj[descriptionCode] || translatedErrorMsg;
   else return translatedErrorMsg;
 }
+
+const sendMessageToParentIframe = (type, message) => {
+  window.parent.postMessage({ message, type }, '*');
+};
 
 module.exports = {
   commonApiPost: (
@@ -104,19 +99,17 @@ module.exports = {
         return response.data;
       })
       .catch(function(response) {
+        let _err = '';
+
         try {
           if (response && response.response && response.response.data && response.response.data[0] && response.response.data[0].error) {
-            var _err = response.response.data[0].error.message || '';
+            response.response.data[0].error.message || '';
             if (response.response.data[0].error.errorFields && Object.keys(response.response.data[0].error.errorFields).length) {
               for (var i = 0; i < response.response.data[0].error.errorFields.length; i++) {
                 _err += '\n ' + response.response.data[0].error.errorFields[i].message + ' ';
               }
-              throw new Error(_err);
             }
           } else if (response && response.response && response.response.data && response.response.data.error) {
-            // let _err = common.translate(response.response.data.error.fields[0].code);
-            let _err = '';
-
             _err = response.response.data.error.message
               ? response.response.data.error.fields
                 ? 'a) ' + extractErrorMsg(response.response.data.error, 'message', 'description') + ' : '
@@ -126,12 +119,7 @@ module.exports = {
             for (var i = 0; i < fields.length; i++) {
               _err += i + 1 + ') ' + extractErrorMsg(fields[i], 'code', 'message') + '.';
             }
-            throw new Error(_err);
           } else if (response && response.response && response.response.data && response.response.data.Errors) {
-            // let _err = common.translate(response.response.data.error.fields[0].code);
-            let _err = '';
-            // _err=response.response.data.error.message?"a) "+extractErrorMsg(response.response.data.error, "message", "description")+" : ":"";
-            // let fields=response.response.data.error.fields;
             if (response.response.data.Errors.length == 1) {
               _err += common.translate(response.response.data.Errors[0].message) + '.';
             } else {
@@ -139,11 +127,8 @@ module.exports = {
                 _err += i + 1 + ') ' + common.translate(response.response.data.Errors[i].message) + '.';
               }
             }
-
-            throw new Error(_err);
           } else if (response && response.response && response.response.data && response.response.data.hasOwnProperty('Data')) {
-            let _err = common.translate(response.response.data.Message) + '.';
-            throw new Error(_err);
+            _err = common.translate(response.response.data.Message) + '.';
           } else if (response && response.response && !response.response.data && response.response.status === 400) {
             if (counter == 0) {
               document.title = 'eGovernments';
@@ -154,23 +139,19 @@ module.exports = {
               localStorage.setItem('locale', locale);
               localStorage.setItem('tenantId', _tntId);
               localStorage.setItem('lang_response', lang_response);
-              alert('Session expired. Please login again.');
-              //localStorage.reload = true;
-              throw new Error('');
-              window.location.href = window.location.href.split('#/')[0] + '#/' + _tntId;
-
-              counter++;
+              _err = 'Session expired. Please login again.';
             }
           } else if (response) {
-            throw new Error("Oops! Something isn't right. Please try again later.");
+            _err = "Oops! Something isn't right. Please try again later.";
           } else {
-            throw new Error('Server returned unexpected error. Please contact system administrator.');
+            _err = 'Server returned unexpected error. Please contact system administrator.';
           }
         } catch (e) {
           if (e.message) {
-            throw new Error(e.message);
-          } else throw new Error("Oops! Something isn't right. Please try again later.");
+            _err = e.message;
+          } else _err = "Oops! Something isn't right. Please try again later.";
         }
+        sendMessageToParentIframe('api_error', _err);
       });
   },
   commonApiGet: (context, queryObject = {}, doNotOverride = false, noPageSize = false) => {
@@ -212,10 +193,6 @@ module.exports = {
       });
   },
   getAll: arrayOfRequest => {
-    return instance.all(arrayOfRequest).then(
-      axios.spread(function(acct, perms) {
-        // Both requests are now complete
-      })
-    );
+    return instance.all(arrayOfRequest).then(axios.spread(function(acct, perms) {}));
   },
 };
