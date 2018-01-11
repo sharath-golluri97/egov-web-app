@@ -80,7 +80,6 @@ export const localization_EN_Data = {
   'noDues.citizenService.email': 'Email',
   'noDues.citizenService.mobileNumber': 'Mobile Number',
   'noDues.search.citizenServices.description': 'Please provide at least one parameter',
-  'login.error.msg': 'Please check your username and password',
   'deshboard.title': 'My Tasks',
   'ui.framework.required': 'Required',
   'ui.framework.patternMessage': 'Invalid pattern',

@@ -133,10 +133,6 @@ class Login extends Component {
     localStorage.removeItem('type');
     localStorage.removeItem('id');
     this.handleLocaleChange(this.state.locale);
-    //if(localStorage.reload) {
-    localStorage.removeItem('reload');
-    this.props.forceLogout();
-    //}
 
     if (window.location.href.indexOf('?') > -1 && window.location.href.indexOf('signup') > -1) {
       this.handleSignUpModalOpen();
@@ -144,7 +140,6 @@ class Login extends Component {
   }
 
   handleLocaleChange = value => {
-    //console.log(value);
     let { setLoadingStatus } = this.props;
     var self = this;
     var tenantId = this.props.match.params.tenantId || 'default';
@@ -164,6 +159,7 @@ class Login extends Component {
     );
   };
 
+  // this should be moved to commons
   persistInLocalStorage = obj => {
     Object.keys(obj).forEach(objKey => {
       const objValue = obj[objKey];

@@ -8,23 +8,15 @@ import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import DataTable from '../common/Table';
 import { Tabs, Tab } from 'material-ui/Tabs';
-import { translate } from '../common/common';
-import SwipeableViews from 'react-swipeable-views';
 import { ListItem } from 'material-ui/List';
 import IconButton from 'material-ui/IconButton';
 import FontIcon from 'material-ui/FontIcon';
-import Paper from 'material-ui/Paper';
-import Menu from 'material-ui/Menu';
-import MenuItem from 'material-ui/MenuItem';
-import Divider from 'material-ui/Divider';
-import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
-import Drawer from 'material-ui/Drawer';
 import MetisMenu from 'react-metismenu';
-// import UiLogo from '../framework/components/UiLogo';
 
-//api import
+import { translate } from '../common/common';
 import Api from '../../api/api';
 
+// Data Table
 const $ = require('jquery');
 $.DataTable = require('datatables.net');
 const dt = require('datatables.net-bs');
@@ -60,11 +52,6 @@ const nameMap = {
 };
 
 const content = [
-  // {
-  //     icon: 'icon-class-name',
-  //     label: 'Services',
-  //     to: '#a-link',
-  // },
   {
     icon: 'icon-class-name',
     label: 'Water',
@@ -223,43 +210,22 @@ class Dashboard extends Component {
     this.onClickServiceGroup = this.onClickServiceGroup.bind(this);
   }
 
-  componentWillMount() {
-    $('#searchTable').DataTable({
-      dom: 'lBfrtip',
-      buttons: [],
-      aaSorting: [],
-      bDestroy: true,
-      language: {
-        emptyTable: 'No Records',
-      },
-    });
-
-    $('#requestTable').DataTable({
-      dom: 'lBfrtip',
-      aaSorting: [],
-      buttons: [],
-      bDestroy: true,
-      language: {
-        emptyTable: 'No Records',
-      },
-    });
-
+  componentDidMount() {
     let { setLoadingStatus } = this.props;
     setLoadingStatus('loading');
 
     let current = this;
+    let self = this;
     let currentUser = JSON.parse(localStorage.userRequest);
     let count = 4,
       _state = {};
+
     const checkCountAndSetState = function(key, res) {
       _state[key] = res;
       count--;
       if (count == 0) {
         setLoadingStatus('hide');
-        current.setState({
-          ..._state,
-          hasData: true,
-        });
+        current.setState({ ..._state, hasData: true });
       }
     };
 
@@ -335,79 +301,6 @@ class Dashboard extends Component {
           checkCountAndSetState('serviceRequestsTwo', []);
         }
       );
-
-      /*Promise.all([
-          Api.commonApiPost("/pgr/seva/v1/_search",{userId:currentUser.id},{}),
-          Api.commonApiPost("/pgr-master/serviceGroup/v1/_search",{keywords:constants.CITIZEN_SERVICES_KEYWORD},{}),
-          Api.commonApiPost("/citizen-services/v1/requests/_search", {userId:currentUser.id}, {}, null, true)
-      ])
-      .then((responses)=>{
-        //if any error occurs
-        if(!responses || responses.length ===0 || !responses[0] || !responses[1] || !responses[2]){
-          current.setState({
-            serviceRequests: [],
-            citizenServices:[],
-            serviceRequestsTwo: responses[2] && responses[2].serviceReq ? responses[2].serviceReq : [],
-            localArray:[],
-             hasData:false
-          });
-          return;
-        }
-
-        //inbox items
-        let inboxResponse = responses[0];
-
-        for(var i=0; i<inboxResponse.serviceRequests.length; i++) {
-          var d1 = inboxResponse.serviceRequests[i].requestedDatetime.split(" ")[0].split("-");
-          var d11 = inboxResponse.serviceRequests[i].requestedDatetime.split(" ")[1].split(":");
-          inboxResponse.serviceRequests[i].clientTime = new Date(d1[2], d1[1]-1, d1[0], d11[0], d11[1], d11[2]).getTime();
-        }
-
-        inboxResponse.serviceRequests.sort(function(s1, s2) {
-            var d1 = s1.requestedDatetime.split(" ")[0].split("-");
-            var d11 = s1.requestedDatetime.split(" ")[1].split(":");
-            var d2 = s2.requestedDatetime.split(" ")[0].split("-");
-            var d22 = s2.requestedDatetime.split(" ")[1].split(":");
-            if(new Date(d1[2], d1[1]-1, d1[0], d11[0], d11[1], d11[2]).getTime() < new Date(d2[2], d2[1]-1, d2[0], d22[0], d22[1], d22[2]).getTime()) {
-              return 1;
-            } else if(new Date(d1[2], d1[1]-1, d1[0], d11[0], d11[1], d11[2]).getTime() > new Date(d2[2], d2[1]-1, d2[0], d22[0], d22[1], d22[2]).getTime()) {
-              return -1;
-            }
-            return 0;
-        });
-
-        //citizen services
-        let citizenServices=responses[1].ServiceGroups;
-
-        //Call to service request
-
-        // Api.commonApiPost("/report/pgr/_get", {}, {}, null, true).then(function(res) {
-        //   current.setState({
-        //     workflowResult: res,
-        //     hasData: true
-        //   });
-        // }, function(err) {
-        //   current.props.setLoadingStatus('hide');
-        //   current.setState({
-        //     workflowResult: {},
-        //     hasData: false
-        //   });
-        // })
-
-        current.props.setLoadingStatus('hide');
-        localStorage.setItem("servReq", JSON.stringify(responses[2].serviceReq));
-        current.setState({
-          serviceRequests: inboxResponse.serviceRequests,
-          serviceRequestsTwo: responses[2].serviceReq,
-          localArray: inboxResponse.serviceRequests,
-          citizenServices,
-          hasData:true
-        });
-
-      }).catch(function(err){
-         current.props.setLoadingStatus("hide");
-         console.log('error', err);
-      });*/
     } else {
       Api.commonApiPost('/hr-employee/employees/_search', { id: currentUser.id }, {}).then(function(res) {
         if (
@@ -418,40 +311,6 @@ class Dashboard extends Component {
           res.Employee[0].assignments[0] &&
           res.Employee[0].assignments[0].position
         ) {
-          /*Api.commonApiPost("/pgr/seva/v1/_search",{positionId:res.Employee[0].assignments[0].position, status: "REGISTERED,FORWARDED,PROCESSING,NOTCOMPLETED,REOPENED"},{}).then(function(response){
-                for(var i=0; i<response.serviceRequests.length; i++) {
-                  var d1 = response.serviceRequests[i].requestedDatetime.split(" ")[0].split("-");
-                  var d11 = response.serviceRequests[i].requestedDatetime.split(" ")[1].split(":");
-                  response.serviceRequests[i].clientTime = new Date(d1[2], d1[1]-1, d1[0], d11[0], d11[1], d11[2]).getTime();
-                }
-
-                response.serviceRequests.sort(function(s1, s2) {
-                  var d1 = s1.requestedDatetime.split(" ")[0].split("-");
-                  var d11 = s1.requestedDatetime.split(" ")[1].split(":");
-                  var d2 = s2.requestedDatetime.split(" ")[0].split("-");
-                  var d22 = s2.requestedDatetime.split(" ")[1].split(":");
-                  if(new Date(d1[2], d1[1]-1, d1[0], d11[0], d11[1], d11[2]).getTime() < new Date(d2[2], d2[1]-1, d2[0], d22[0], d22[1], d22[2]).getTime()) {
-                    return 1;
-                  } else if(new Date(d1[2], d1[1]-1, d1[0], d11[0], d11[1], d11[2]).getTime() > new Date(d2[2], d2[1]-1, d2[0], d22[0], d22[1], d22[2]).getTime()) {
-                    return -1;
-                  }
-                  return 0;
-                })
-
-                current.setState({
-                  serviceRequests: response.serviceRequests,
-                  localArray:response.serviceRequests,
-                   hasData:true
-                });
-            }).catch((error)=>{
-                current.setState({
-                  serviceRequests: [],
-                  localArray:[],
-                   hasData:false
-                });
-				        current.props.setLoadingStatus('hide');
-            })*/
-
           var positions = '';
           for (var i = 0; i < res.Employee[0].assignments.length; i++) {
             positions += i == 0 ? res.Employee[0].assignments[i].position : "','" + res.Employee[0].assignments[i].position;
@@ -460,26 +319,15 @@ class Dashboard extends Component {
           var bodyReq = {
             tenantId: localStorage.getItem('tenantId') || 'default',
             reportName: 'CommonInbox',
-            searchParams: [
-              {
-                name: 'positionId',
-                input: positions,
-              },
-            ],
+            searchParams: [{ name: 'positionId', input: positions }],
           };
           Api.commonApiPost('/report/common/_get', {}, bodyReq, null, true).then(
             function(res) {
-              current.setState({
-                workflowResult: res,
-                hasData: true,
-              });
+              current.setState({ workflowResult: res, hasData: true });
             },
             function(err) {
               current.props.setLoadingStatus('hide');
-              current.setState({
-                workflowResult: {},
-                hasData: false,
-              });
+              current.setState({ workflowResult: {}, hasData: false });
             }
           );
         } else {
@@ -487,116 +335,6 @@ class Dashboard extends Component {
           current.props.toggleSnackbarAndSetText(true, 'Something went wrong. Please try again later.');
         }
       });
-    }
-  }
-
-  componentWillUnmount() {
-    /*$('#searchTable')
-       .DataTable()
-       .destroy(true);*/
-  }
-
-  componentDidMount() {
-    let self = this;
-    if (localStorage.token && localStorage.userRequest && !localStorage.actions) {
-      this.props.login(false, localStorage.token, JSON.parse(localStorage.userRequest), true);
-      let roleCodes = [];
-      var UserRequest = JSON.parse(localStorage.userRequest);
-      for (var i = 0; i < UserRequest.roles.length; i++) {
-        roleCodes.push(UserRequest.roles[i].code);
-      }
-      if (localStorage.getItem('type') === constants.ROLE_EMPLOYEE) {
-        //old menu item api access/v1/actions/_get
-        Api.commonApiPost(
-          'access/v1/actions/mdms/_get',
-          {},
-          {
-            tenantId: localStorage.tenantId,
-            roleCodes,
-            enabled: true,
-            actionMaster: 'actions-test',
-          }
-        ).then(
-          function(response) {
-            var actions = response.actions || [];
-            var roles = JSON.parse(localStorage.userRequest).roles;
-
-              actions.unshift({
-                id: 12299,
-                name: 'SearchRequest',
-                url: '/search/service/requests',
-                displayName: 'Search Service Requests',
-                orderNumber: 35,
-                queryParams: '',
-                parentModule: 75,
-                enabled: true,
-                serviceCode: '',
-                tenantId: null,
-                createdDate: null,
-                createdBy: null,
-                lastModifiedDate: null,
-                lastModifiedBy: null,
-                path: 'Service Request.Requests.Search',
-              });
-
-            localStorage.setItem('actions', JSON.stringify(actions));
-            self.props.setActionList(actions);
-          },
-          function(err) {
-            //old menu item api access/v1/actions/_get
-            Api.commonApiPost('access/v1/actions/_get', {}, { tenantId: localStorage.tenantId, roleCodes, enabled: true }).then(
-              function(response) {
-                var actions = response.actions || [];
-                var roles = JSON.parse(localStorage.userRequest).roles;
-
-                  actions.unshift({
-                    id: 12299,
-                    name: 'SearchRequest',
-                    url: '/search/service/requests',
-                    displayName: 'Search Service Requests',
-                    orderNumber: 35,
-                    queryParams: '',
-                    parentModule: 75,
-                    enabled: true,
-                    serviceCode: '',
-                    tenantId: null,
-                    createdDate: null,
-                    createdBy: null,
-                    lastModifiedDate: null,
-                    lastModifiedBy: null,
-                    path: 'Service Request.Requests.Search',
-                  });
-
-
-                localStorage.setItem('actions', JSON.stringify(actions));
-                self.props.setActionList(actions);
-              },
-              function(err) {
-                console.log(err);
-              }
-            );
-          }
-        );
-      }
-
-      if (window.location.href.indexOf('?') > -1 && window.location.href.indexOf('link') > -1) {
-        var query = window.location.href.split('?')[1].split('&');
-        for (var i = 0; i < query.length; i++) {
-          if (query[i].indexOf('link') > -1) {
-            switch (query[i].split('=')[1]) {
-              case 'waternodue':
-                self.props.setRoute('/non-framework-cs/citizenServices/no-dues/search/wc');
-                break;
-              case 'propertytaxextract':
-                self.props.setRoute('/non-framework-cs/citizenServices/no-dues/extract/pt');
-                break;
-              case 'propertytaxdue':
-                self.props.setRoute('/non-framework-cs/citizenServices/no-dues/search/pt');
-                break;
-            }
-          }
-        }
-      }
     }
   }
 
@@ -966,72 +704,11 @@ class Dashboard extends Component {
                       </tbody>
                     </Table>
                   </div>
-                  {/*<div  className="tableLayout">
-            <Table id="searchTable" style={{color:"black",fontWeight: "normal"}} bordered responsive className="table-striped">
-						 <thead>
-							<tr>
-							  <th>#</th>
-							  <th>Application No.</th>
-							  <th>Date</th>
-							  <th>Sender</th>
-							  <th>Nature of Work</th>
-							  <th>Status</th>
-							  <th>Comments</th>
-							</tr>
-
-						  </thead>
-						  <tbody>
-						  {renderBody()}
-						  </tbody>
-					</Table>
-          </div>*/}
-                  {/*<div className="cardLayout">
-
-         {(this.state.localArray.length>0) && this.state.localArray.map((e,i)=>{
-
-			 	var priority;
-							var triColor = "#fff";
-							e.attribValues.map((item,index)=>{
-							  if(item.key =="PRIORITY"){
-								triColor = item.name
-							  }
-							})
-
-                        return(
-                          <Col xs={12} md={4} sm={6} style={{paddingTop:15, paddingBottom:15}} key={i}>
-                             <Card style={{minHeight:320}}>
-                                 <CardHeader titleStyle={{fontSize:18, fontWeight:700}} subtitleStyle={styles.status}
-                                  title={e.serviceName}
-                                  subtitle={e.attribValues && e.attribValues.map((item,index)=>{
-                                      if(item.key =="systemStatus"){
-                                        return(item.name)
-                                      }
-                                  })}
-                                 />
-
-                                 <CardHeader  titleStyle={{fontSize:18}}
-                                   title={<Link to={`/pgr/viewGrievance/${e.serviceRequestId}`} target=""><span style={{width:6, height:6, borderRadius:50, backgroundColor:triColor, display:"inline-block", marginRight:5}}></span>{e.serviceRequestId}</Link>}
-                                   subtitle={e.requestedDatetime}
-                                 />
-                                 <CardText>
-                                    Complaint No. {e.serviceRequestId} regarding {e.serviceName} in {e.attribValues && e.attribValues.map((item,index)=>{
-                                        if(item.key =="systemStatus"){
-                                          return(item.name)
-                                        }
-                                    })}
-                                 </CardText>
-                             </Card>
-                          </Col>
-                        )
-                      }) }
-					</div>*/}
                 </Row>
               </Grid>
-
             </CardText>
           </Card>
         )}
-        {/*<UiLogo src={require("../../images/logo.png")} alt="logo"/>*/}
       </div>
     );
   }
@@ -1058,7 +735,6 @@ const ServiceTypeItem = ({ serviceType, onClick }) => {
     <Col md={4} sm={4} lg={4} xs={12}>
       <div className="service-menu-item disable-selection">
         <ListItem primaryText={serviceType.serviceName} secondaryText={serviceType.description} onClick={onClick} />
-        {/*<RaisedButton fullWidth={true} label={service.serviceName} primary={true} onClick={onClick} /> */}
       </div>
     </Col>
   );
@@ -1067,8 +743,6 @@ const ServiceTypeItem = ({ serviceType, onClick }) => {
 const mapStateToProps = state => ({
   currentUser: state.common.currentUser,
 });
-
-// this.props.appLoaded
 
 const mapDispatchToProps = dispatch => ({
   toggleSnackbarAndSetText: (snackbarState, toastMsg) => {
@@ -1092,191 +766,3 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
-
-//
-// <Tabs
-//     onChange={this.handleChange}
-//     value={this.state.slideIndex}
-//   >
-//     <Tab label={translate("csv.lbl.myrequest")} value={0}/>
-//     <Tab label={translate(constants.LABEL_SERVICES)} value={1} />
-//     <Tab label={translate("pgr.title.create.grievence")} value={2} onClick={()=>{
-//         this.props.history.push("/pgr/createGrievance")
-//       }} />
-//   </Tabs>
-//   <SwipeableViews
-//     index={this.state.slideIndex}
-//     onChangeIndex={this.handleChange}
-//   >
-//     <div>
-//         <Grid>
-//           <Row>
-//             <Col xs={12} md={12}>
-//               <TextField
-//                 hintText={translate("core.lbl.search")}
-//                 floatingLabelText={translate("core.lbl.search")}
-//                 fullWidth={true}
-//                 onChange={(e, value) =>this.localHandleChange(value)}
-//               />
-//             </Col>
-//             {this.state.localArray && this.state.localArray.map((e,i)=>{
-//
-//                 var priority;
-//                 var triColor = "#fff";
-//                 e.attribValues.map((item,index)=>{
-//                   if(item.key =="PRIORITY"){
-//                   triColor = item.name
-//                   }
-//                 })
-//
-//               return(
-//                 <Col xs={12} md={4} sm={6} style={{paddingTop:15, paddingBottom:15}} key={i}>
-//                    <Card style={{minHeight:320}}>
-//                        <CardHeader subtitleStyle={styles.status}
-//                         title={e.serviceName}
-//                         subtitle={e.attribValues && e.attribValues.map((item,index)=>{
-//                             if(item.key =="systemStatus"){
-//                               return(item.name)
-//                             }
-//                         })}
-//                        />
-//
-//                        <CardHeader  titleStyle={{fontSize:18}}
-//                          title={<Link to={`/pgr/viewGrievance/${e.serviceRequestId}`} target=""><span style={{width:6, height:6, borderRadius:50, backgroundColor:triColor, display:"inline-block", marginRight:5}}></span>{e.serviceRequestId}</Link>}
-//                          subtitle={e.requestedDatetime}
-//                        />
-//                        <CardText>
-//                           Complaint No. {e.serviceRequestId} regarding {e.serviceName} in {e.attribValues && e.attribValues.map((item,index)=>{
-//                               if(item.key =="systemStatus"){
-//                                 return(item.name)
-//                               }
-//                           })}
-//                        </CardText>
-//                    </Card>
-//                 </Col>
-//               )
-//             }) }
-//           </Row>
-//         </Grid>
-//     </div>
-//     <div style={styles.slide}>
-//         <Grid>
-//           <Row>
-//           {/*  <TextField
-//               floatingLabelText={translate("core.lbl.search")}
-//               fullWidth={true}
-//               value={this.state.servicesFilter||""}
-//               onChange={(e, value) => this.filterCitizenServices(value)}
-//             />*/}
-//           </Row>
-//         {/*  <Row>
-//               <Card style={{width:'100%'}}>
-//                 <CardTitle style={{padding:'16px 16px 0px 16px'}}>
-//                   {this.state.selectedServiceCode ? (
-//                     <IconButton onTouchTap={()=>{
-//                         this.onBackFromServiceType();
-//                       }}>
-//                       <FontIcon className="material-icons">arrow_back</FontIcon>
-//                     </IconButton>
-//                   ):null}
-//                   <span className="custom-card-title disable-selection">{translate(this.state.selectedServiceName)}</span>
-//                 </CardTitle>
-//
-//                  <CardText style={{padding:'0px 16px 16px 16px'}}>
-//                     <Row>
-//                       {!this.state.selectedServiceCode && servicesMenus.map((service, index)=>{
-//                            return (<ServiceMenu key={index} service={service} onClick={this.onClickServiceGroup} />);
-//                         })}
-//                       {serviceTypeMenus.map((serviceType, index)=>{
-//                         return (<ServiceTypeItem key={index} serviceType={serviceType} onClick={()=>{
-//                             if(serviceType.serviceName !== 'New Water Connection')
-//                               this.props.setRoute(`/services/apply/${serviceType.serviceCode}/${serviceType.serviceName.replace(/\//g, "~")}`);
-//                             else
-//                               this.props.setRoute('/create/wc');
-//                           }}></ServiceTypeItem>)
-//                       })}
-//
-//                       {serviceTypeMenus.length === 0 && servicesMenus.length === 0? (
-//                         <div className="col-xs-12 empty-info">
-//                           <FontIcon className="material-icons icon">inbox</FontIcon>
-//                           <span className="msg">{translate(constants.LABEL_NO_SERVICS)}</span>
-//                         </div>
-//                       ) : null}
-//
-//                     </Row>
-//                  </CardText>
-//               </Card>
-//           </Row>*/}
-//           <Row>
-//             <Col md={3}>
-//             {/*
-//               <Drawer open={true}>
-//                  <MenuItem>Menu Item</MenuItem>
-//                  <MenuItem>Menu Item 2</MenuItem>
-//                </Drawer>
-//               */}
-//           {<Paper style={style}>
-//                 <Menu desktop={true}>
-//                   <MenuItem
-//                     primaryText="Water Charge"
-//                     rightIcon={<ArrowDropRight />}
-//                     menuItems={[
-//                       <Link to="/non-framework/citizenServices/no-dues/search/watercharge"><MenuItem primaryText="Nodues"/></Link>,
-//                       <Link to="/non-framework/citizenServices/no-dues/search/watercharge"><MenuItem primaryText="New Connection"/></Link>
-//
-//                     ]}
-//                   />
-//
-//                   <MenuItem
-//                     primaryText="Property Tax"
-//                     rightIcon={<ArrowDropRight />}
-//                     menuItems={[
-//                       <Link to="/non-framework/citizenServices/no-dues/search/propertytax"><MenuItem primaryText="Nodues"/></Link>
-//                     ]}
-//                   />
-//
-//                   <MenuItem
-//                     primaryText="Trade licence"
-//                     rightIcon={<ArrowDropRight />}
-//                     menuItems={[
-//                       <Link to="/non-framework/citizenServices/no-dues/search/tradelicence"><MenuItem primaryText="Nodues"/></Link>
-//                     ]}
-//                   />
-//
-//                 </Menu>
-//               </Paper>}
-//             </Col>
-//             <Col md={9}>
-//                 <Table responsive>
-//                     <thead>
-//                         <th>Name</th>
-//                         <th>Date</th>
-//                         <th>Status</th>
-//
-//                     </thead>
-//                     <tbody>
-//                         <tr>
-//                             <td>Water charge</td>
-//                             <td>21-12-2017</td>
-//                             <td>Progress</td>
-//
-//                         </tr>
-//
-//                         <tr>
-//                             <td>Property Tax</td>
-//                             <td>21-12-2017</td>
-//                             <td>Aporved</td>
-//
-//                         </tr>
-//                     </tbody>
-//                 </Table>
-//             </Col>
-//
-//           </Row>
-//         </Grid>
-//
-//     </div>
-//   </SwipeableViews>
-
-// WEBPACK FOOTER //
-// ./src/components/contents/Dashboard.js

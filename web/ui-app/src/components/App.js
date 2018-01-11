@@ -16,7 +16,7 @@ class App extends Component {
     tokenRecieved: process.env.NODE_ENV === 'development' ? false : true,
   };
 
-  componentDidMount() {
+  componentWillMount() {
     window.addEventListener('message', this.handleFrameTasks);
   }
 
@@ -27,6 +27,7 @@ class App extends Component {
         window.localStorage.setItem(index, localStorage[index]);
         this.setState({ tokenRecieved: true });
       } catch (error) {
+        console.log(localStorage);
         console.log(error);
       }
     });

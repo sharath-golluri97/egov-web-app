@@ -12,7 +12,6 @@ import Snackbar from 'material-ui/Snackbar';
 import LoadingIndicator from './common/LoadingIndicator';
 import router from '../router';
 import Api from '../api/api';
-import UiLogo from './framework/components/UiLogo';
 
 class App extends Component {
   componentDidMount() {
@@ -35,10 +34,14 @@ class App extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.redirectTo) {
+      console.log('Redirect Url');
+      console.log(nextProps.redirectTo);
       this.props.history.replace(nextProps.redirectTo);
       this.props.onRedirect();
     }
   }
+
+  tenantSearch = async () => {};
 
   componentWillMount() {
     let { setTenantInfo, setActionList } = this.props;

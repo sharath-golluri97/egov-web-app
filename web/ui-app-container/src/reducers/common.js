@@ -34,7 +34,7 @@ export default (state = defaultState, action) => {
     case 'LOGOUT':
       return {
         ...state,
-        redirectTo: '/' + action.tenantId,
+        redirectTo: '/loadComponent?url=http://localhost:3000/#/' + action.tenantId,
         token: null,
         currentUser: null,
         showMenu: false,

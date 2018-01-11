@@ -8,6 +8,7 @@ export const localization_EN_Data = {
   'core.lbl.varify': 'Verify',
   'pgr.lbl.applicationnumber': ' Application Number',
   'pgr.lbl.certificateNumber': 'Certificate Number',
+  'login.error.msg': 'Please check your username and password',
 };
 
 export const localization_MR_Data = {
@@ -21,4 +22,5 @@ export const localization_MR_Data = {
   'pgr.msg.complaintstatus.certificate': 'प्रमाणपत्र स्थिती',
   'pgr.lbl.applicationnumber': ' तक्रार क्रमांक',
   'pgr.lbl.certificateNumber': 'प्रमाणपत्र क्रमांक',
+  'login.error.msg': 'Please check your username and password',
 };

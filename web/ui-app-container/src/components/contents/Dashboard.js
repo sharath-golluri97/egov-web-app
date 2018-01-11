@@ -641,6 +641,7 @@ class Dashboard extends Component {
     let servicesMenus = [];
     let serviceTypeMenus = [];
     let { serviceRequestsTwo } = this.state;
+    let { currentUser } = this.props;
 
     if (!this.state.selectedServiceCode)
       servicesMenus = this.state.citizenServices.filter(
@@ -734,8 +735,6 @@ class Dashboard extends Component {
         );
       });
     };
-
-    var { currentUser } = this.props;
 
     return (
       <div className="Dashboard">
@@ -891,8 +890,6 @@ const ServiceTypeItem = ({ serviceType, onClick }) => {
 const mapStateToProps = state => ({
   currentUser: state.common.currentUser,
 });
-
-// this.props.appLoaded
 
 const mapDispatchToProps = dispatch => ({
   toggleSnackbarAndSetText: (snackbarState, toastMsg) => {

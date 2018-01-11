@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Grid, Row, Col, Table, DropdownButton } from 'react-bootstrap';
 import { Card, CardHeader, CardText } from 'material-ui/Card';
+import UiButton from '../../framework/components/UiButton';
+import { translate } from '../../common/common';
+import Api from '../../../api/api';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
-import { translate } from '../common/common';
-import Api from '../../api/api';
-import { getFullDate } from '../framework/utility/utility';
-import UiButton from '../framework/components/UiButton';
+import { getFullDate } from '../../framework/utility/utility';
 
 let nameMap = {
   CREATED: 'Created',
@@ -111,15 +111,7 @@ class CertificateView extends Component {
               openSecondDialog: self.props.match.params.isCertificate == 'true' ? true : false,
               Property: property,
             });
-            // console.log(res2);
-            // self.handleNext();
           });
-
-          // self.setState({
-          // 	ServiceRequest: res.serviceReq[0],
-          // 	Receipt:res.receiptDetails.Receipt,
-          // 	openSecondDialog:self.props.match.params.isCertificate=="true"?true:false
-          // })
         } else {
           self.setState({
             open: true,
