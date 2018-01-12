@@ -18,10 +18,6 @@ const styles = {
 };
 
 class ComponentLoader extends Component {
-  state = {
-    url: '',
-  };
-
   componentDidMount() {
     const iframe = this.ifr;
 
@@ -29,9 +25,6 @@ class ComponentLoader extends Component {
       const localStorage = Object.assign({}, window.localStorage);
       iframe.contentWindow.postMessage(localStorage, '*');
     };
-
-    const url = this.getIframeUrl(this.props);
-    this.setState({ url });
   }
 
   getIframeUrl = () => {
@@ -43,7 +36,11 @@ class ComponentLoader extends Component {
   };
 
   generateFullUrl = url => {
-    let base = window.location.origin;
+    let base = window.localStorage.baseUrl;
+
+    if (typeof baseUrl === 'undefined') {
+      base = window.location.origin;
+    }
     if (process.env.NODE_ENV === 'development') {
       base = process.env.REACT_APP_MODULE_URL;
     }
