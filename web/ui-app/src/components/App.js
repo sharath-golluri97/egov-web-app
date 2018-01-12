@@ -17,6 +17,7 @@ class App extends Component {
     window.addEventListener('message', this.handleFrameTasks);
   }
 
+  // handles the message from
   handleFrameTasks = e => {
     const localStorage = e.data;
     Object.keys(localStorage).forEach((index, key) => {
@@ -99,6 +100,7 @@ class App extends Component {
             onRequestClose={() => toggleSnackbarAndSetText(false, '', false, false)}
           />
         )}
+        <LoadingIndicator status={loadingStatus || 'hide'} />
       </div>
     );
   }

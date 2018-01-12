@@ -432,13 +432,14 @@ let menuConvention = {
   'Works Management.Abstract Estimate.Spillover Abstract Estimate': '/non-framework/works/transaction/create/spilloverAE',
 
   'Works Management.Works Masters.Create SOR': '/search/works/scheduleofrate/view',
-  //upload
-  'Upload.Upload': 'http://egov-micro-dev.egovernments.org/app/v2/uploader/',
-  'Upload.User Jobs': 'http://egov-micro-dev.egovernments.org/app/v2/uploader/#user-jobs',
+  //uploader service
+  'Upload.Upload': '/app/v2/uploader/',
+  'Upload.User Jobs': '/app/v2/uploader/#user-jobs',
 };
 
+// add componentLoader to the base url
 menuConvention = Object.keys(menuConvention).reduce((menu, menuName) => {
-  menu[menuName] = `/loadComponent?url=http://localhost:3000/#${menuConvention[menuName]}`;
+  menu[menuName] = `/loadComponent?url=${menuConvention[menuName]}`;
   return menu;
 }, {});
 

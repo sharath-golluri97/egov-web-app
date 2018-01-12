@@ -52,7 +52,7 @@ export default (state = defaultState, action) => {
     case 'REGISTER':
       return {
         ...state,
-        redirectTo: action.error || action.doNotNavigate ? null : '/loadComponent?url=http://localhost:3000/#/prd/dashboard',
+        redirectTo: action.error || action.doNotNavigate ? null : '/loadComponent?url=/prd/dashboard',
         token: action.error ? null : action.payload.access_token,
         currentUser: action.error ? null : action.payload.UserRequest,
       };

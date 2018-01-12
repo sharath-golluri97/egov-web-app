@@ -34,32 +34,25 @@ class ComponentLoader extends Component {
     this.setState({ url });
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.location.hash !== this.props.location.hash) {
-      const url = this.getIframeUrl(nextProps);
-      this.setState({ url });
-    }
-  }
-
-  // very hacky method
-  getIframeUrl = props => {
-    const paramsString = props.location.search;
-    const hash = props.location.hash;
+  getIframeUrl = () => {
+    const paramsString = this.props.location.search;
+    const hash = this.props.location.hash;
     const params = new URLSearchParams(paramsString);
     const url = params.get('url');
     return url + hash;
   };
 
   generateFullUrl = url => {
+    let base = window.location.origin;
     if (process.env.NODE_ENV === 'development') {
-      const MODULE_URL = process.env.REACT_APP_MODULE_URL;
-      url = `${MODULE_URL}${url}`;
+      base = process.env.REACT_APP_MODULE_URL;
     }
+    url = `${base}${url}`;
     return url;
   };
 
   render() {
-    const { url } = this.state;
+    const url = this.getIframeUrl();
     const { generateFullUrl } = this;
 
     return (
@@ -71,7 +64,7 @@ class ComponentLoader extends Component {
               this.ifr = f;
             }}
             frameBorder="0"
-            src={url}
+            src={generateFullUrl(url)}
             allowFullScreen
           />
         }
