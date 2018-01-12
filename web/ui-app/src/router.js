@@ -1,7 +1,6 @@
 import React from 'react';
-import { Switch } from 'react-router-dom';
-import Route from './AuthRoute';
-
+import { Switch, Route } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import Dashboard from './components/contents/Dashboard';
 import ProfileEdit from './components/contents/settings/profileEdit';
 
