@@ -99,7 +99,8 @@ module.exports = {
         return response.data;
       })
       .catch(function(response) {
-        let _err = '';
+        let _err = '',
+          _error_type = 'api_error';
 
         try {
           if (response && response.response && response.response.data && response.response.data[0] && response.response.data[0].error) {
@@ -132,13 +133,7 @@ module.exports = {
           } else if (response && response.response && !response.response.data && response.response.status === 400) {
             if (counter == 0) {
               document.title = 'eGovernments';
-              // var locale = localStorage.getItem('locale');
-              // var _tntId = localStorage.getItem('tenantId') || 'default';
-              // var lang_response = localStorage.getItem('lang_response');
-              // localStorage.clear();
-              // localStorage.setItem('locale', locale);
-              // localStorage.setItem('tenantId', _tntId);
-              // localStorage.setItem('lang_response', lang_response);
+              _error_type = 'token_expired';
               _err = 'Session expired. Please login again.';
             }
           } else if (response) {
@@ -151,7 +146,8 @@ module.exports = {
             _err = e.message;
           } else _err = "Oops! Something isn't right. Please try again later.";
         }
-        sendMessageToParentIframe('api_error', _err);
+        // send message to parent iframe
+        sendMessageToParentIframe(_error_type, _err);
       });
   },
   commonApiGet: (context, queryObject = {}, doNotOverride = false, noPageSize = false) => {

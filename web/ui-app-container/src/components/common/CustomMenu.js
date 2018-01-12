@@ -10,7 +10,6 @@ import { orange500 } from 'material-ui/styles/colors';
 import Divider from 'material-ui/Divider';
 import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
-import jp from 'jsonpath';
 import _ from 'lodash';
 import { getTitleCase } from '../framework/utility/utility';
 
@@ -590,7 +589,6 @@ class CustomMenu extends Component {
       }
     }
 
-    // console.log(_.orderBy(menuItems, ['orderNumber'], ['asc']));
     menuItems = _.orderBy(menuItems, ['orderNumber'], ['asc']);
     this.setState({
       menuItems,

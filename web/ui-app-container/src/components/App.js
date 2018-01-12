@@ -5,7 +5,6 @@ import FlatButton from 'material-ui/FlatButton';
 import { Grid, Row, Col } from 'react-bootstrap';
 import classnames from 'classnames';
 import { withRouter } from 'react-router';
-
 import Header from './common/Header';
 import Footer from './common/Footer';
 import Snackbar from 'material-ui/Snackbar';
@@ -19,10 +18,15 @@ class App extends Component {
       'message',
       e => {
         const { type, message } = e.data;
+        const { props } = this;
         switch (type) {
+          case 'token_expired':
+            props.toggleSnackbarAndSetText(true, message);
+            props.history.replace('/');
+            props.onRedirect();
+            break;
           case 'api_error':
-            this.props.history.replace('/');
-            this.props.onRedirect();
+            props.toggleSnackbarAndSetText(true, message);
             break;
           default:
             break;
@@ -39,16 +43,13 @@ class App extends Component {
     }
   }
 
-  tenantSearch = async () => {};
-
   componentWillMount() {
     let { setTenantInfo, setActionList } = this.props;
 
     if (localStorage.getItem('token') && localStorage.getItem('userRequest')) {
       this.props.onLoad({ UserRequest: JSON.parse(localStorage.getItem('userRequest')) }, localStorage.getItem('token'));
-      Api.commonApiPost('tenant/v1/tenant/_search', {
-        code: localStorage.getItem('tenantId') ? localStorage.getItem('tenantId') : 'default',
-      }).then(
+      const params = { code: localStorage.getItem('tenantId') ? localStorage.getItem('tenantId') : 'default' };
+      Api.commonApiPost('tenant/v1/tenant/_search', params).then(
         function(res) {
           setActionList(JSON.parse(localStorage.getItem('actions')));
           setTenantInfo(res.tenant);
@@ -64,15 +65,10 @@ class App extends Component {
         var codeArray = hash[1].split('?');
         urlCode = codeArray[0];
       }
-      Api.commonApiPost(
-        'tenant/v1/tenant/_search',
-        {
-          code: hash[1] ? urlCode : 'default',
-          tenantId: hash[1] ? urlCode : 'default',
-        },
-        {},
-        true
-      ).then(
+
+      const params = { code: hash[1] ? urlCode : 'default', tenantId: hash[1] ? urlCode : 'default' };
+
+      Api.commonApiPost('tenant/v1/tenant/_search', params, {}, true).then(
         function(res) {
           setTenantInfo(res.tenant);
         },

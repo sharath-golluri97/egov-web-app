@@ -120,9 +120,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  onLoad: (payload, token) => dispatch({ type: 'APP_LOAD', payload, token, skipTracking: true }),
   onRedirect: () => dispatch({ type: 'REDIRECT' }),
-  setRoute: route => dispatch({ type: 'SET_ROUTE', route }),
   login: (token, currentUser) => dispatch({ type: 'LOGIN', token, currentUser }),
   toggleDailogAndSetText: (dailogState, msg) => {
     dispatch({ type: 'TOGGLE_DAILOG_AND_SET_TEXT', dailogState, msg });
