@@ -37,17 +37,12 @@ class ComponentLoader extends Component {
   generateFullUrl = url => {
     let base = window.localStorage.baseUrl;
 
-    if (typeof baseUrl === 'undefined') {
-      base = window.location.origin;
-    }
-    if (process.env.NODE_ENV === 'development') {
-      base = process.env.REACT_APP_MODULE_URL;
-    }
+    base =
+      typeof base === 'undefined'
+        ? typeof process.env.REACT_APP_MODULE_URL === 'undefined' ? window.location.origin : process.env.REACT_APP_MODULE_URL
+        : base;
 
-    if (url.indexOf('3002') === -1) {
-      url = `${base}${url}`;
-    }
-    return url;
+    return `${base}${url}`;
   };
 
   render() {
