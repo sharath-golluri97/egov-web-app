@@ -383,22 +383,15 @@ let menuConvention = {
   'Inventory.Inventory Masters.Supplier Master.Supplier Search': '/search/inventory/supplier/view',
   'Inventory.Inventory Masters.Supplier Master.Supplier Update': '/search/inventory/supplier/update',
 
-<<<<<<< HEAD:web/ui-app-container/src/components/common/CustomMenu.js
-  'Inventory.Inventory Masters.Material Master.Material Create': '/create/inventory/material',
-  // "Inventory.Inventory Masters.Material Master.Material Create":"/search/inventory/material/view",
-  'Inventory.Inventory Masters.Material Master.Material Search': '/search/inventory/material/view',
-  'Inventory.Inventory Masters.Material Master.Material Update': '/search/inventory/material/update',
-=======
   'Inventory.Inventory Masters.Material Master.Material Create': '/search/inventory/material/view',
 
   'Inventory.Inventory Masters.MaterialType Master.MaterialType.MaterialType': '/search/inventory/materialtype/view',
-  'Inventory.Inventory Masters.Material Store Mapping.Material Store Mapping Search':'/search/inventory/materialstoremapping/view',
-'Inventory.Inventory Masters.Material Type Store Mapping.Material Store Mapping Search':'/search/inventory/materialtypestoremapping/view' ,
+  'Inventory.Inventory Masters.Material Store Mapping.Material Store Mapping Search': '/search/inventory/materialstoremapping/view',
+  'Inventory.Inventory Masters.Material Type Store Mapping.Material Store Mapping Search': '/search/inventory/materialtypestoremapping/view',
 
-   "Inventory.Inventory Masters.Material Master.Material Create":"/search/inventory/material/view",
- // 'Inventory.Inventory Masters.Material Master.Material Search': '/search/inventory/material/view',
- // 'Inventory.Inventory Masters.Material Master.Material Update': '/search/inventory/material/update',
->>>>>>> master:web/ui-app/src/components/common/CustomMenu.js
+  'Inventory.Inventory Masters.Material Master.Material Create': '/search/inventory/material/view',
+  // 'Inventory.Inventory Masters.Material Master.Material Search': '/search/inventory/material/view',
+  // 'Inventory.Inventory Masters.Material Master.Material Update': '/search/inventory/material/update',
 
   'Inventory.Inventory Masters.Store Master.Store Create': '/create/inventory/stores',
   // "Inventory.Inventory Masters.Store Master.Store Create":"/search/inventory/stores/view",
