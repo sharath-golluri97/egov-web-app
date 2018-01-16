@@ -1,0 +1,1 @@
+handleMessageFromIframe = message => {};

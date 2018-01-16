@@ -19,20 +19,19 @@ const styles = {
 
 class ComponentLoader extends Component {
   componentDidMount() {
-    const iframe = this.ifr;
-
-    iframe.onload = () => {
-      const localStorage = Object.assign({}, window.localStorage);
-      iframe.contentWindow.postMessage(localStorage, '*');
-    };
+    this.ifr.addEventListener('load', this.sendMessage);
   }
+
+  sendMessage = () => {
+    const message = Object.assign({}, window.localStorage);
+    this.ifr.contentWindow.postMessage(message, '*');
+  };
 
   getIframeUrl = () => {
     const paramsString = this.props.location.search;
-    const hash = this.props.location.hash;
     const params = new URLSearchParams(paramsString);
     const url = params.get('url');
-    return url + hash;
+    return url;
   };
 
   generateFullUrl = url => {
@@ -44,7 +43,10 @@ class ComponentLoader extends Component {
     if (process.env.NODE_ENV === 'development') {
       base = process.env.REACT_APP_MODULE_URL;
     }
-    url = `${base}${url}`;
+
+    if (url.indexOf('3002') === -1) {
+      url = `${base}${url}`;
+    }
     return url;
   };
 
@@ -53,7 +55,7 @@ class ComponentLoader extends Component {
     const { generateFullUrl } = this;
 
     return (
-      <div id="container" style={styles.container} className="col-lg-12">
+      <div style={styles.container} className="col-lg-12">
         {
           <iframe
             style={styles.iframe}

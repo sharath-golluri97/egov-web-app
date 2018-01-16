@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { HashRouter } from 'react-router-dom';
+import { HashRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './store';
 import { grey300 } from 'material-ui/styles/colors';
@@ -47,9 +47,9 @@ const muiTheme = getMuiTheme(themeObject);
 ReactDOM.render(
   <Provider store={store}>
     <MuiThemeProvider muiTheme={muiTheme}>
-      <HashRouter>
+      <Router>
         <App />
-      </HashRouter>
+      </Router>
     </MuiThemeProvider>
   </Provider>,
   document.getElementById('root')

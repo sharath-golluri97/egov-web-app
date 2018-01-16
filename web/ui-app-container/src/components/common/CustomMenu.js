@@ -432,8 +432,8 @@ let menuConvention = {
 
   'Works Management.Works Masters.Create SOR': '/search/works/scheduleofrate/view',
   //uploader service
-  'Upload.Upload': '/app/v2/uploader/',
-  'Upload.User Jobs': '/app/v2/uploader/#user-jobs',
+  'Upload.Upload': '/app/v2/uploader',
+  'Upload.User Jobs': '/app/v2/uploader/user-jobs',
 };
 
 // add componentLoader to the base url
@@ -469,7 +469,7 @@ const getTenantId = () => {
     return localStorage.getItem('tenantId');
   }
 
-  return window.location.hash.split('#/')[1];
+  return window.location.pathname.split('/')[1];
 };
 
 const getTitle = (tenantInfo, tenantContext) => {

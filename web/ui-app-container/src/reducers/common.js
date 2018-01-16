@@ -1,4 +1,9 @@
-// const actions = JSON.parse(window.localStorage.getItem('actions')) || [];
+let actions = window.localStorage.getItem('actions');
+try {
+  actions = JSON.parse(actions);
+} catch (error) {
+  actions = [];
+}
 
 const defaultState = {
   appName: 'common',
@@ -8,8 +13,7 @@ const defaultState = {
   complaintsLength: 0,
   pleaseWait: false,
   showMenu: false,
-  actionList: [],
-  // actionList: actions,
+  actionList: actions,
   showHome: false,
   tenantInfo: [],
 };
@@ -20,7 +24,6 @@ export default (state = defaultState, action) => {
       return {
         ...state,
         token: action.token || null,
-        appLoaded: true,
         currentUser: action.payload ? action.payload.UserRequest : null,
       };
 

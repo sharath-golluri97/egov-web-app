@@ -34,6 +34,9 @@ function extractErrorMsg(errorObj, localeCode, descriptionCode) {
 }
 
 const sendMessageToParentIframe = (type, message) => {
+  if (type === 'token_expired') {
+    window.localStorage.clear();
+  }
   window.parent.postMessage({ message, type }, '*');
 };
 

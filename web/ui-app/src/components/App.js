@@ -10,6 +10,7 @@ import LoadingIndicator from './common/LoadingIndicator';
 import router from '../router';
 import Api from '../api/api';
 import UiLogo from './framework/components/UiLogo';
+import { login } from '../actions/auth';
 
 class App extends Component {
   constructor(props) {
@@ -17,22 +18,11 @@ class App extends Component {
     window.addEventListener('message', this.handleFrameTasks);
   }
 
-  // handles the message from
   handleFrameTasks = e => {
-    const localStorage = e.data;
-    Object.keys(localStorage).forEach((index, key) => {
-      try {
-        window.localStorage.setItem(index, localStorage[index]);
-      } catch (error) {
-        console.log(error);
-      }
-    });
-
-    const token = e.data.token;
-    const userRequest = e.data.userRequest;
-
-    if (token && userRequest) {
-      this.props.login(token, userRequest);
+    const { origin, data: message } = e;
+    const { authenticated } = this.props;
+    if (!authenticated && message.token && message.userRequest) {
+      this.props.login(origin, message);
     }
   };
 
@@ -121,7 +111,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   onRedirect: () => dispatch({ type: 'REDIRECT' }),
-  login: (token, currentUser) => dispatch({ type: 'LOGIN', token, currentUser }),
+  login: (origin, message) => dispatch(login(origin, message)),
   toggleDailogAndSetText: (dailogState, msg) => {
     dispatch({ type: 'TOGGLE_DAILOG_AND_SET_TEXT', dailogState, msg });
   },

@@ -44,14 +44,13 @@ class App extends Component {
   }
 
   componentWillMount() {
-    let { setTenantInfo, setActionList } = this.props;
+    let { setTenantInfo } = this.props;
 
     if (localStorage.getItem('token') && localStorage.getItem('userRequest')) {
       this.props.onLoad({ UserRequest: JSON.parse(localStorage.getItem('userRequest')) }, localStorage.getItem('token'));
       const params = { code: localStorage.getItem('tenantId') ? localStorage.getItem('tenantId') : 'default' };
       Api.commonApiPost('tenant/v1/tenant/_search', params).then(
         function(res) {
-          setActionList(JSON.parse(localStorage.getItem('actions')));
           setTenantInfo(res.tenant);
         },
         function(err) {
@@ -59,7 +58,7 @@ class App extends Component {
         }
       );
     } else {
-      var hash = window.location.hash.split('/');
+      var hash = window.location.pathname.split('/');
       var urlCode = hash[1];
       if (hash[1].match('/?')) {
         var codeArray = hash[1].split('?');
@@ -95,7 +94,6 @@ class App extends Component {
       isSuccess,
       isError,
       showMenu,
-      actionList,
     } = this.props;
 
     const actions = [<FlatButton label="Ok" primary={true} onTouchTap={this.handleClose} />];
@@ -141,7 +139,6 @@ class App extends Component {
 
 const mapStateToProps = state => ({
   redirectTo: state.common.redirectTo,
-  token: state.common.token,
   isDialogOpen: state.form.dialogOpen,
   msg: state.form.msg,
   isSnackBarOpen: state.form.snackbarOpen,
@@ -150,7 +147,6 @@ const mapStateToProps = state => ({
   isSuccess: state.form.isSuccess,
   isError: state.form.isError,
   showMenu: state.common.showMenu,
-  actionList: state.common.actionList,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -174,9 +170,6 @@ const mapDispatchToProps = dispatch => ({
   },
   setTenantInfo: tenantInfo => {
     dispatch({ type: 'SET_TENANT_INFO', tenantInfo });
-  },
-  setActionList: actionList => {
-    dispatch({ type: 'SET_ACTION_LIST', actionList });
   },
 });
 

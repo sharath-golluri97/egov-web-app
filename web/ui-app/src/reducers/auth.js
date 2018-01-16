@@ -1,7 +1,7 @@
 const intialState = {
   token: null,
   currentUser: null,
-  authenticated: process.env.NODE_ENV === 'development' ? false : true,
+  authenticated: window.self !== window.top ? false : true,
 };
 
 export default (state = intialState, action) => {
@@ -14,6 +14,13 @@ export default (state = intialState, action) => {
         currentUser: action.error ? null : action.currentUser,
       };
 
+    case 'LOGOUT':
+      return {
+        ...state,
+        authenticated: false,
+        token: null,
+        currentUser: null,
+      };
     default:
       return state;
   }

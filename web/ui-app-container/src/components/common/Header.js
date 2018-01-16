@@ -121,7 +121,6 @@ class Header extends Component {
     this.state = {
       open: false,
       menuItems: [],
-      reRender: false,
       tenantContext: {},
     };
   }
@@ -203,7 +202,6 @@ class Header extends Component {
 
 const mapStateToProps = state => ({
   labels: state.labels,
-  appLoaded: state.common.appLoaded,
   appName: state.common.appName,
   currentUser: state.common.currentUser,
   token: state.common.token,
