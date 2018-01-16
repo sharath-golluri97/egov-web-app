@@ -11,6 +11,7 @@ import router from '../router';
 import Api from '../api/api';
 import UiLogo from './framework/components/UiLogo';
 import { login } from '../actions/auth';
+import { setTenantInfo } from '../actions/commons';
 
 class App extends Component {
   constructor(props) {
@@ -23,6 +24,13 @@ class App extends Component {
     const { authenticated } = this.props;
     if (!authenticated && message.token && message.userRequest) {
       this.props.login(origin, message);
+      let { tenantInfo } = message;
+      try {
+        tenantInfo = JSON.parse(tenantInfo);
+      } catch (error) {
+        tenantInfo = [];
+      }
+      this.props.setTenantInfo(tenantInfo);
     }
   };
 
@@ -115,6 +123,7 @@ const mapDispatchToProps = dispatch => ({
   toggleDailogAndSetText: (dailogState, msg) => {
     dispatch({ type: 'TOGGLE_DAILOG_AND_SET_TEXT', dailogState, msg });
   },
+  setTenantInfo: tenantInfo => dispatch(setTenantInfo(tenantInfo)),
   toggleSnackbarAndSetText: (snackbarState, toastMsg, isSuccess, isError) => {
     dispatch({
       type: 'TOGGLE_SNACKBAR_AND_SET_TEXT',

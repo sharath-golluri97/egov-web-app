@@ -9,19 +9,6 @@ import { withRouter } from 'react-router';
 import Api from '../../api/api';
 import CustomMenu from './CustomMenu';
 
-var tenantContent = {
-  details: {
-    panavel: {
-      name: 'Panvel',
-      logo: './temp/images/panvelLogo.jpg',
-    },
-    default: {
-      name: 'My City',
-      logo: './temp/images/yourCity.jpg',
-    },
-  },
-};
-
 const Logo = props => {
   return (
     <div
@@ -90,7 +77,7 @@ const RightIcon = props => {
         </i>
       </div>
     );
-  } else if (window.location.hash === '#/') {
+  } else if (window.location.pathname === '/') {
     return <div />;
   } else {
     return (
@@ -99,7 +86,7 @@ const RightIcon = props => {
           <i
             onClick={() => {
               if (localStorage.getItem('token')) {
-                props.setRoute('/prd/dashboard');
+                props.setRoute('/componentLoader?url=/prd/dashboard');
               } else {
                 props.setRoute('/' + (localStorage.getItem('tenantId') || 'default'));
               }

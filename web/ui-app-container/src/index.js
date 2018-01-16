@@ -11,7 +11,6 @@ import App from './components/App';
 
 import './styles/index.css';
 import './styles/application.css';
-import './styles/vistyle.css';
 import './styles/bootstrap.min.css';
 
 // Needed for onTouchTap

@@ -11,6 +11,7 @@ import Snackbar from 'material-ui/Snackbar';
 import LoadingIndicator from './common/LoadingIndicator';
 import router from '../router';
 import Api from '../api/api';
+import { setTenantInfo } from '../actions/commons';
 
 class App extends Component {
   componentDidMount() {
@@ -169,7 +170,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch({ type: 'SET_LOADING_STATUS', loadingStatus });
   },
   setTenantInfo: tenantInfo => {
-    dispatch({ type: 'SET_TENANT_INFO', tenantInfo });
+    dispatch(setTenantInfo(tenantInfo));
   },
 });
 
