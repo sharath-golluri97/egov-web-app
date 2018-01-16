@@ -4,6 +4,17 @@ var dat = {
     useTimestamp: true,
     objectName: '',
     url: '/inventory-services/openingbalance/_search',
+    preApiCalls: [
+
+     {
+       url: "/inventory-services/stores/_search",
+       jsonPath: "store.code",
+       jsExpForDD: {
+         key: "$..code",
+         value: "$..name",
+       }
+     },
+     ],
     groups: [
       {
         name: 'search',
@@ -47,7 +58,7 @@ var dat = {
           label: 'inventory.status',
         },
       ],
-      values: ['financialYear', 'receivingStore.code', 'mrnNumber', 'mrnStatus'],
+      values: ['financialYear',   { jsonPath: 'receivingStore.code', reduxObject: "store.code", isObj: true, cToN: true }, 'mrnNumber', 'mrnStatus'],
       resultPath: 'materialReceipt',
       rowClickUrlUpdate: '/update/inventory/openingbalance/{id}',
       rowClickUrlView: '/view/inventory/openingbalance/{id}',
@@ -106,6 +117,9 @@ var dat = {
                 },
                 {
                   label: 'inventory.Uom',
+                  style: {
+                    width: '180px',
+                  },
                 },
                 {
                   label: 'inventory.quantity',
@@ -118,12 +132,14 @@ var dat = {
                 },
                 {
                   label: 'inventory.receiptDate',
+               
                 },
                 {
                   label: 'inventory.lotNumber',
                 },
                 {
                   label: 'inventory.expiryDate',
+                 
                 },
               ],
               values: [
@@ -211,6 +227,10 @@ var dat = {
                   isDisabled: false,
                   defaultValue: '',
                   patternErrorMsg: '',
+                  style:{
+                    height:'6px'
+                  }
+                
                 },
                 {
                   name: 'lotNo',
@@ -231,6 +251,9 @@ var dat = {
                   isDisabled: false,
                   defaultValue: '',
                   patternErrorMsg: '',
+                  style: {
+                    height: '6px'
+                  }
                 },
               ],
             },
@@ -411,6 +434,9 @@ var dat = {
                   isDisabled: true,
                   defaultValue: '',
                   patternErrorMsg: '',
+                  style: {
+                    height: '6px'
+                  }
                 },
                 {
                   name: 'lotNo',
@@ -431,6 +457,9 @@ var dat = {
                   isDisabled: false,
                   defaultValue: '',
                   patternErrorMsg: '',
+                  style: {
+                    height: '6px'
+                  }
                 },
               ],
             },

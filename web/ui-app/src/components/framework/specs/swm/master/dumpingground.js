@@ -3,7 +3,6 @@ var dat = {
     numCols: 4,
     useTimestamp: true,
     objectName: 'DumpingGround',
-    //url: '/swm-services/dumpingground/_search',
     url: '/egov-mdms-service/v1/_search',
     groups: [
       {
@@ -66,7 +65,6 @@ var dat = {
     numCols: 3,
     useTimestamp: true,
     objectName: 'MasterMetaData',
-    //idJsonPath: 'MasterMetaData.masterData[0].code',
     idJsonPath: 'MdmsRes.swm.DumpingGround[0].code',
     title: 'swm.create.page.title.dumpingGround',
     groups: [
@@ -154,7 +152,7 @@ var dat = {
             minLength: '',
             patternErrorMsg: '',
             url: '',
-               showHideFields: [
+            showHideFields: [
               {
                 ifValue: true,
                 hide: [],
@@ -286,7 +284,7 @@ var dat = {
             isRequired: true,
             isDisabled: false,
             defaultValue: '',
-            patternErrMsg: 'Invalid Value',
+            patternErrMsg: 'Area of dumping ground is between 1-50(Sq.Km)',
             url: '',
           },
 
@@ -301,7 +299,7 @@ var dat = {
             defaultValue: '',
             maxLength: '5',
             minLength: '1',
-            patternErrMsg: 'Invalid Value',
+            patternErrMsg: 'Capacity of dumping ground (tons / day): between 0 and 50000',
             url: '',
           },
 
@@ -317,7 +315,7 @@ var dat = {
             maxLength: 500,
             minLength: 15,
             fullWidth: true,
-            patternErrMsg: '',
+            patternErrMsg: 'Address shall be of minimum 15 Characters',
             url: '',
           },
         ]
@@ -330,14 +328,14 @@ var dat = {
             name: 'dumpingGroundLatitude',
             jsonPath: 'MasterMetaData.masterData[0].siteDetails.latitude',
             label: 'swm.dumpingGround.create.dumpingGroundLatitude',
-            pattern: '',
+            pattern: '^-{0,1}((90|90.[0]{1,20}|[0-9]|[1-8][0-9])|(89|[0-9]|[1-8][0-9])[.]{1}[0-9]{1,20}){1}$',
             type: 'text',
             isRequired: true,
             isDisabled: false,
             defaultValue: '',
             maxLength: '',
             minLength: '',
-            patternErrMsg: '',
+            patternErrMsg: 'Latitude measurements range from -90° to +90°',
             url: '',
           },
 
@@ -345,14 +343,14 @@ var dat = {
             name: 'dumpingGroundLongitude',
             jsonPath: 'MasterMetaData.masterData[0].siteDetails.longitude',
             label: 'swm.dumpingGround.create.dumpingGroundLongitude',
-            pattern: '',
+            pattern: '^-{0,1}((180|180.[0]{1,20}|[0-9]|([0-9][0-9])|([1][0-7][0-9]))|(179|[0-9]|([0-9][0-9])|([1][0-7][0-9]))[.]{1}[0-9]{1,20}){1}$',
             type: 'text',
             isRequired: true,
             isDisabled: false,
             defaultValue: '',
             maxLength: '',
             minLength: '',
-            patternErrMsg: '',
+            patternErrMsg: 'Longitude measurements range from -180° to +180°',
             url: '',
           },
         ]
@@ -380,34 +378,40 @@ var dat = {
                 show: [],
                 hide: [
                   {
-                    name: 'dumpingGroundProcessingPlant',
+                    name: 'processingSite.code',
                     isGroup: false,
                     isField: true,
                   },
                   {
-                    name: 'dumpingGroundDistance',
+                    name: 'distanceFromProcessingSite',
                     isGroup: false,
                     isField: true,
-                  },
+                  }
                 ],
-              },{
+              },
+
+              {
                 ifValue: false,
                 hide: [],
                 show: [
                   {
-                    name: 'dumpingGroundProcessingPlant',
+                    name: 'processingSite.code',
                     isGroup: false,
                     isField: true,
                   },
                   {
-                    name: 'dumpingGroundDistance',
+                    name: 'distanceFromProcessingSite',
                     isGroup: false,
                     isField: true,
                   },
                 ],
               },
-            ],
+            ]
           },
+                // hide: [
+                  
+                // ],
+              
           {
             name: 'dummy',
             jsonPath: '',
@@ -451,13 +455,14 @@ var dat = {
             url: '',
           },
           {
-            name: 'dumpingGroundProcessingPlant',
+            name: 'processingSite.code',
             jsonPath: 'MasterMetaData.masterData[0].processingSite.code',
             label: 'swm.dumpingGround.create.dumpingGroundProcessingPlant',
             pattern: '',
             type: 'singleValueList',
             isRequired: true,
             isDisabled: false,
+            hide: false,
             defaultValue: '',
             maxLength: '',
             minLength: '',
@@ -465,13 +470,14 @@ var dat = {
             url: '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=ProcessingSite|$..ProcessingSite.*.code|$..ProcessingSite.*.name'
           },
           {
-            name: 'dumpingGroundDistance',
+            name: 'distanceFromProcessingSite',
             jsonPath: 'MasterMetaData.masterData[0].distanceFromProcessingSite',
             label: 'swm.dumpingGround.create.distance',
             pattern: '',
             type: 'text',
             isRequired: true,
             isDisabled: false,
+            hide: false,
             defaultValue: '',
             maxLength: '',
             minLength: '',
@@ -545,6 +551,7 @@ var dat = {
       }
     ],
     url: 'egov-mdms-create/v1/_create',
+    isMDMSScreen: true,
     tenantIdRequired: true,
   },
   'swm.view': {
@@ -846,27 +853,27 @@ var dat = {
                 ],
               },
             ],*/
-            showHideFields: [
-              {
-                ifValue: true,
-                show: [],
-                hide: [
-                  {
-                    name: 'dumpingGroundProcessingPlant',
-                    isGroup: false,
-                    isField: true,
-                  },
-                  {
-                    name: 'dumpingGroundDistance',
-                    isGroup: false,
-                    isField: true,
-                  },
-                ],
-              },
-            ],
+            // showHideFields: [
+            //   {
+            //     ifValue: true,
+            //     show: [],
+            //     hide: [
+            //       {
+            //         name: 'dumpingGroundProcessingPlant',
+            //         isGroup: false,
+            //         isField: true,
+            //       },
+            //       {
+            //         name: 'dumpingGroundDistance',
+            //         isGroup: false,
+            //         isField: true,
+            //       },
+            //     ],
+            //   },
+            // ],
           },
           {
-            name: 'dumpingGroundProcessingPlant',
+            name: 'processingSite.code',
             jsonPath: 'MdmsRes.swm.DumpingGround[0].processingSite.code',
             label: 'swm.dumpingGround.create.dumpingGroundProcessingPlant',
             pattern: '',
@@ -881,7 +888,7 @@ var dat = {
             url: '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=ProcessingSite|$..ProcessingSite.*.code|$..ProcessingSite.*.name',
           },
           {
-            name: 'dumpingGroundDistance',
+            name: 'distanceFromProcessingSite',
             jsonPath: 'MdmsRes.swm.DumpingGround[0].distanceFromProcessingSite',
             label: 'swm.dumpingGround.create.distance',
             pattern: '',
@@ -924,45 +931,6 @@ var dat = {
           },
         ]
       },
-
-      /*{
-        name: 'HideGroup',
-        hide: true,
-        fields: [
-            {
-              name: 'tenantId',
-              jsonPath: 'MasterMetaData.masterData[0].tenantId',
-              defaultValue: localStorage.getItem("tenantId"),
-              isRequired : true,
-              type: 'text',
-              hide: true
-            },
-            {
-              name: 'moduleName',
-              jsonPath: 'MasterMetaData.moduleName',
-              defaultValue: 'swm',
-              isRequired : true,
-              type: 'text',
-              hide: true
-            },
-            {
-              name: 'masterName',
-              jsonPath: 'MasterMetaData.masterName',
-              defaultValue: 'DumpingGround',
-              isRequired : true,
-              type: 'text',
-              hide: true
-            },
-            {
-              name: 'code',
-              jsonPath: 'MasterMetaData.masterData[0].code',
-              defaultValue: 'DumpingGround-' + new Date().getTime(),
-              isRequired : true,
-              type: 'text',
-              hide: true
-            },
-        ]
-      }*/
     ],
     tenantIdRequired: true,
     url: '/egov-mdms-service/v1/_search?code={code}',
@@ -1189,7 +1157,7 @@ var dat = {
             defaultValue: '',
             maxLength: '',
             minLength: '',
-            patternErrMsg: 'Invalid Value',
+            patternErrMsg: 'Area of dumping ground is between 1-50(Sq.Km)',
             url: '',
           },
 
@@ -1202,7 +1170,7 @@ var dat = {
             isRequired: true,
             isDisabled: false,
             defaultValue: '',
-            patternErrMsg: 'Invalid Value',
+            patternErrMsg: 'Capacity of dumping ground (tons / day): between 0 and 50000',
             url: '',
           },
           {
@@ -1217,7 +1185,7 @@ var dat = {
             maxLength: 500,
             minLength: 15,
             fullWidth: true,
-            patternErrMsg: '',
+            patternErrMsg: 'Address shall be of minimum 15 Characters',
             url: '',
           },
         ]
@@ -1230,14 +1198,14 @@ var dat = {
             name: 'dumpingGroundLatitude',
             jsonPath: 'MasterMetaData.masterData[0].siteDetails.latitude',
             label: 'swm.dumpingGround.create.dumpingGroundLatitude',
-            pattern: '',
+            pattern: '^-{0,1}((90|90.[0]{1,20}|[0-9]|[1-8][0-9])|(89|[0-9]|[1-8][0-9])[.]{1}[0-9]{1,20}){1}$',
             type: 'text',
             isRequired: true,
             isDisabled: false,
             defaultValue: '',
             maxLength: '',
             minLength: '',
-            patternErrMsg: '',
+            patternErrMsg: 'Latitude measurements range from -90° to +90°',
             url: '',
           },
 
@@ -1245,14 +1213,14 @@ var dat = {
             name: 'dumpingGroundLongitude',
             jsonPath: 'MasterMetaData.masterData[0].siteDetails.longitude',
             label: 'swm.dumpingGround.create.dumpingGroundLongitude',
-            pattern: '',
+            pattern: '^-{0,1}((180|180.[0]{1,20}|[0-9]|([0-9][0-9])|([1][0-7][0-9]))|(179|[0-9]|([0-9][0-9])|([1][0-7][0-9]))[.]{1}[0-9]{1,20}){1}$',
             type: 'text',
             isRequired: true,
             isDisabled: false,
             defaultValue: '',
             maxLength: '',
             minLength: '',
-            patternErrMsg: '',
+            patternErrMsg: 'Longitude measurements range from -180° to +180°',
             url: '',
           },
         ]
@@ -1279,12 +1247,12 @@ var dat = {
                 show: [],
                 hide: [
                   {
-                    name: 'dumpingGroundProcessingPlant',
+                    name: 'processingSite.code',
                     isGroup: false,
                     isField: true,
                   },
                   {
-                    name: 'dumpingGroundDistance',
+                    name: 'distanceFromProcessingSite',
                     isGroup: false,
                     isField: true,
                   },
@@ -1294,12 +1262,12 @@ var dat = {
                 hide: [],
                 show: [
                   {
-                    name: 'dumpingGroundProcessingPlant',
+                    name: 'processingSite.code',
                     isGroup: false,
                     isField: true,
                   },
                   {
-                    name: 'dumpingGroundDistance',
+                    name: 'distanceFromProcessingSite',
                     isGroup: false,
                     isField: true,
                   },
@@ -1350,7 +1318,7 @@ var dat = {
             url: '',
           },
           {
-            name: 'dumpingGroundProcessingPlant',
+            name: 'processingSite.code',
             jsonPath: 'MasterMetaData.masterData[0].processingSite.code',
             label: 'swm.dumpingGround.create.dumpingGroundProcessingPlant',
             pattern: '',
@@ -1365,7 +1333,7 @@ var dat = {
           },
 
           {
-            name: 'dumpingGroundDistance',
+            name: 'distanceFromProcessingSite',
             jsonPath: 'MasterMetaData.masterData[0].distanceFromProcessingSite',
             label: 'swm.dumpingGround.create.distance',
             pattern: '',

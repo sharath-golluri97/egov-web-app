@@ -15,12 +15,12 @@ var dat = {
         },
         {
           url:"/hr-masters/designations/_search",
-          jsonPath:"designation.code",
+          jsonPath:"designation.codeDes",
           jsExpForDD:{
             key:"$..code",
             value:"$..name",
           }
-        }
+        },
       ],
       numCols: 4,
       useTimestamp: true,
@@ -32,9 +32,9 @@ var dat = {
           label: 'swm.shift.create.group.title.ShiftSelection',
           fields: [
             {
-              name: 'shiftType',
-              jsonPath: 'shiftType.code',
-              label: 'swm.Shift.create.shiftType',
+              name: 'shift',
+              jsonPath: 'code',
+              label: 'swm.Shift.create.shift',
               pattern: '',
               type: 'autoCompelete',
               isRequired: false,
@@ -42,13 +42,28 @@ var dat = {
               maxLength: 128,
               minLength: 1,
               patternErrorMsg: '',
+              url: '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=Shift|$..Shift.*.code|$..Shift.*.name',
+            },
+            {
+              name: 'shiftType',
+              jsonPath: 'shiftType.code',
+              label: 'swm.Shift.create.shiftType',
+              pattern: '',
+              type: 'singleValueList',
+              isRequired: false,
+              isDisabled: false,
+              maxLength: 12,
+              minLength: 6,
               url: '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=ShiftType|$..ShiftType.*.code|$..ShiftType.*.name',
-            }
+            },
           ]
         },
       ],
       result: {
         header: [
+          {
+            label: 'swm.Shift.create.shift',
+          },
           {
             label: 'swm.Shift.create.shiftType',
           },
@@ -65,8 +80,9 @@ var dat = {
           },
         ],
         values: [
+          'name',
           {jsonPath:'shiftType.code',reduxObject:"shiftType.codeTwo",isObj:true,cToN:true},
-          {jsonPath:'designation.code',reduxObject:"designation.code",isObj:true,cToN:true},
+          {jsonPath:'designation.code',reduxObject:"designation.codeDes",isObj:true,cToN:true},
           'shiftStartTime',
           'shiftEndTime',
         ],
@@ -80,13 +96,24 @@ var dat = {
       numCols: 3,
       useTimestamp: true,
       objectName: 'MasterMetaData',
-      idJsonPath: 'MasterMetaData.masterData[0].code',
+      idJsonPath: 'MdmsRes.swm.Shift[0].code',
       title: 'swm.create.page.title.shiftmasters',
       groups: [
         {
           name:'ShiftSelection',
           label: 'swm.shift.create.group.title.ShiftSelection',
           fields: [
+            {
+              name: 'shiftName',
+              jsonPath: 'MasterMetaData.masterData[0].name',
+              label: 'swm.Shift.create.shift',
+              pattern: '',
+              type: 'text',
+              isRequired: true,
+              isDisabled: false,
+              maxLength: 100,
+              minLength: 1,
+            },
             {
               name: 'shiftType',
               jsonPath: 'MasterMetaData.masterData[0].shiftType.code',
@@ -124,15 +151,7 @@ var dat = {
               maxLength: 128,
               minLength: 1,
               patternErrorMsg: '',
-              url: '/hr-masters/designations/_search?tenantId=default|$..id|$..name',
-            },
-            {
-              name: 'code',
-              jsonPath: 'MasterMetaData.masterData[0].code',
-              defaultValue: 'Shift-' + new Date().getTime(),
-              isRequired : true,
-              type: 'text',
-              hide: true,
+              url: '/hr-masters/designations/_search?tenantId=default|$..code|$..name',
             },
             {
               name: 'tenantId',
@@ -155,6 +174,21 @@ var dat = {
               defaultValue: 'Shift',
               hide: true
             },
+            
+          ]
+        },
+        {
+          name: 'HideGroup',
+          hide: true,
+          fields: [
+            {
+              name: 'code',
+              jsonPath: 'MasterMetaData.masterData[0].code',
+              defaultValue: 'Shift-' + new Date().getTime(),
+              isRequired : true,
+              type: 'text',
+              hide: true,
+            }
           ]
         },
         {
@@ -251,7 +285,8 @@ var dat = {
         },
       ],
       url: '/egov-mdms-create/v1/_create',
-      tenantIdRequired: true
+      tenantIdRequired: true,
+      isMDMSScreen:true
     },
     'swm.view': {
       numCols: 4,
@@ -263,6 +298,17 @@ var dat = {
           name:'ShiftSelection',
           label: 'swm.shift.create.group.title.ShiftSelection',
           fields: [
+            {
+              name: 'shiftName',
+              jsonPath: 'MdmsRes.swm.Shift[0].name',
+              label: 'swm.Shift.create.shift',
+              pattern: '',
+              type: 'text',
+              isRequired: true,
+              isDisabled: false,
+              maxLength: 100,
+              minLength: 1,
+            },
             {
               name: 'shiftType',
               jsonPath: 'MdmsRes.swm.Shift[0].shiftType.code',
@@ -300,7 +346,7 @@ var dat = {
               maxLength: 128,
               minLength: 1,
               patternErrorMsg: '',
-              url: '/hr-masters/designations/_search?tenantId=default|$..id|$..name',
+              url: '/hr-masters/designations/_search?tenantId=default|$..code|$..name',
             },
             // {
             //   name: 'code',
@@ -436,6 +482,17 @@ var dat = {
           label: 'swm.shift.create.group.title.ShiftSelection',
           fields: [
             {
+              name: 'shiftName',
+              jsonPath: 'MasterMetaData.masterData[0].name',
+              label: 'swm.Shift.create.shift',
+              pattern: '',
+              type: 'text',
+              isRequired: true,
+              isDisabled: false,
+              maxLength: 100,
+              minLength: 1,
+            },
+            {
               name: 'shiftType',
               jsonPath: 'MasterMetaData.masterData[0].shiftType.code',
               label: 'swm.Shift.create.shiftType',
@@ -472,7 +529,7 @@ var dat = {
               maxLength: 128,
               minLength: 1,
               patternErrorMsg: '',
-              url: '/hr-masters/designations/_search?tenantId=default|$..id|$..name',
+              url: '/hr-masters/designations/_search?tenantId=default|$..code|$..name',
             },
             // {
             //   name: 'code',
@@ -503,6 +560,22 @@ var dat = {
             //   defaultValue: 'Shift',
             //   hide: true
             // },
+
+           
+          ]
+        },
+        {
+          name: 'HideGroup',
+          hide: true,
+          fields: [
+            {
+              name: 'code',
+              jsonPath: 'MasterMetaData.masterData[0].code',
+              defaultValue: 'Shift-' + new Date().getTime(),
+              isRequired : true,
+              type: 'text',
+              hide: true,
+            }
           ]
         },
         {
@@ -515,7 +588,6 @@ var dat = {
               label: 'swm.Shift.create.shiftStartTime',
               pattern: '',
               type: 'timePicker',
-              reset:true,
               isDisabled: false,
               isRequired: true,
               maxLength: 12,
@@ -529,7 +601,7 @@ var dat = {
               label: 'swm.Shift.create.shiftEndTime',
               pattern: '',
               type: 'timePicker',
-              reset:true,
+
               isDisabled: false,
               isRequired: true,
               patternErrorMsg: '',
@@ -541,7 +613,6 @@ var dat = {
               label: 'swm.Shift.create.lunchStartTime',
               pattern: '',
               type: 'timePicker',
-              reset:true,
               isDisabled: false,
               isRequired: true,
               maxLength: 12,
@@ -555,7 +626,6 @@ var dat = {
               label: 'swm.Shift.create.lunchEndTime',
               pattern: '',
               type: 'timePicker',
-              reset:true,
               isRequired: true,
               isDisabled: false,
               patternErrorMsg: '',
@@ -567,7 +637,6 @@ var dat = {
               label: 'swm.Shift.create.graceTimeFrom',
               pattern: '',
               type: 'timePicker',
-              reset:true,
               isDisabled: false,
               isRequired: true,
               maxLength: 12,
@@ -580,8 +649,7 @@ var dat = {
               jsonPath: 'MasterMetaData.masterData[0].graceTimeTo',
               label: 'swm.Shift.create.graceTimeTo',
               pattern: '',
-              type: 'timePicker',
-              reset:true,
+              type: 'timePicker', 
               isRequired: true,
               isDisabled: false,
               patternErrorMsg: '',

@@ -2,6 +2,7 @@ var dat = {
     'inventory.search': {
         numCols: 3,
         useTimestamp: true,
+        title:'inventory.materialType.master.title',
         objectName: 'MaterialType',
         url: '/egov-mdms-service/v1/_get?&moduleName=inventory&masterName=MaterialType',
         groups: [
@@ -20,7 +21,7 @@ var dat = {
                         defaultValue: '',
                         maxLength: 100,
                         minLength: 1,
-                    url: "/egov-mdms-service/v1/_get?&moduleName=inventory&masterName=MaterialType|$..code|$..name",
+                        url: "/egov-mdms-service/v1/_get?&moduleName=inventory&masterName=MaterialType|$..code|$..name",
 
                     },
                     {
@@ -52,7 +53,24 @@ var dat = {
             },
         ],
         result: {
+            disableRowClick: true,
+            isAction: true,
+            actionItems: [
+                {
+                    label: 'Map to Store',
+                    url: '/update/inventory/materialtypestoremapping/',
+                }
+            ],
+
             header: [
+                {
+                    label: 'legal.search.result.actionLabels',
+                    isChecked: true,
+                    checkedItem: {
+                        jsonPath: 'checkedRow',
+                        label: '',
+                    },
+                },
                 {
                     label: 'inventory.materialType.name',
                 },
@@ -67,6 +85,7 @@ var dat = {
                 },
             ],
             values: [
+                'code',
                 'name',
                 
                 'description',
@@ -76,6 +95,7 @@ var dat = {
                 'active',
             ],
             resultPath: 'MdmsRes.inventory.MaterialType',
+            resultIdKey: 'code',
             rowClickUrlUpdate: '/update/inventory/materialtype/{code}',
             rowClickUrlView: '/view/inventory/materialtype/{code}',
             isMasterScreen: true,
@@ -86,7 +106,7 @@ var dat = {
         numCols: 4,
         useTimestamp: true,
         url: '/egov-mdms-create/v1/_create',
-        title: 'inventory.materialType.title',
+        title: 'inventory.materialType.master.title',
         idJsonPath: 'inventory.MaterialType[0].code',
         moduleName: 'inventory',
         masterName: 'MaterialType',
@@ -212,7 +232,7 @@ var dat = {
     'inventory.view': {
         numCols: 4,
         useTimestamp: true,
-        title: 'inventory.material.title',
+        title: 'inventory.materialType.master.title',
         // moduleName: 'inventory',
         // masterName: 'MaterialType',
         objectName: 'MaterialType',
@@ -287,7 +307,7 @@ var dat = {
         numCols: 4,
         useTimestamp: true,
         url: '/egov-mdms-create/v1/_update',
-        title: 'inventory.materialType.title',
+        title: 'inventory.materialType.master.title',
         searchUrl: '/egov-mdms-service/v1/_search?code={code}',
         idJsonPath: 'MasterMetaData.masterData[0].code',
         objectName: 'MaterialType',

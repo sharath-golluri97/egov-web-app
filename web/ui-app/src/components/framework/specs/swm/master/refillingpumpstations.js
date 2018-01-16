@@ -66,7 +66,12 @@ var dat = {
           label: 'swm.collectionpoints.create.colony',
         },
       ],
-      values: ['name', 'typeOfPump.name', 'typeOfFuel.name', 'quantity', 'location.name'],
+      values: [
+      'name',
+      'typeOfPump.name', 
+      'fuelTypes',
+      'quantity',
+      'location.name'],
       resultPath: 'refillingPumpStations',
       rowClickUrlUpdate: '/update/swm/refillingpumpstations/{code}',
       rowClickUrlView: '/view/swm/refillingpumpstations/{code}',
@@ -139,35 +144,22 @@ var dat = {
         name: 'FuelDetails',
         label: 'swm.refillingpumpstations.create.group.title.FuelDetails',
         fields: [
-          // {
-          //   name: 'name',
-          //   jsonPath: 'refillingPumpStations[0].typeOfFuel[0].code',
-          //   label: 'swm.refillingpumpstations.typeOfFuel',
-          //   type: 'multiValueList',
-          //   isRequired: true,
-          //   isDisabled: false,
-          //   maxLength: 128,
-          //   minLength: 1,
-          //   patternErrorMsg: '',
-          //   url: '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=FuelType|$..code|$..name',
-          //   hasATOAATransform: true,
-          //   aATransformInfo: {
-          //     to: 'refillingPumpStations[0].typeOfFuel',
-          //     key: 'code'
-          //   }
-           
-          // },
           {
             name: 'name',
-            jsonPath: 'refillingPumpStations[0].typeOfFuel.code',
+            jsonPath: 'refillingPumpStations[0].fuelTypes[0].code',
             label: 'swm.refillingpumpstations.typeOfFuel',
-            type: 'singleValueList',
+            type: 'multiValueList',
             isRequired: true,
             isDisabled: false,
             maxLength: 128,
             minLength: 1,
             patternErrorMsg: '',
-            url: '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=FuelType|$..code|$..name'
+            url: '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=FuelType|$..code|$..name',
+            hasATOAATransform: true,
+            aATransformInfo: {
+              to: 'refillingPumpStations[0].fuelTypes',
+              key: 'code'
+            }
           },
           {
             name: 'name',
@@ -253,14 +245,20 @@ var dat = {
         fields: [
           {
             name: 'name',
-            jsonPath: 'refillingPumpStations[0].typeOfFuel.name',
+            jsonPath: 'refillingPumpStations[0].fuelTypes',
             label: 'swm.refillingpumpstations.typeOfFuel',
-            type: 'text',
+            type: 'multiValueList',
             isRequired: true,
             isDisabled: false,
             maxLength: 128,
             minLength: 1,
             patternErrorMsg: '',
+            url: '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=FuelType|$..code|$..name',
+            hasATOAATransform: true,
+            aATransformInfo: {
+              to: 'refillingPumpStations[0].fuelTypes',
+              key: 'code'
+            },
           },
           {
             name: 'name',
@@ -347,15 +345,20 @@ var dat = {
         fields: [
           {
             name: 'name',
-            jsonPath: 'refillingPumpStations[0].typeOfFuel.code',
+            jsonPath: 'refillingPumpStations[0].fuelTypes',
             label: 'swm.refillingpumpstations.typeOfFuel',
-            type: 'singleValueList',
+            type: 'multiValueList',
             isRequired: true,
             isDisabled: false,
             maxLength: 128,
             minLength: 1,
             patternErrorMsg: '',
-            url: '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=FuelType|$..code|$..name'
+            url: '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=FuelType|$..code|$..name',
+            hasATOAATransform: true,
+            aATransformInfo: {
+              to: 'refillingPumpStations[0].fuelTypes',
+              key: 'code'
+            }
           },
           {
             name: 'name',
