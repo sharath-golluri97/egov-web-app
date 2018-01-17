@@ -22,6 +22,7 @@ export const localization_MR_Data = {
   'ui.framework.required': 'आवश्यक',
   'core.lbl.varify': 'पडताळा',
   'login.error.msg': 'Please check your username and password',
+  'pgr.msg.createaccount.avail.onlineservices': ' आमच्या ऑनलाइन सेवांचा लाभ घेण्यासाठी तक्रार करा',
   'ui.framework.patternMessage': ' वरील नमुने जुळवा',
   'pgr.lbl.apply.service': ' तक्रार नोंदवा',
   'pgr.lbl.apply.servicetag': ' तक्रार नोंदवा',
