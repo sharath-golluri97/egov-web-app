@@ -444,10 +444,10 @@ let menuConvention = {
 };
 
 // add componentLoader to the base url
-menuConvention = Object.keys(menuConvention).reduce((menu, menuName) => {
-  menu[menuName] = `/loadComponent?url=${menuConvention[menuName]}`;
-  return menu;
-}, {});
+// menuConvention = Object.keys(menuConvention).reduce((menu, menuName) => {
+//   menu[menuName] = `/loadComponent?url=${menuConvention[menuName]}`;
+//   return menu;
+// }, {});
 
 const style = {
   display: 'inline-block',

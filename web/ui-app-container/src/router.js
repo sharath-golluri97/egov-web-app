@@ -15,12 +15,12 @@ const Main = () => {
   return (
     <main style={{ marginBottom: '50px' }}>
       <Switch>
-        <Route exact path={'/loadComponent'} component={ComponentLoader} />
         <Route exact path={'/:tenantId?'} component={Login} />
         <Route exact path={'/pgr/createGrievance'} component={grievanceCreate} />
         <Route exact path={'/pgr/viewGrievance/:srn'} component={grievanceView} />
         <Route exact path={'/pgr/searchGrievance'} component={grievanceSearch} />
         <Route exact path={'/service/request/view/:srn/:isCertificate'} component={CertificateView} />;
+        <Route component={ComponentLoader} />
       </Switch>
     </main>
   );

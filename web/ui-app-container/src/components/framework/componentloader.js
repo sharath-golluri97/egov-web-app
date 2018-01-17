@@ -28,21 +28,13 @@ class ComponentLoader extends Component {
   };
 
   getIframeUrl = () => {
-    const paramsString = this.props.location.search;
-    const params = new URLSearchParams(paramsString);
-    const url = params.get('url');
-    return url;
-  };
-
-  generateFullUrl = url => {
-    let base = window.localStorage.baseUrl;
-
-    base =
-      typeof base === 'undefined'
+    const base =
+      typeof window.localStorage.baseUrl === 'undefined'
         ? typeof process.env.REACT_APP_MODULE_URL === 'undefined' ? window.location.origin : process.env.REACT_APP_MODULE_URL
         : base;
 
-    return `${base}${url}`;
+    const path = window.location.pathname;
+    return `${base}${path}`;
   };
 
   render() {
@@ -57,7 +49,7 @@ class ComponentLoader extends Component {
             this.ifr = f;
           }}
           frameBorder="0"
-          src={generateFullUrl(url)}
+          src={url}
           allowFullScreen
         />
       </div>

@@ -50,14 +50,14 @@ export default (state = defaultState, action) => {
     case 'SETTINGS_SAVED':
       return {
         ...state,
-        redirectTo: action.error ? null : '/loadComponent?url=/prd/dashboard',
+        redirectTo: action.error ? null : '/prd/dashboard',
         currentUser: action.error ? null : action.payload.UserRequest,
       };
     case 'LOGIN':
     case 'REGISTER':
       return {
         ...state,
-        redirectTo: action.error || action.doNotNavigate ? null : '/loadComponent?url=/prd/dashboard',
+        redirectTo: action.error || action.doNotNavigate ? null : '/prd/dashboard',
         token: action.error ? null : action.payload.access_token,
         currentUser: action.error ? null : action.payload.UserRequest,
       };
