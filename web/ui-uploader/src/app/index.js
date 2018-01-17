@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import Main from "./Main";
-import { loginUser, userLoginSuccess } from "./actions";
+import { login } from "./actions";
 
 // component
 const App = () => {
@@ -12,25 +12,17 @@ const App = () => {
   );
 };
 
+// container
 class AppContainer extends Component {
-  componentDidMount() {
-    // this listener is setup when the parent application sends a message via postMessage API
+  constructor(props) {
+    super(props);
     window.addEventListener("message", this.handleFrameTasks);
-
-    if (process.env.NODE_ENV === "development") {
-      const username = process.env.REACT_APP_USERNAME;
-      const password = process.env.REACT_APP_PASSWORD;
-      this.props.loginUser(username, password);
-    }
   }
 
   handleFrameTasks = e => {
-    // if the iframe and the origin are in different domains this is important
-    if (e.origin !== window.origin) {
-      const token = e.token;
-      const tenantId = e.tenantId;
-      const userInfo = e.userInfo;
-      //persist these in the localstorage
+    const { origin, data: message } = e;
+    if (origin !== window.origin && message.token && message.userRequest) {
+      this.props.login(message);
     }
   };
 
@@ -45,8 +37,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  loginUser: (username, password) => dispatch(loginUser(username, password)),
-  userLoginSuccess: () => dispatch(userLoginSuccess())
+  login: message => dispatch(login(message))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AppContainer);
