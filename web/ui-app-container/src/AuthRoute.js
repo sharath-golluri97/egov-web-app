@@ -6,7 +6,7 @@ const isAuthenticated = () => {
   return window.localStorage.getItem('token') ? true : false;
 };
 
-const PRIVATE_ROOT = 'componentLoader?url=/prd/dashboard';
+const PRIVATE_ROOT = '/componentLoader?url=/prd/dashboard';
 const PUBLIC_ROOT = '/';
 
 const AuthRoute = ({ component, ...props }) => {
