@@ -65,7 +65,7 @@ const RightIcon = props => {
         <i
           onClick={e => {
             if (localStorage.getItem('token')) {
-              props.setRoute('/prd/dashboard');
+              props.setRoute('/componentLoader?url=/prd/dashboard');
             } else {
               props.setRoute('/' + (localStorage.getItem('tenantId') || 'default'));
             }

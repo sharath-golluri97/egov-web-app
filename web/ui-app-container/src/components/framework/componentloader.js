@@ -51,17 +51,15 @@ class ComponentLoader extends Component {
 
     return (
       <div style={styles.container} className="col-lg-12">
-        {
-          <iframe
-            style={styles.iframe}
-            ref={f => {
-              this.ifr = f;
-            }}
-            frameBorder="0"
-            src={generateFullUrl(url)}
-            allowFullScreen
-          />
-        }
+        <iframe
+          style={styles.iframe}
+          ref={f => {
+            this.ifr = f;
+          }}
+          frameBorder="0"
+          src={generateFullUrl(url)}
+          allowFullScreen
+        />
       </div>
     );
   }

@@ -18,6 +18,8 @@ const defaultState = {
   tenantInfo: [],
 };
 
+const tenantId = window.localStorage.getItem('tenantId') || 'default';
+
 export default (state = defaultState, action) => {
   switch (action.type) {
     case 'APP_LOAD':
@@ -35,9 +37,9 @@ export default (state = defaultState, action) => {
     case 'REDIRECT':
       return { ...state, redirectTo: null };
     case 'LOGOUT':
-      window.location.replace('/');
       return {
         ...state,
+        redirectTo: '/' + tenantId,
         token: null,
         currentUser: null,
         showMenu: false,
@@ -48,7 +50,7 @@ export default (state = defaultState, action) => {
     case 'SETTINGS_SAVED':
       return {
         ...state,
-        redirectTo: action.error ? null : '/prd/dashboard',
+        redirectTo: action.error ? null : '/loadComponent?url=/prd/dashboard',
         currentUser: action.error ? null : action.payload.UserRequest,
       };
     case 'LOGIN':
