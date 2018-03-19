@@ -1,13 +1,13 @@
-import { setRoute } from '../actions/framework';
-import _ from 'lodash';
+import { setRoute } from "../actions/framework";
+import _ from "lodash";
 
-const framework = store => next => action => {
+const framework = (store) => (next) => (action) => {
   const { type } = action;
   const dispatch = store.dispatch;
   const state = store.getState();
 
   switch (type) {
-    case 'SUBMIT_FORM_DATA_SUCCESS':
+    case "SUBMIT_FORM_DATA_SUCCESS":
       const { response } = action;
       const { framework } = state;
       const { specs, moduleName, moduleMaster } = framework;

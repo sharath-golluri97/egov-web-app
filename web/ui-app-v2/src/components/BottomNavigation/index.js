@@ -1,23 +1,22 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { BottomNavigation as MaterialUiBottomNavigation, BottomNavigationItem } from 'material-ui/BottomNavigation';
+import React from "react";
+import PropTypes from "prop-types";
+import { BottomNavigation as MaterialUiBottomNavigation, BottomNavigationItem } from "material-ui/BottomNavigation";
+import "./index.css";
 
-const BottomNavigation = ({ style, options, handleChange, selectedIndex }) => {
-  const renderNavigationOptions = () => {
-    return options.map((option, index) => (
+const BottomNavigation = ({ className, style = {}, options, handleChange, selectedIndex }) => (
+  <MaterialUiBottomNavigation className={`${className} bottom-navigation`} style={style} selectedIndex={selectedIndex}>
+    {options.map((item, index) => (
       <BottomNavigationItem
         key={index}
-        label={option.label}
-        icon={option.icon}
+        label={item.label}
+        icon={item.icon}
         onClick={() => {
-          handleChange(index, option.route);
+          handleChange(index, item.route);
         }}
       />
-    ));
-  };
-
-  return <MaterialUiBottomNavigation selectedIndex={selectedIndex}>{renderNavigationOptions()}</MaterialUiBottomNavigation>;
-};
+    ))}
+  </MaterialUiBottomNavigation>
+);
 
 BottomNavigation.propTypes = {
   style: PropTypes.object,
@@ -25,7 +24,7 @@ BottomNavigation.propTypes = {
   options: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string.isRequired,
-      icon: PropTypes.any,
+      icon: PropTypes.node,
       route: PropTypes.string.isRequired,
     })
   ).isRequired,

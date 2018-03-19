@@ -1,47 +1,40 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import SelectField from 'material-ui/SelectField';
-import MenuItem from 'material-ui/MenuItem';
-import './style.css';
+import React from "react";
+import PropTypes from "prop-types";
+import SelectField from "material-ui/SelectField";
+import MenuItem from "material-ui/MenuItem";
+import "./index.css";
 
-const DropDownUi = ({ value, field, name, dropDownData = [], selected, onChange, style }) => {
-  const labelProperty = {
-    floatingLabelFixed: true,
-    floatingLabelStyle: {
-      color: '#696969',
-      fontSize: '20px',
-      whiteSpace: 'nowrap',
-    },
-    floatingLabelText: (
-      <span>
-        {field.label} <span style={{ color: '#FF0000' }}>{field.isRequired ? ' *' : ''}</span>
-      </span>
-    ),
-    hintText: '-- Please Select --',
-  };
+const floatingLabelStyle = {
+  top: 28,
+  color: "#6090ae",
+  fontSize: "16px",
+  fontWeight: 500,
+};
 
+const DropDownUi = ({ value, fullWidth = false, labelStyle, dropDownData, children, selected, onChange, id, style = {}, floatingLabelText }) => {
   const renderSelectMenuItems = () => {
     return dropDownData.map((option, index) => {
-      return <MenuItem key={index} value={option.key} primaryText={option.value} />;
+      return <MenuItem key={index} value={option.value} primaryText={option.label} />;
     });
   };
 
   return (
     <SelectField
-      className="custom-form-control-for-select"
+      className="dropdown"
+      id={id}
       style={style}
-      floatingLabelStyle={{
-        color: '#696969',
-        fontSize: '20px',
-        whiteSpace: 'nowrap',
-      }}
+      fullWidth={fullWidth}
       dropDownMenuProps={{
-        targetOrigin: { horizontal: 'left', vertical: 'bottom' },
+        targetOrigin: { horizontal: "left", vertical: "bottom" },
       }}
-      labelStyle={{ color: '#5F5C57' }}
-      value={value}
+      labelStyle={labelStyle}
       onChange={onChange}
-      {...labelProperty}
+      selected="Select"
+      value={value}
+      floatingLabelText={floatingLabelText}
+      floatingLabelStyle={floatingLabelStyle}
+      iconStyle={{ fill: "#484848" }}
+      underlineStyle={{ borderBottom: "none" }}
     >
       {renderSelectMenuItems()}
     </SelectField>
@@ -49,8 +42,9 @@ const DropDownUi = ({ value, field, name, dropDownData = [], selected, onChange,
 };
 
 DropDownUi.propTypes = {
+  fullWidth: PropTypes.bool,
   label: PropTypes.string,
-  handleChange: PropTypes.func,
+  onChange: PropTypes.func,
   selected: PropTypes.string,
 };
 

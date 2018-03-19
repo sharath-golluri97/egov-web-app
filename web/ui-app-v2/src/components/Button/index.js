@@ -1,23 +1,28 @@
-import React from 'react';
-import RaisedButton from 'material-ui/RaisedButton';
+import React from "react";
+import PropTypes from "prop-types";
+import RaisedButton from "material-ui/RaisedButton";
 
-const ButtonUi = ({ label, icon = {}, onClick, disabled, hide, primary = false, style = {} }) => {
+const Button = (props) => {
+  let { label, icon = {}, className, onClick, backgroundColor, labelColor, fullWidth, disabled, primary = false, style = {}, id } = props;
   return (
     <RaisedButton
-      style={style}
-      hide={hide}
-      disabled={disabled}
-      primary={primary}
-      type="button"
-      label={label}
-      onClick={onClick}
       icon={
         <i style={icon.style} className="material-icons">
           {icon.name}
         </i>
       }
+      {...props}
     />
   );
 };
 
-export default ButtonUi;
+Button.propTypes = {
+  onClick: PropTypes.func,
+  primary: PropTypes.bool,
+  fullWidth: PropTypes.bool,
+  disabled: PropTypes.bool,
+  label: PropTypes.string,
+  style: PropTypes.object,
+};
+
+export default Button;

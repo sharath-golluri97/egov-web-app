@@ -1,14 +1,14 @@
-import React from 'react';
-import TimePicker from 'material-ui/TimePicker';
+import React from "react";
+import TimePicker from "material-ui/TimePicker";
 import PropTypes from "prop-types";
-import './style.css';
+import "./style.css";
 // {onChange,autoOk,floatingLabelText}
-const TimePickerUi = props => {
+const TimePickerUi = (props) => {
   return <TimePicker {...props} />;
 };
 
 export default TimePickerUi;
 
 TimePickerUi.propTypes = {
-  props:PropTypes.object
-}
+  props: PropTypes.object,
+};

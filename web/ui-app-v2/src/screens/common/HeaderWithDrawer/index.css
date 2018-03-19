@@ -1,0 +1,25 @@
+.drawer-list-poweredBy-wrapper {
+  background-color: #ffffff;
+  height: 100%;
+}
+
+.drawer-button-toggle-container {
+  padding-left: 60px !important;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 16px !important;
+  height: auto !important;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.drawer-image-cont .mseva-logo {
+  width: 40% !important;
+  margin-top: 43px !important;
+}
+
+@media only screen and (max-width: 361px) {
+  .drawer-button-toggle-container span {
+    font-size: 13px !important;
+  }
+}

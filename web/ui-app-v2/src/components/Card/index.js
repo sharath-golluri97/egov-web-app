@@ -1,26 +1,19 @@
-import React from 'react';
-import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from 'material-ui/Card';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
+import "./index.css";
 
-const CardUi = ({ header, mediaOverlay, mediaChildren, title, textChildren, actionChildren }) => {
+const CardUi = ({ id, card, style = {}, textChildren, className = "" }) => {
   return (
-    <Card>
-      <CardHeader {...header} />
-      <CardMedia overlay={mediaOverlay}>{mediaChildren}</CardMedia>
-      <CardTitle {...title} />
-      <CardText>{textChildren}</CardText>
-      <CardActions>{actionChildren}</CardActions>
-    </Card>
+    <div style={style} id={id} className={`rainmaker-card ${className}`}>
+      {textChildren}
+    </div>
   );
 };
 
 export default CardUi;
 
 CardUi.propTypes = {
-  header: PropTypes.object,
-  mediaOverlay: PropTypes.element,
-  mediaChildren: PropTypes.element,
-  title: PropTypes.object,
+  className: PropTypes.string,
+  id: PropTypes.string,
   textChildren: PropTypes.element,
-  actionChildren: PropTypes.element,
 };
