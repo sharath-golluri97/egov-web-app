@@ -102,18 +102,6 @@ class FormWizard extends Component {
     const ownerDetails = [];
     let ownersCount = 0;
     ownerFormKeys.forEach((key) => {
-<<<<<<< Updated upstream
-      const currentOwnerIndex = key.split("_")[1];
-      if (parseInt(currentOwnerIndex) > ownersCount) ownersCount = currentOwnerIndex;
-      const ownerInfo = this.configOwner(currentOwnerIndex);
-      ownerDetails.push({ index: ownersCount, Component: ownerInfo });
-    });
-    if (!ownerDetails.length) {
-      ownersCount = 0;
-      const ownerInfo = this.configOwner(ownersCount);
-      ownerDetails.push({ index: ownersCount, Component: ownerInfo });
-      ownersCount += 1;
-=======
       const currentOwnerIndex = parseInt(key.split("_")[1])
       if (currentOwnerIndex >= ownersCount) ownersCount = currentOwnerIndex
       const ownerInfo = this.configOwner(currentOwnerIndex)
@@ -123,7 +111,6 @@ class FormWizard extends Component {
       ownersCount = 0
       const ownerInfo = this.configOwner(ownersCount)
       ownerDetails.push({ index: ownersCount, Component: ownerInfo })
->>>>>>> Stashed changes
     }
     return {
       ownerDetails,
