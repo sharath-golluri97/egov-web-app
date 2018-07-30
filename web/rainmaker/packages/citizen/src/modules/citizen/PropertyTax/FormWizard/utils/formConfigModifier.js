@@ -23,7 +23,6 @@ export const getOwnerDetails = state => {
     } else {
       ownerShipdropDown.push(formOwnerDropdown(OwnerShipCategory[category]))
     }
-    console.log("ownerShipdropDown======================================================================================================>", ownerShipdropDown)
   })
   return ownerShipdropDown
 }
