@@ -121,7 +121,7 @@ class ReviewForm extends Component {
 
   handleFieldChange = (event, value) => {
     let { totalAmount } = this.props.estimationDetails[0] || {};
-    if (!isNaN(parseFloat(value)) && isFinite(value) && value > totalAmount) {
+    if (isNaN(parseFloat(value)) || !isFinite(value) || value > totalAmount) {
       this.setState({
         errorText: `amount should be numeric and can't be greater than ${totalAmount}`,
       });
@@ -137,7 +137,7 @@ class ReviewForm extends Component {
     let { estimationDetails } = this.props;
     let { totalAmount } = estimationDetails[0] || {};
     if (e.target.value === "Full_Amount") {
-      this.setState({ totalAmountTobePaid: totalAmount, valueSelected: "Full_Amount" });
+      this.setState({ totalAmountTobePaid: totalAmount, valueSelected: "Full_Amount", errorText: "" });
     } else {
       this.setState({ totalAmountTobePaid: 0, valueSelected: "Partial_Amount" });
     }
