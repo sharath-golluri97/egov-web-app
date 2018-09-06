@@ -8,7 +8,7 @@ import { addBreadCrumbs, toggleSnackbarAndSetText } from "egov-ui-kit/redux/app/
 import SearchPropertyForm from "./components/SearchPropertyForm";
 import PropertyTable from "./components/PropertyTable";
 import { validateForm } from "egov-ui-kit/redux/form/utils";
-import { displayFormErrors } from "egov-ui-kit/redux/form/actions";
+import { displayFormErrors, resetForm } from "egov-ui-kit/redux/form/actions";
 import { connect } from "react-redux";
 import { fetchProperties } from "egov-ui-kit/redux/properties/actions";
 import { getLatestPropertyDetails } from "egov-ui-kit/utils/PTCommon";
@@ -16,7 +16,7 @@ import get from "lodash/get";
 
 import "./index.css";
 
-const userType = localStorage.getItem("user-info") && JSON.parse(localStorage.getItem("user-info")).type;
+const userType = process.env.REACT_APP_NAME;
 
 const PropertySearchFormHOC = formHoc({ formKey: "searchProperty", path: "PropertyTaxPay", isCoreConfiguration: true })(SearchPropertyForm);
 
@@ -32,9 +32,10 @@ class SearchProperty extends Component {
   }
 
   componentDidMount = () => {
-    const { location, addBreadCrumbs, title } = this.props;
+    const { location, addBreadCrumbs, title, resetForm } = this.props;
     const pathname = location && location.pathname;
-    if (userType === "CITIZEN" && !(localStorage.getItem("path") === pathname)) {
+    resetForm("searchProperty");
+    if (userType === "Citizen" && !(localStorage.getItem("path") === pathname)) {
       title && addBreadCrumbs({ title: title, path: window.location.pathname });
     }
   };
@@ -67,7 +68,7 @@ class SearchProperty extends Component {
   extractTableData = (properties) => {
     const { history } = this.props;
     const tableData = properties.reduce((tableData, property, index) => {
-      let { propertyId, oldPropertyId, address, propertyDetails } = property;
+      let { propertyId, oldPropertyId, address, propertyDetails, tenantId } = property;
       const { doorNo, buildingName, street, locality } = address;
       let displayAddress = doorNo
         ? `${doorNo ? doorNo + "," : ""}` + `${buildingName ? buildingName + "," : ""}` + `${street ? street + "," : ""}`
@@ -80,22 +81,23 @@ class SearchProperty extends Component {
       let button = (
         <Button
           onClick={
-            userType === "CITIZEN"
+            userType === "Citizen"
               ? () => {
-                  localStorage.setItem("draftId", "")
+                  localStorage.setItem("draftId", "");
                   this.setState({
                     dialogueOpen: true,
                     urlToAppend: `/property-tax/assessment-form?assessmentId=${assessmentNo}&isReassesment=true&uuid=${uuid}&propertyId=${propertyId}&tenantId=${tenantId}`,
                   });
                 }
               : (e) => {
-                  localStorage.setItem("draftId", "")
-                  history.push(`/property-tax/property/${propertyId}/${property.tenantId}`);
+                  localStorage.setItem("draftId", "");
+                  history.push(`/property-tax/property/${propertyId}/${tenantId}`);
                 }
           }
-          label={<Label buttonLabel={true} label={userType === "CITIZEN" ? "PT_PAYMENT_ASSESS_AND_PAY" : "View"} fontSize="12px" />}
+          label={<Label buttonLabel={true} label={userType === "Citizen" ? "PT_PAYMENT_ASSESS_AND_PAY" : "View"} fontSize="12px" />}
           value={propertyId}
           primary={true}
+          className="pt-search-table-action"
           style={{ height: 20, lineHeight: "auto", minWidth: "inherit" }}
         />
       );
@@ -104,10 +106,6 @@ class SearchProperty extends Component {
       return tableData;
     }, []);
     return tableData;
-  };
-
-  onActionClick = (e) => {
-    console.log(e);
   };
 
   closeYearRangeDialogue = () => {
@@ -127,12 +125,12 @@ class SearchProperty extends Component {
     let urlArray = [];
     const pathname = location && location.pathname;
     const tableData = this.extractTableData(propertiesFound);
-    if (userType === "CITIZEN" && urls.length == 0 && localStorage.getItem("path") === pathname) {
+    if (userType === "Citizen" && urls.length == 0 && localStorage.getItem("path") === pathname) {
       urlArray = JSON.parse(localStorage.getItem("breadCrumbObject"));
     }
     return (
       <Screen loading={loading}>
-        {userType === "CITIZEN" ? <BreadCrumbs url={urls.length > 0 ? urls : urlArray} history={history} /> : []}
+        {userType === "Citizen" ? <BreadCrumbs url={urls.length > 0 ? urls : urlArray} history={history} /> : []}
         <PropertySearchFormHOC history={this.props.history} onSearchClick={this.onSearchClick} />
         {tableData.length > 0 && showTable ? <PropertyTable tableData={tableData} onActionClick={this.onActionClick} /> : null}
         {showTable &&
@@ -144,7 +142,9 @@ class SearchProperty extends Component {
                   label={"New Property Assessment"}
                   labelStyle={{ fontSize: 12 }}
                   className="new-property-assessment"
-                  onClick={() => history.push("/property-tax")}
+                  onClick={() => {
+                    userType === "Citizen" ? history.push("/property-tax/assess-pay") : history.push("/property-tax");
+                  }}
                   primary={true}
                   fullWidth={true}
                 />
@@ -171,6 +171,7 @@ const mapDispatchToProps = (dispatch) => {
     displayFormErrors: (formKey) => dispatch(displayFormErrors(formKey)),
     fetchProperties: (queryObject) => dispatch(fetchProperties(queryObject)),
     toggleSnackbarAndSetText: (open, message, error) => dispatch(toggleSnackbarAndSetText(open, message, error)),
+    resetForm: (formKey) => dispatch(resetForm(formKey)),
   };
 };
 

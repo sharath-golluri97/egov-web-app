@@ -1,5 +1,9 @@
 import get from "lodash/get";
 import queryString from "query-string";
+import * as formWizardUtils from "./formWizardUtils";
+
+const { fetchAllPTMDMSData, getMultipleOwnerInfo, getSingleOwnerInfo, validateUnitandPlotSize, normalizePropertyDetails } = formWizardUtils;
+export { fetchAllPTMDMSData, getMultipleOwnerInfo, getSingleOwnerInfo, validateUnitandPlotSize, normalizePropertyDetails };
 
 export const resetFormWizard = (form, removeForm) => {
   const formKeys = form && Object.keys(form);

@@ -26,7 +26,16 @@ import formHoc from "egov-ui-kit/hocs/form";
 import { validateForm } from "egov-ui-kit/redux/form/utils";
 import { displayFormErrors } from "egov-ui-kit/redux/form/actions";
 import { httpRequest } from "egov-ui-kit/utils/api";
-import { getQueryValue, findCorrectDateObj, getFinancialYearFromQuery, getEstimateFromBill } from "egov-ui-kit/utils/PTCommon";
+import {
+  getQueryValue,
+  findCorrectDateObj,
+  getFinancialYearFromQuery,
+  getEstimateFromBill,
+  getMultipleOwnerInfo,
+  getSingleOwnerInfo,
+  validateUnitandPlotSize,
+  normalizePropertyDetails,
+} from "egov-ui-kit/utils/PTCommon";
 import { get, set, isEqual } from "lodash";
 import { fetchFromLocalStorage, trimObj } from "egov-ui-kit/utils/commons";
 import range from "lodash/range";
@@ -634,7 +643,7 @@ class FormWizard extends Component {
   };
 
   updateIndex = (index) => {
-    const { callDraft, pay, estimate, createReceipt, validateUnitandPlotSize } = this;
+    const { callDraft, pay, estimate, createReceipt } = this;
     const { selected, formValidIndexArray, financialYearFromQuery } = this.state;
     const { setRoute, displayFormErrorsAction, form } = this.props;
     switch (selected) {
@@ -764,31 +773,31 @@ class FormWizard extends Component {
     }
   };
 
-  validateUnitandPlotSize = (plotDetails, form) => {
-    let isValid = true;
-    Object.keys(form).forEach((formKey, ind) => {
-      if (formKey.startsWith("customSelect_")) {
-        const floorCardIndex = formKey.split("_")[1];
-        const { fields } = form[formKey];
-        const floorNo = fields.floorName.value;
-        const unitTotal = Object.keys(form).reduce((unitTotal, key) => {
-          if (key.startsWith(`floorDetails_${floorCardIndex}_`)) {
-            const form1 = form[key];
-            if (form1 && form1.fields.builtArea.value) {
-              unitTotal += parseFloat(form1.fields.builtArea.value);
-            }
-          }
-          return unitTotal;
-        }, 0);
-        const plotSizeInFt = parseFloat(plotDetails.fields.plotSize.value) * 9;
-        if (unitTotal > plotSizeInFt) {
-          alert(`Total area of floor ${floorNo} has exceeded the plot size`);
-          isValid = false;
-        }
-      }
-    });
-    return isValid;
-  };
+  // validateUnitandPlotSize = (plotDetails, form) => {
+  //   let isValid = true;
+  //   Object.keys(form).forEach((formKey, ind) => {
+  //     if (formKey.startsWith("customSelect_")) {
+  //       const floorCardIndex = formKey.split("_")[1];
+  //       const { fields } = form[formKey];
+  //       const floorNo = fields.floorName.value;
+  //       const unitTotal = Object.keys(form).reduce((unitTotal, key) => {
+  //         if (key.startsWith(`floorDetails_${floorCardIndex}_`)) {
+  //           const form1 = form[key];
+  //           if (form1 && form1.fields.builtArea.value) {
+  //             unitTotal += parseFloat(form1.fields.builtArea.value);
+  //           }
+  //         }
+  //         return unitTotal;
+  //       }, 0);
+  //       const plotSizeInFt = parseFloat(plotDetails.fields.plotSize.value) * 9;
+  //       if (unitTotal > plotSizeInFt) {
+  //         alert(`Total area of floor ${floorNo} has exceeded the plot size`);
+  //         isValid = false;
+  //       }
+  //     }
+  //   });
+  //   return isValid;
+  // };
 
   callGetBill = async (propertyId, assessmentNumber, assessmentYear, tenantId) => {
     const { location, toggleSpinner } = this.props;
@@ -861,53 +870,53 @@ class FormWizard extends Component {
     return new Date(date).getTime();
   };
 
-  getSingleOwnerInfo = () => {
-    const { ownerInfo } = this.props.form;
-    const ownerObj = {
-      document: {},
-    };
-    Object.keys(ownerInfo.fields).map((field) => {
-      const jsonPath = ownerInfo.fields[field].jsonPath;
-      if (jsonPath.toLowerCase().indexOf("document") !== -1) {
-        ownerObj.document[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] =
-          get(ownerInfo, `fields.${field}.value`, undefined) || null;
-      } else if (jsonPath.toLowerCase().indexOf("gender") !== -1) {
-        ownerObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] = get(ownerInfo, `fields.${field}.value`, undefined) || "Male";
-      } else {
-        ownerObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] = get(ownerInfo, `fields.${field}.value`, undefined) || null;
-      }
-    });
-    const ownerArray = [ownerObj];
-    return ownerArray;
-  };
+  // getSingleOwnerInfo = () => {
+  //   const { ownerInfo } = this.props.form;
+  //   const ownerObj = {
+  //     document: {},
+  //   };
+  //   Object.keys(ownerInfo.fields).map((field) => {
+  //     const jsonPath = ownerInfo.fields[field].jsonPath;
+  //     if (jsonPath.toLowerCase().indexOf("document") !== -1) {
+  //       ownerObj.document[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] =
+  //         get(ownerInfo, `fields.${field}.value`, undefined) || null;
+  //     } else if (jsonPath.toLowerCase().indexOf("gender") !== -1) {
+  //       ownerObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] = get(ownerInfo, `fields.${field}.value`, undefined) || "Male";
+  //     } else {
+  //       ownerObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] = get(ownerInfo, `fields.${field}.value`, undefined) || null;
+  //     }
+  //   });
+  //   const ownerArray = [ownerObj];
+  //   return ownerArray;
+  // };
 
-  getMultipleOwnerInfo = () => {
-    let { form } = this.props;
-    return Object.keys(form)
-      .filter((formkey) => formkey.indexOf("ownerInfo_") !== -1)
-      .reduce((acc, curr, currIndex, arr) => {
-        const ownerData = [...acc];
-        const currForm = form[curr];
-        const ownerObj = {
-          document: {},
-        };
-        Object.keys(currForm.fields).map((field) => {
-          const jsonPath = currForm.fields[field].jsonPath;
-          if (jsonPath.toLowerCase().indexOf("document") !== -1) {
-            ownerObj.document[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] =
-              get(form, `${curr}.fields.${field}.value`, undefined) || null;
-          } else if (jsonPath.toLowerCase().indexOf("gender") !== -1) {
-            ownerObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] =
-              get(form, `${curr}.fields.${field}.value`, undefined) || "Male";
-          } else {
-            ownerObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] =
-              get(form, `${curr}.fields.${field}.value`, undefined) || null;
-          }
-        });
-        ownerData.push(ownerObj);
-        return ownerData;
-      }, []);
-  };
+  // getMultipleOwnerInfo = () => {
+  //   let { form } = this.props;
+  //   return Object.keys(form)
+  //     .filter((formkey) => formkey.indexOf("ownerInfo_") !== -1)
+  //     .reduce((acc, curr, currIndex, arr) => {
+  //       const ownerData = [...acc];
+  //       const currForm = form[curr];
+  //       const ownerObj = {
+  //         document: {},
+  //       };
+  //       Object.keys(currForm.fields).map((field) => {
+  //         const jsonPath = currForm.fields[field].jsonPath;
+  //         if (jsonPath.toLowerCase().indexOf("document") !== -1) {
+  //           ownerObj.document[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] =
+  //             get(form, `${curr}.fields.${field}.value`, undefined) || null;
+  //         } else if (jsonPath.toLowerCase().indexOf("gender") !== -1) {
+  //           ownerObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] =
+  //             get(form, `${curr}.fields.${field}.value`, undefined) || "Male";
+  //         } else {
+  //           ownerObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] =
+  //             get(form, `${curr}.fields.${field}.value`, undefined) || null;
+  //         }
+  //       });
+  //       ownerData.push(ownerObj);
+  //       return ownerData;
+  //     }, []);
+  // };
 
   getInstituteInfo = () => {
     const { institutionAuthority, institutionDetails } = this.props.form;
@@ -1018,7 +1027,8 @@ class FormWizard extends Component {
   };
 
   estimate = async () => {
-    let { form, common, toggleSpinner } = this.props;
+    let { form, common, toggleSpinner, location } = this.props;
+    let { search } = location;
     let prepareFormData = { ...this.props.prepareFormData };
     toggleSpinner();
     if (get(prepareFormData, "Properties[0].propertyDetails[0].institution", undefined))
@@ -1030,7 +1040,7 @@ class FormWizard extends Component {
         set(prepareFormData, "Properties[0].propertyDetails[0].financialYear", financialYearFromQuery);
       }
       if (selectedownerShipCategoryType === "SINGLEOWNER") {
-        set(prepareFormData, "Properties[0].propertyDetails[0].owners", this.getSingleOwnerInfo());
+        set(prepareFormData, "Properties[0].propertyDetails[0].owners", getSingleOwnerInfo(form));
         set(
           prepareFormData,
           "Properties[0].propertyDetails[0].ownershipCategory",
@@ -1039,7 +1049,7 @@ class FormWizard extends Component {
         set(prepareFormData, "Properties[0].propertyDetails[0].subOwnershipCategory", selectedownerShipCategoryType);
       }
       if (selectedownerShipCategoryType === "MULTIPLEOWNERS") {
-        set(prepareFormData, "Properties[0].propertyDetails[0].owners", this.getMultipleOwnerInfo());
+        set(prepareFormData, "Properties[0].propertyDetails[0].owners", getMultipleOwnerInfo(form));
         set(
           prepareFormData,
           "Properties[0].propertyDetails[0].ownershipCategory",
@@ -1054,7 +1064,7 @@ class FormWizard extends Component {
         set(prepareFormData, "Properties[0].propertyDetails[0].ownershipCategory", get(form, "ownershipType.fields.typeOfOwnership.value", ""));
         set(prepareFormData, "Properties[0].propertyDetails[0].subOwnershipCategory", get(form, "institutionDetails.fields.type.value", ""));
       }
-      const propertyDetails = this.normalizePropertyDetails(prepareFormData.Properties);
+      const propertyDetails = normalizePropertyDetails(prepareFormData.Properties, search);
       let estimateResponse = await httpRequest("pt-calculator-v2/propertytax/_estimate", "_estimate", [], {
         CalculationCriteria: [
           {
@@ -1099,7 +1109,7 @@ class FormWizard extends Component {
       set(prepareFormData, "Properties[0].propertyDetails[0].assessmentNumber", assessmentId);
     }
     if (selectedownerShipCategoryType === "SINGLEOWNER") {
-      set(prepareFormData, "Properties[0].propertyDetails[0].owners", this.getSingleOwnerInfo());
+      set(prepareFormData, "Properties[0].propertyDetails[0].owners", getSingleOwnerInfo(form));
       set(
         prepareFormData,
         "Properties[0].propertyDetails[0].ownershipCategory",
@@ -1109,7 +1119,7 @@ class FormWizard extends Component {
     }
 
     if (selectedownerShipCategoryType === "MULTIPLEOWNERS") {
-      set(prepareFormData, "Properties[0].propertyDetails[0].owners", this.getMultipleOwnerInfo());
+      set(prepareFormData, "Properties[0].propertyDetails[0].owners", getMultipleOwnerInfo(form));
       set(
         prepareFormData,
         "Properties[0].propertyDetails[0].ownershipCategory",
@@ -1147,7 +1157,7 @@ class FormWizard extends Component {
       if (isCompletePayment) {
         callPGService(propertyId, assessmentId, financialYearFromQuery, tenantId);
       } else {
-        const properties = this.normalizePropertyDetails(prepareFormData.Properties);
+        const properties = normalizePropertyDetails(prepareFormData.Properties, search);
         let createPropertyResponse = await httpRequest(`pt-services-v2/property/${propertyMethodAction}`, `${propertyMethodAction}`, [], {
           Properties: properties,
         });
@@ -1164,31 +1174,31 @@ class FormWizard extends Component {
     }
   };
 
-  normalizePropertyDetails = (properties) => {
-    let { search } = this.props.location;
-    const propertyInfo = trimObj(JSON.parse(JSON.stringify(properties)));
-    const property = propertyInfo[0] || {};
-    const { propertyDetails } = property;
-    const isReassesment = !!getQueryValue(search, "isReassesment");
-    const propertyId = getQueryValue(search, "propertyId");
-    const units = propertyDetails[0].units.filter((item, ind) => {
-      return item !== null;
-    });
-    if (isReassesment && propertyId) {
-      property.propertyId = propertyId;
-    }
-    var sumOfUnitArea = 0;
-    units.forEach((unit) => {
-      let unitAreaInSqYd = parseFloat(unit.unitArea) / 9;
-      unit.unitArea = Math.round(unitAreaInSqYd * 1000) / 1000;
-      sumOfUnitArea += unit.unitArea;
-    });
-    if (propertyDetails[0].propertySubType === "SHAREDPROPERTY") {
-      propertyDetails[0].buildUpArea = sumOfUnitArea;
-    }
-    propertyDetails[0].units = units;
-    return propertyInfo;
-  };
+  // normalizePropertyDetails = (properties) => {
+  //   let { search } = this.props.location;
+  //   const propertyInfo = trimObj(JSON.parse(JSON.stringify(properties)));
+  //   const property = propertyInfo[0] || {};
+  //   const { propertyDetails } = property;
+  //   const isReassesment = !!getQueryValue(search, "isReassesment");
+  //   const propertyId = getQueryValue(search, "propertyId");
+  //   const units = propertyDetails[0].units.filter((item, ind) => {
+  //     return item !== null;
+  //   });
+  //   if (isReassesment && propertyId) {
+  //     property.propertyId = propertyId;
+  //   }
+  //   var sumOfUnitArea = 0;
+  //   units.forEach((unit) => {
+  //     let unitAreaInSqYd = parseFloat(unit.unitArea) / 9;
+  //     unit.unitArea = Math.round(unitAreaInSqYd * 1000) / 1000;
+  //     sumOfUnitArea += unit.unitArea;
+  //   });
+  //   if (propertyDetails[0].propertySubType === "SHAREDPROPERTY") {
+  //     propertyDetails[0].buildUpArea = sumOfUnitArea;
+  //   }
+  //   propertyDetails[0].units = units;
+  //   return propertyInfo;
+  // };
 
   getHeaderLabel = (selected) => {
     switch (selected) {

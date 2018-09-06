@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.getEstimateFromBill = exports.getFinancialYearFromQuery = exports.getOwnerCategoryByYear = exports.sortDropdown = exports.findCorrectDateObj = exports.getQueryValue = exports.getLatestPropertyDetails = exports.resetFormWizard = undefined;
+exports.getEstimateFromBill = exports.getFinancialYearFromQuery = exports.getOwnerCategoryByYear = exports.sortDropdown = exports.findCorrectDateObj = exports.getQueryValue = exports.getLatestPropertyDetails = exports.resetFormWizard = exports.normalizePropertyDetails = exports.validateUnitandPlotSize = exports.getSingleOwnerInfo = exports.getMultipleOwnerInfo = exports.fetchAllPTMDMSData = undefined;
 
 var _extends2 = require("babel-runtime/helpers/extends");
 
@@ -17,8 +17,24 @@ var _queryString = require("query-string");
 
 var _queryString2 = _interopRequireDefault(_queryString);
 
+var _formWizardUtils = require("./formWizardUtils");
+
+var formWizardUtils = _interopRequireWildcard(_formWizardUtils);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var fetchAllPTMDMSData = formWizardUtils.fetchAllPTMDMSData,
+    getMultipleOwnerInfo = formWizardUtils.getMultipleOwnerInfo,
+    getSingleOwnerInfo = formWizardUtils.getSingleOwnerInfo,
+    validateUnitandPlotSize = formWizardUtils.validateUnitandPlotSize,
+    normalizePropertyDetails = formWizardUtils.normalizePropertyDetails;
+exports.fetchAllPTMDMSData = fetchAllPTMDMSData;
+exports.getMultipleOwnerInfo = getMultipleOwnerInfo;
+exports.getSingleOwnerInfo = getSingleOwnerInfo;
+exports.validateUnitandPlotSize = validateUnitandPlotSize;
+exports.normalizePropertyDetails = normalizePropertyDetails;
 var resetFormWizard = exports.resetFormWizard = function resetFormWizard(form, removeForm) {
   var formKeys = form && Object.keys(form);
   var formToReset = ["basicInformation", "propertyAddress", "plotDetails", "ownershipType", "institutionAuthority", "institutionDetails", "cashInfo", "paymentModes", "receiptInfo", "additionalRebate"];

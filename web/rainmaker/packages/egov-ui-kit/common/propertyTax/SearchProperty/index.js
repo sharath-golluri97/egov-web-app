@@ -70,7 +70,7 @@ require("./index.css");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var userType = localStorage.getItem("user-info") && JSON.parse(localStorage.getItem("user-info")).type;
+var userType = process.env.REACT_APP_NAME;
 
 var PropertySearchFormHOC = (0, _form2.default)({ formKey: "searchProperty", path: "PropertyTaxPay", isCoreConfiguration: true })(_SearchPropertyForm2.default);
 
@@ -86,10 +86,12 @@ var SearchProperty = function (_Component) {
       var _this$props = _this.props,
           location = _this$props.location,
           addBreadCrumbs = _this$props.addBreadCrumbs,
-          title = _this$props.title;
+          title = _this$props.title,
+          resetForm = _this$props.resetForm;
 
       var pathname = location && location.pathname;
-      if (userType === "CITIZEN" && !(localStorage.getItem("path") === pathname)) {
+      resetForm("searchProperty");
+      if (userType === "Citizen" && !(localStorage.getItem("path") === pathname)) {
         title && addBreadCrumbs({ title: title, path: window.location.pathname });
       }
     };
@@ -131,7 +133,8 @@ var SearchProperty = function (_Component) {
         var propertyId = property.propertyId,
             oldPropertyId = property.oldPropertyId,
             address = property.address,
-            propertyDetails = property.propertyDetails;
+            propertyDetails = property.propertyDetails,
+            tenantId = property.tenantId;
         var doorNo = address.doorNo,
             buildingName = address.buildingName,
             street = address.street,
@@ -144,7 +147,7 @@ var SearchProperty = function (_Component) {
         var assessmentNo = latestAssessment.assessmentNumber;
         var uuid = (0, _get2.default)(latestAssessment, "citizenInfo.uuid");
         var button = _react2.default.createElement(_components.Button, {
-          onClick: userType === "CITIZEN" ? function () {
+          onClick: userType === "Citizen" ? function () {
             localStorage.setItem("draftId", "");
             _this.setState({
               dialogueOpen: true,
@@ -152,11 +155,12 @@ var SearchProperty = function (_Component) {
             });
           } : function (e) {
             localStorage.setItem("draftId", "");
-            history.push("/property-tax/property/" + propertyId + "/" + property.tenantId);
+            history.push("/property-tax/property/" + propertyId + "/" + tenantId);
           },
-          label: _react2.default.createElement(_translationNode2.default, { buttonLabel: true, label: userType === "CITIZEN" ? "PT_PAYMENT_ASSESS_AND_PAY" : "View", fontSize: "12px" }),
+          label: _react2.default.createElement(_translationNode2.default, { buttonLabel: true, label: userType === "Citizen" ? "PT_PAYMENT_ASSESS_AND_PAY" : "View", fontSize: "12px" }),
           value: propertyId,
           primary: true,
+          className: "pt-search-table-action",
           style: { height: 20, lineHeight: "auto", minWidth: "inherit" }
         });
         var item = { index: index + 1, name: name, propertyId: propertyId, oldPropertyId: oldPropertyId, address: displayAddress, action: button };
@@ -164,10 +168,6 @@ var SearchProperty = function (_Component) {
         return tableData;
       }, []);
       return tableData;
-    };
-
-    _this.onActionClick = function (e) {
-      console.log(e);
     };
 
     _this.closeYearRangeDialogue = function () {
@@ -206,13 +206,13 @@ var SearchProperty = function (_Component) {
       var urlArray = [];
       var pathname = location && location.pathname;
       var tableData = this.extractTableData(propertiesFound);
-      if (userType === "CITIZEN" && urls.length == 0 && localStorage.getItem("path") === pathname) {
+      if (userType === "Citizen" && urls.length == 0 && localStorage.getItem("path") === pathname) {
         urlArray = JSON.parse(localStorage.getItem("breadCrumbObject"));
       }
       return _react2.default.createElement(
         _Screen2.default,
         { loading: loading },
-        userType === "CITIZEN" ? _react2.default.createElement(_components.BreadCrumbs, { url: urls.length > 0 ? urls : urlArray, history: history }) : [],
+        userType === "Citizen" ? _react2.default.createElement(_components.BreadCrumbs, { url: urls.length > 0 ? urls : urlArray, history: history }) : [],
         _react2.default.createElement(PropertySearchFormHOC, { history: this.props.history, onSearchClick: this.onSearchClick }),
         tableData.length > 0 && showTable ? _react2.default.createElement(_PropertyTable2.default, { tableData: tableData, onActionClick: this.onActionClick }) : null,
         showTable && tableData.length === 0 && _react2.default.createElement(
@@ -231,7 +231,7 @@ var SearchProperty = function (_Component) {
               labelStyle: { fontSize: 12 },
               className: "new-property-assessment",
               onClick: function onClick() {
-                return history.push("/property-tax");
+                userType === "Citizen" ? history.push("/property-tax/assess-pay") : history.push("/property-tax");
               },
               primary: true,
               fullWidth: true
@@ -270,6 +270,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     },
     toggleSnackbarAndSetText: function toggleSnackbarAndSetText(open, message, error) {
       return dispatch((0, _actions.toggleSnackbarAndSetText)(open, message, error));
+    },
+    resetForm: function resetForm(formKey) {
+      return dispatch((0, _actions2.resetForm)(formKey));
     }
   };
 };
