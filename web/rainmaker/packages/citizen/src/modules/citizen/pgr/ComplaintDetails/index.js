@@ -6,6 +6,7 @@ import { Comments } from "modules/common";
 import { Screen } from "modules/common";
 import { resetFiles } from "egov-ui-kit/redux/form/actions";
 import { fetchComplaints } from "egov-ui-kit/redux/complaints/actions";
+import get from "lodash/get"
 import { getDateFromEpoch, mapCompIDToName, isImage, fetchImages, getPropertyFromObj } from "egov-ui-kit/utils/commons";
 
 import "./index.css";
@@ -22,7 +23,7 @@ class ComplaintDetails extends Component {
 
   render() {
     let { complaint, timeLine } = this.props.transformedComplaint;
-    let { history } = this.props;
+    let { history, reopenValidChecker } = this.props;
     let action;
     if (timeLine && timeLine[0]) {
       action = timeLine[0].action;
@@ -39,6 +40,7 @@ class ComplaintDetails extends Component {
               feedback={complaint ? complaint.feedback : ""}
               rating={complaint ? complaint.rating : ""}
               role={"citizen"}
+              reopenValidChecker={reopenValidChecker}
             />
             <Comments role={"citizen"} />
           </div>
@@ -50,7 +52,7 @@ class ComplaintDetails extends Component {
 let gro = "";
 const mapStateToProps = (state, ownProps) => {
   const { complaints, common, form } = state;
-
+  const reopenValidChecker = get(state, "mdms.reopenValidChecker", "")
   const { employeeById, departmentById, designationsById, cities } = common || {};
   let selectedComplaint = complaints["byId"][decodeURIComponent(ownProps.match.params.serviceRequestId)];
   if (selectedComplaint) {
@@ -90,9 +92,9 @@ const mapStateToProps = (state, ownProps) => {
       timeLine,
     };
 
-    return { form, transformedComplaint };
+    return { form, transformedComplaint, reopenValidChecker };
   } else {
-    return { form, transformedComplaint: {} };
+    return { form, transformedComplaint: {}, reopenValidChecker };
   }
 };
 

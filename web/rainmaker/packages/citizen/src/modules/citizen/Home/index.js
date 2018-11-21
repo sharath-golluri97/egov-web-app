@@ -5,6 +5,7 @@ import NewAndOldComplaints from "./components/NewAndOldComplaints";
 import Notifications from "./components/Notifications";
 import { fetchComplaints } from "egov-ui-kit/redux/complaints/actions";
 import { resetFiles, removeForm } from "egov-ui-kit/redux/form/actions";
+import { fetchConfig } from "egov-ui-kit/redux/mdms/actions";
 import { mapCompIDToName } from "egov-ui-kit/utils/commons";
 import { Image } from "components";
 import logo from "egov-ui-kit/assets/images/punjab-logo.png";
@@ -13,8 +14,9 @@ import "./index.css";
 
 class Home extends Component {
   componentDidMount = () => {
-    const { fetchComplaints, resetFiles, removeForm } = this.props;
+    const { fetchComplaints, resetFiles, removeForm, fetchConfig } = this.props;
     fetchComplaints([], false);
+    fetchConfig()
     if (this.props.form && this.props.form.complaint) {
       resetFiles("reopenComplaint");
       removeForm("complaint");
@@ -71,6 +73,7 @@ const mapDispatchToProps = (dispatch) => {
     fetchComplaints: (criteria, hasUsers) => dispatch(fetchComplaints(criteria, hasUsers)),
     resetFiles: (formKey) => dispatch(resetFiles(formKey)),
     removeForm: (formKey) => dispatch(removeForm(formKey)),
+    fetchConfig: () => dispatch(fetchConfig()),
   };
 };
 

@@ -5,6 +5,7 @@ const initialState = {
   loading: false,
   error: false,
   errorMessage: "",
+  reopenValidChecker: "",
   specs: {},
   data: {},
 };
@@ -64,6 +65,11 @@ const mdmsReducer = (state = initialState, action) => {
         error: true,
         errorMessage: action.error,
       };
+    case actionTypes.REOPEN_PGR_COMPLAINT_TIME:
+      return {
+        ...state,
+        reopenValidChecker: action.timeLimit
+      }
     default:
       return state;
   }

@@ -4,6 +4,7 @@ import { initForm } from "egov-ui-kit/redux/form/actions";
 import { SPEC, MDMS } from "egov-ui-kit/utils/endPoints";
 import { upperCaseFirst } from "egov-ui-kit/utils/commons";
 import { httpRequest } from "egov-ui-kit/utils/api";
+import get from "lodash/get";
 
 const specsFetchPending = () => {
   return {
@@ -52,6 +53,13 @@ const dataFetchError = (error) => {
 const mapFloatingLabelText = (rawText) => {
   return rawText.split(".").pop();
 };
+
+const setReopenComplaintTimeline = (timeLimit) => {
+  return {
+    type: actionTypes.REOPEN_PGR_COMPLAINT_TIME,
+    timeLimit,
+  }
+}
 
 const transformRawTypeToFormat = (rawType) => {
   switch (rawType) {
@@ -185,6 +193,18 @@ export const fetchSpecs = (queryObject, moduleName, masterName, tenantId, reques
       }
     } catch (error) {
       dispatch(specsFetchError(error.message));
+    }
+  };
+};
+
+export const fetchConfig = () => {
+  return async (dispatch, getState) => {
+    try {
+      const payload = await fetch("http://www.mocky.io/v2/5bf3fa673100006a00619ac5").then(res => res.json()).then(res => res)
+      const reopenValidChecker = parseInt(get(payload, "config[0].REOPENVALIDCHECKER", 432000000))
+      dispatch(setReopenComplaintTimeline(reopenValidChecker));
+    } catch (error) {
+      dispatch(setReopenComplaintTimeline(432000000));
     }
   };
 };

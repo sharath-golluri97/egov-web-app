@@ -28,6 +28,7 @@ var initialState = {
   loading: false,
   error: false,
   errorMessage: "",
+  reopenValidChecker: "",
   specs: {},
   data: {}
 };
@@ -75,6 +76,10 @@ var mdmsReducer = function mdmsReducer() {
         loading: false,
         error: true,
         errorMessage: action.error
+      });
+    case actionTypes.REOPEN_PGR_COMPLAINT_TIME:
+      return (0, _extends5.default)({}, state, {
+        reopenValidChecker: action.timeLimit
       });
     default:
       return state;

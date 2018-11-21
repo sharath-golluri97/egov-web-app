@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.fetchSpecs = exports.dataFetchComplete = undefined;
+exports.fetchConfig = exports.fetchSpecs = exports.dataFetchComplete = undefined;
 
 var _regenerator = require("babel-runtime/regenerator");
 
@@ -36,6 +36,10 @@ var _endPoints = require("egov-ui-kit/utils/endPoints");
 var _commons = require("egov-ui-kit/utils/commons");
 
 var _api = require("egov-ui-kit/utils/api");
+
+var _get = require("lodash/get");
+
+var _get2 = _interopRequireDefault(_get);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -87,6 +91,13 @@ var dataFetchError = function dataFetchError(error) {
 
 var mapFloatingLabelText = function mapFloatingLabelText(rawText) {
   return rawText.split(".").pop();
+};
+
+var setReopenComplaintTimeline = function setReopenComplaintTimeline(timeLimit) {
+  return {
+    type: actionTypes.REOPEN_PGR_COMPLAINT_TIME,
+    timeLimit: timeLimit
+  };
 };
 
 var transformRawTypeToFormat = function transformRawTypeToFormat(rawType) {
@@ -247,6 +258,50 @@ var fetchSpecs = exports.fetchSpecs = function fetchSpecs(queryObject, moduleNam
 
     return function (_x, _x2) {
       return _ref.apply(this, arguments);
+    };
+  }();
+};
+
+var fetchConfig = exports.fetchConfig = function fetchConfig() {
+  return function () {
+    var _ref2 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2(dispatch, getState) {
+      var payload, reopenValidChecker;
+      return _regenerator2.default.wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              _context2.prev = 0;
+              _context2.next = 3;
+              return fetch("http://www.mocky.io/v2/5bf3fa673100006a00619ac5").then(function (res) {
+                return res.json();
+              }).then(function (res) {
+                return res;
+              });
+
+            case 3:
+              payload = _context2.sent;
+              reopenValidChecker = parseInt((0, _get2.default)(payload, "config[0].REOPENVALIDCHECKER", 432000000));
+
+              dispatch(setReopenComplaintTimeline(reopenValidChecker));
+              _context2.next = 11;
+              break;
+
+            case 8:
+              _context2.prev = 8;
+              _context2.t0 = _context2["catch"](0);
+
+              dispatch(setReopenComplaintTimeline(432000000));
+
+            case 11:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2, undefined, [[0, 8]]);
+    }));
+
+    return function (_x3, _x4) {
+      return _ref2.apply(this, arguments);
     };
   }();
 };
