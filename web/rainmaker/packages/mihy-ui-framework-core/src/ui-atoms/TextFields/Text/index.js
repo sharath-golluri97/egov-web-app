@@ -1,29 +1,34 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import TextField from '@material-ui/core/TextField';
+import React from "react";
+import PropTypes from "prop-types";
+import TextField from "@material-ui/core/TextField";
 
-const MihyText=(props)=> {
-    const {id,value,label,fullWidth,...rest} = props;
+const inputLabelProps = {
+  shrink: true
+};
 
-    return (
-        <TextField
-          id={id}
-          label={label}
-          value={value}
-          fullWidth={true}
-          {...rest}
-        />
-    );
-  }
+const MihyText = props => {
+  const { id, value, label, fullWidth, ...rest } = props;
+
+  return (
+    <TextField
+      id={id}
+      label={label}
+      value={value}
+      fullWidth={true}
+      InputLabelProps={inputLabelProps}
+      {...rest}
+    />
+  );
+};
 
 MihyText.propTypes = {
   id: PropTypes.string.isRequired,
-  label:PropTypes.string.isRequired,
-  value:PropTypes.string
+  label: PropTypes.string.isRequired,
+  value: PropTypes.string
 };
 
-MihyText.defaultProps= {
-  fullWidth:true
-}
+MihyText.defaultProps = {
+  fullWidth: true
+};
 
 export default MihyText;
