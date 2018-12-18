@@ -26,7 +26,12 @@ const themeObject = {
         backgroundColor: "transparent"
       }
     },
-
+    MuiSvgIcon: {
+      root: {
+        height: "15px",
+        width: "15px"
+      }
+    },
     MuiCard: {
       root: {
         marginTop: "24px"

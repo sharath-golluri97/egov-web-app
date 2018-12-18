@@ -1,9 +1,10 @@
 import React from "react";
-
+import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
-import Footer from "../FooterContainer";
+import { screenHoc } from "mihy-ui-framework/ui-hocs";
 import Stepper from "../../ui-molecules-local/Stepper";
 import StepperContent from "./components/StepperContent";
+import get from "lodash/get";
 
 const styles = theme => ({
   root: {
@@ -13,25 +14,25 @@ const styles = theme => ({
 
 class EmployeeCreate extends React.Component {
   render() {
-    const { classes } = this.props;
+    const { classes, employeeConfig } = this.props;
+    const stepOne = get(employeeConfig, "components.step-one");
+    const stepData = get(employeeConfig, "components.stepper");
     return (
       <div>
-        <Stepper classes={classes.root} />
-        <StepperContent />
-        <Footer
-          variant={"contained"}
-          color={"primary"}
-          label1={"Previous"}
-          label2={"NEXT"}
-          style={{
-            minWidth: "200px",
-            height: "48px",
-            marginRight: "45px"
-          }}
-        />
+        <Stepper classes={classes.root} stepData={stepData} />
+        <StepperContent stepOne={stepOne} />
       </div>
     );
   }
 }
 
-export default withStyles(styles)(EmployeeCreate);
+const mapStateToProps = state => {
+  const { screenConfiguration } = state;
+  const { screenConfig } = screenConfiguration;
+  const employeeConfig = screenConfig["create-update"];
+  return { employeeConfig };
+};
+
+export default screenHoc({ screenKey: "create-update", hasRemoteConfig: true })(
+  withStyles(styles)(connect(mapStateToProps)(EmployeeCreate))
+);

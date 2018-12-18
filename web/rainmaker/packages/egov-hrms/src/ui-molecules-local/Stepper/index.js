@@ -4,9 +4,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
-import { getCommonTitle } from "mihy-ui-framework/ui-config/screens/specs/utils";
-import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
+import Footer from "../../ui-containers-local/FooterContainer";
 
 const styles = theme => ({
   root: {
@@ -62,9 +60,11 @@ class HorizontalStepper extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
-    const steps = getSteps();
+    const { classes, stepData } = this.props;
+    const steps = stepData.steps || [];
     const { activeStep } = this.state;
+    console.log("stepper is....", stepData);
+    console.log("step data is....", steps);
 
     return (
       <div className={classes.root}>
@@ -77,6 +77,47 @@ class HorizontalStepper extends React.Component {
             );
           })}
         </Stepper>
+        <div>
+          {this.state.activeStep === steps.length ? (
+            <div>{/* <Button onClick={this.handleReset}>Reset</Button> */}</div>
+          ) : (
+            <div>
+              {/* <Typography className={classes.instructions}>
+                {getStepContent(activeStep)}
+              </Typography> */}
+              {/* <div>
+                <Button
+                  disabled={activeStep === 0}
+                  onClick={this.handleBack}
+                  className={classes.backButton}
+                >
+                  Back
+                </Button>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={this.handleNext}
+                >
+                  {activeStep === steps.length - 1 ? "Finish" : "Next"}
+                </Button>
+              </div> */}
+            </div>
+          )}
+        </div>
+        <Footer
+          disabled={activeStep === 0}
+          onPreviousClick={this.handleBack}
+          onNextClick={this.handleNext}
+          variant={"contained"}
+          color={"primary"}
+          label1={"Previous"}
+          label2={"NEXT"}
+          style={{
+            minWidth: "200px",
+            height: "48px",
+            marginRight: "45px"
+          }}
+        />
       </div>
     );
   }

@@ -12,7 +12,8 @@ import "./index.css";
 
 const styles = theme => ({
   root: {
-    display: "flex"
+    display: "flex",
+    marginTop: 15
   },
   formControl: {
     marginTop: 0,
@@ -46,7 +47,7 @@ class RadioButtonsGroup extends React.Component {
   };
 
   render() {
-    const { classes, buttons } = this.props;
+    const { classes, buttons, radioClassName } = this.props;
 
     return (
       <div className={classes.root}>

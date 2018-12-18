@@ -6,10 +6,7 @@ import {
   submitForm
 } from "../ui-redux/screen-configuration/actions";
 import { setRoute } from "../ui-redux/app/actions";
-import isEmpty from "lodash/isEmpty";
-import get from "lodash/get";
-// import { addComponentJsonpath } from "../ui-utils";
-import $ from "jquery";
+import axios from "axios";
 import cloneDeep from "lodash/cloneDeep";
 
 const screenHoc = ({
@@ -32,7 +29,22 @@ const screenHoc = ({
         };
         if (hasOwnConfig) {
           this.screenConfig = defaultScreenConfig || {};
+          initScreen(screenKey, cloneDeep(this.screenConfig));
         } else if (hasRemoteConfig) {
+          let timeStamp = new Date().getTime();
+          let self = this;
+          const ax = axios.create({
+            baseURL:
+              "https://raw.githubusercontent.com/egovernments/egov-web-app/rainmaker/web/rainmaker/packages/screen-configurations"
+          });
+          ax.get(`/hrms/create-update.json?timeStamp=${timeStamp}?callback=?`)
+            .then(function(response) {
+              self.screenConfig = response.data[screenKey] || {};
+              initScreen(screenKey, cloneDeep(self.screenConfig));
+            })
+            .catch(function(error) {
+              console.log(error);
+            });
           // const url=`http://rawgit.com/muralim4242/mihy-repo/master/packages/ui-client-app/src/ui-config/screens/specs/${path}/${screenKey}.js`;
           // $.getScript(url, function( data, textStatus, jqxhr ) {
           //     console.log( data ); // Data returned
@@ -40,14 +52,14 @@ const screenHoc = ({
           //     console.log( jqxhr.status ); // 200
           //     console.log( "Load was performed." );
           // });
-          this.screenConfig = getConfig(path, screenKey);
         } else {
           this.screenConfig = getConfig(path, screenKey);
+          initScreen(screenKey, cloneDeep(this.screenConfig));
         }
         // if (!isEmpty(this.screenConfig)) {
         //   addComponentJsonpath(this.screenConfig.components);
         // }
-        initScreen(screenKey, cloneDeep(this.screenConfig));
+        // initScreen(screenKey, cloneDeep(this.screenConfig));
       } catch (error) {
         // the error is assumed to have occured due to absence of config; so ignore it!
         console.log(error);
@@ -69,7 +81,7 @@ const screenHoc = ({
       );
     };
 
-    onClick = (onClickDefination, componentJsonpath = "",index=-1) => {
+    onClick = (onClickDefination, componentJsonpath = "", index = -1) => {
       switch (onClickDefination.action) {
         case "submit":
           const { submitForm } = this.props;
@@ -95,7 +107,7 @@ const screenHoc = ({
           const { state, dispatchAction } = this.props;
           const { callBack } = onClickDefination;
           if (typeof callBack === "function") {
-            callBack(state, dispatchAction,{componentJsonpath,index});
+            callBack(state, dispatchAction, { componentJsonpath, index });
           }
           break;
         case "page_change":

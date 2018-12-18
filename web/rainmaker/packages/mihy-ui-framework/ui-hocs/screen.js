@@ -38,17 +38,9 @@ var _actions = require("../ui-redux/screen-configuration/actions");
 
 var _actions2 = require("../ui-redux/app/actions");
 
-var _isEmpty = require("lodash/isEmpty");
+var _axios = require("axios");
 
-var _isEmpty2 = _interopRequireDefault(_isEmpty);
-
-var _get = require("lodash/get");
-
-var _get2 = _interopRequireDefault(_get);
-
-var _jquery = require("jquery");
-
-var _jquery2 = _interopRequireDefault(_jquery);
+var _axios2 = _interopRequireDefault(_axios);
 
 var _cloneDeep = require("lodash/cloneDeep");
 
@@ -56,7 +48,6 @@ var _cloneDeep2 = _interopRequireDefault(_cloneDeep);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// import { addComponentJsonpath } from "../ui-utils";
 var screenHoc = function screenHoc(_ref) {
   var _ref$path = _ref.path,
       path = _ref$path === undefined ? "" : _ref$path,
@@ -127,7 +118,19 @@ var screenHoc = function screenHoc(_ref) {
           };
           if (hasOwnConfig) {
             _this.screenConfig = defaultScreenConfig || {};
+            initScreen(screenKey, (0, _cloneDeep2.default)(_this.screenConfig));
           } else if (hasRemoteConfig) {
+            var timeStamp = new Date().getTime();
+            var self = _this;
+            var ax = _axios2.default.create({
+              baseURL: "https://raw.githubusercontent.com/egovernments/egov-web-app/rainmaker/web/rainmaker/packages/screen-configurations"
+            });
+            ax.get("/hrms/create-update.json?timeStamp=" + timeStamp + "?callback=?").then(function (response) {
+              self.screenConfig = response.data[screenKey] || {};
+              initScreen(screenKey, (0, _cloneDeep2.default)(self.screenConfig));
+            }).catch(function (error) {
+              console.log(error);
+            });
             // const url=`http://rawgit.com/muralim4242/mihy-repo/master/packages/ui-client-app/src/ui-config/screens/specs/${path}/${screenKey}.js`;
             // $.getScript(url, function( data, textStatus, jqxhr ) {
             //     console.log( data ); // Data returned
@@ -135,14 +138,14 @@ var screenHoc = function screenHoc(_ref) {
             //     console.log( jqxhr.status ); // 200
             //     console.log( "Load was performed." );
             // });
-            _this.screenConfig = getConfig(path, screenKey);
           } else {
             _this.screenConfig = getConfig(path, screenKey);
+            initScreen(screenKey, (0, _cloneDeep2.default)(_this.screenConfig));
           }
           // if (!isEmpty(this.screenConfig)) {
           //   addComponentJsonpath(this.screenConfig.components);
           // }
-          initScreen(screenKey, (0, _cloneDeep2.default)(_this.screenConfig));
+          // initScreen(screenKey, cloneDeep(this.screenConfig));
         } catch (error) {
           // the error is assumed to have occured due to absence of config; so ignore it!
           console.log(error);

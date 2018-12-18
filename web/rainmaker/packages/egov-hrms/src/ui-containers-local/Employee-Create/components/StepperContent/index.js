@@ -1,75 +1,99 @@
 import React from "react";
 import { Form } from "mihy-ui-framework/ui-atoms";
 import { Card, Grid } from "@material-ui/core";
-import { TextFieldContainer } from "mihy-ui-framework/ui-containers";
-import createEmployee from "./createEmployee";
-import { OwnerInfoCard } from "../../../../ui-config/screens/specs/tradelicence/applyResource/tradeOwnerDetails";
-import { getCommonTitle } from "mihy-ui-framework/ui-config/screens/specs/utils";
 import {
-  ComponentInterface,
-  RenderScreen
-} from "mihy-ui-framework/ui-molecules";
+  TextFieldContainer,
+  LabelContainer
+} from "mihy-ui-framework/ui-containers";
+import { RadioGroupContainer } from "../../../index";
 
-// const header = getCommonTitle(
-//   {
-//     labelName: "Required Documents",
-//     labelKey: "TL_NEW-UPLOAD-DOCS_HEADER"
-//   },
-//   {
-//     style: {
-//       marginBottom: 18
-//     }
-//   }
-// );
-const inputLabelProps = {
-  shrink: true
-};
+const genderOptions = ["Male", "Female", "Transgender"];
 
-const StepperContent = () => {
-  const { name, mobileNo, emailId, dob, aadhaar, pan } = createEmployee;
-  console.log("OwnerInfoCard is....", OwnerInfoCard);
+const StepperContent = ({ stepOne }) => {
+  const cardOne = stepOne["card-one"];
+  const {
+    aadhaar,
+    correspondenceAddress,
+    dateofAppointment,
+    department,
+    designation,
+    dob,
+    emailId,
+    employeeCode,
+    fromDate,
+    mobileNo,
+    name,
+    pan,
+    permanentAddress,
+    toDate
+  } = cardOne;
   return (
     <Form>
       <Card style={{ padding: "16px" }}>
-        <Grid container="true" sm="12" spacing={16}>
-          <Grid sm="4">
-            <TextFieldContainer
-              label={name.label}
-              placeholder={name.placeholder}
-            />
+        <LabelContainer labelName="Employee Details" />
+        <div style={{ margin: 16 }}>
+          <Grid container="true" sm="12" spacing={16}>
+            <Grid sm="4">
+              <TextFieldContainer {...name} />
+            </Grid>
+            <Grid sm="4">
+              <TextFieldContainer {...mobileNo} />
+            </Grid>
+            <Grid sm="4">
+              <TextFieldContainer {...employeeCode} />
+            </Grid>
+            <Grid sm="4">
+              <TextFieldContainer {...department} />
+            </Grid>
+            <Grid sm="4">
+              <TextFieldContainer {...designation} />
+            </Grid>
+            <Grid sm="4">
+              <TextFieldContainer {...emailId} />
+            </Grid>
+            <Grid sm="4">
+              <TextFieldContainer {...dob} />
+            </Grid>
+            <Grid sm="4">
+              <TextFieldContainer {...permanentAddress} />
+            </Grid>
+            <Grid sm="4">
+              <TextFieldContainer {...correspondenceAddress} />
+            </Grid>
+            <Grid sm="4">
+              <TextFieldContainer {...aadhaar} />
+            </Grid>
+            <Grid sm="4">
+              <TextFieldContainer {...pan} />
+            </Grid>
+            <Grid sm="4">
+              <TextFieldContainer {...dateofAppointment} />
+            </Grid>
+            <Grid sm="4">
+              <TextFieldContainer {...dateofAppointment} />
+            </Grid>
+            <Grid sm="4">
+              <TextFieldContainer {...fromDate} />
+            </Grid>
+            <Grid sm="4">
+              <TextFieldContainer {...toDate} />
+            </Grid>
+            <Grid sm="4">
+              <LabelContainer
+                labelName="Gender"
+                style={{
+                  fontSize: "14px",
+                  fontFamily: "Roboto",
+                  color: "rgba(0,0,0,0.60)"
+                }}
+              />
+              <RadioGroupContainer
+                buttons={genderOptions}
+                style={{ marginTop: 10 }}
+              />
+            </Grid>
           </Grid>
-          <Grid sm="4">
-            <TextFieldContainer
-              label={mobileNo.label}
-              placeholder={mobileNo.placeholder}
-            />
-          </Grid>
-          <Grid sm="4">
-            <TextFieldContainer
-              label={emailId.label}
-              placeholder={emailId.placeholder}
-            />
-          </Grid>
-          <Grid sm="4">
-            <TextFieldContainer
-              label={dob.label}
-              placeholder={dob.placeholder}
-            />
-          </Grid>
-
-          <Grid sm="4">
-            <TextFieldContainer
-              label={aadhaar.label}
-              placeholder={aadhaar.placeholder}
-            />
-          </Grid>
-          <Grid sm="4">
-            <TextFieldContainer
-              label={pan.label}
-              placeholder={pan.placeholder}
-            />
-          </Grid>
-        </Grid>
+        </div>
       </Card>
     </Form>
   );
