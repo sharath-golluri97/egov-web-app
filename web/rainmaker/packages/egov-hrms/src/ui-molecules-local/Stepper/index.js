@@ -19,52 +19,31 @@ const styles = theme => ({
   }
 });
 
-function getSteps() {
-  return ["Employee Details", "Address Info", "Summary"];
-}
-
-const header = function getStepContent(stepIndex) {
-  switch (stepIndex) {
-    case 0:
-      return "Select campaign settings...";
-    case 1:
-      return "What is an ad group anyways?";
-    case 2:
-      return "This is the bit I really care about!";
-    default:
-      return "Uknown stepIndex";
-  }
-};
-
 class HorizontalStepper extends React.Component {
-  state = {
-    activeStep: 0
+  handleNext = activeStep => {
+    const { onFieldChange } = this.props;
+    onFieldChange(
+      "create-update",
+      "components.stepper",
+      "activeStep",
+      activeStep + 1
+    );
   };
 
-  handleNext = () => {
-    this.setState(state => ({
-      activeStep: state.activeStep + 1
-    }));
-  };
-
-  handleBack = () => {
-    this.setState(state => ({
-      activeStep: state.activeStep - 1
-    }));
-  };
-
-  handleReset = () => {
-    this.setState({
-      activeStep: 0
-    });
+  handleBack = activeStep => {
+    const { onFieldChange } = this.props;
+    onFieldChange(
+      "create-update",
+      "components.stepper",
+      "activeStep",
+      activeStep - 1
+    );
   };
 
   render() {
     const { classes, stepData } = this.props;
-    const steps = stepData.steps || [];
-    const { activeStep } = this.state;
-    console.log("stepper is....", stepData);
-    console.log("step data is....", steps);
+    const { steps, activeStep } = stepData;
+    const { handleBack, handleNext } = this;
 
     return (
       <div className={classes.root}>
@@ -77,37 +56,11 @@ class HorizontalStepper extends React.Component {
             );
           })}
         </Stepper>
-        <div>
-          {this.state.activeStep === steps.length ? (
-            <div>{/* <Button onClick={this.handleReset}>Reset</Button> */}</div>
-          ) : (
-            <div>
-              {/* <Typography className={classes.instructions}>
-                {getStepContent(activeStep)}
-              </Typography> */}
-              {/* <div>
-                <Button
-                  disabled={activeStep === 0}
-                  onClick={this.handleBack}
-                  className={classes.backButton}
-                >
-                  Back
-                </Button>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={this.handleNext}
-                >
-                  {activeStep === steps.length - 1 ? "Finish" : "Next"}
-                </Button>
-              </div> */}
-            </div>
-          )}
-        </div>
         <Footer
+          activeStep={activeStep}
           disabled={activeStep === 0}
-          onPreviousClick={this.handleBack}
-          onNextClick={this.handleNext}
+          onPreviousClick={handleBack}
+          onNextClick={handleNext}
           variant={"contained"}
           color={"primary"}
           label1={"Previous"}

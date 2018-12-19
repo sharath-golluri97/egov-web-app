@@ -3,6 +3,7 @@ import { Button } from "@material-ui/core";
 import "./index.css";
 
 const FooterContainer = ({
+  activeStep,
   disabled,
   onPreviousClick,
   onNextClick,
@@ -21,7 +22,7 @@ const FooterContainer = ({
             color={color}
             variant={variant}
             style={style}
-            onClick={onPreviousClick}
+            onClick={() => onPreviousClick(activeStep)}
           >
             {label1}
           </Button>
@@ -30,7 +31,7 @@ const FooterContainer = ({
           color={color}
           variant={variant}
           style={style}
-          onClick={onNextClick}
+          onClick={() => onNextClick(activeStep)}
         >
           {label2}
         </Button>
