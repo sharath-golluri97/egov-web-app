@@ -4,6 +4,8 @@ import { withStyles } from "@material-ui/core/styles";
 import { screenHoc } from "mihy-ui-framework/ui-hocs";
 import Stepper from "../../ui-molecules-local/Stepper";
 import StepperContent from "./components/StepperContent";
+import { handleScreenConfigurationFieldChange as handleField } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
+
 import get from "lodash/get";
 
 const styles = theme => ({
@@ -14,13 +16,17 @@ const styles = theme => ({
 
 class EmployeeCreate extends React.Component {
   render() {
-    const { classes, employeeConfig } = this.props;
+    const { classes, employeeConfig, handleField } = this.props;
     const stepOne = get(employeeConfig, "components.step-one");
     const stepData = get(employeeConfig, "components.stepper");
     return (
       <div>
-        <Stepper classes={classes.root} stepData={stepData} />
-        <StepperContent stepOne={stepOne} />
+        <Stepper
+          classes={classes.root}
+          stepData={stepData}
+          onFieldChange={handleField}
+        />
+        <StepperContent stepOne={stepOne} onFieldChange={handleField} />
       </div>
     );
   }
@@ -33,6 +39,18 @@ const mapStateToProps = state => {
   return { employeeConfig };
 };
 
+const mapDispatchToProps = dispatch => {
+  return {
+    handleField: (screenKey, path, field, value) =>
+      dispatch(handleField(screenKey, path, field, value))
+  };
+};
+
 export default screenHoc({ screenKey: "create-update", hasRemoteConfig: true })(
-  withStyles(styles)(connect(mapStateToProps)(EmployeeCreate))
+  withStyles(styles)(
+    connect(
+      mapStateToProps,
+      mapDispatchToProps
+    )(EmployeeCreate)
+  )
 );
