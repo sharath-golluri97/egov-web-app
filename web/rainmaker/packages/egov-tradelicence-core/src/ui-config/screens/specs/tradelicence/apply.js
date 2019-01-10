@@ -95,7 +95,6 @@ export const getMdmsData = async (action, state, dispatch) => {
         {
           moduleName: "common-masters",
           masterDetails: [
-            { name: "StructureType" },
             { name: "OwnerType" },
             { name: "OwnerShipCategory" },
             { name: "DocumentType" },
@@ -147,7 +146,39 @@ export const getMdmsData = async (action, state, dispatch) => {
     if (localities && localities.length > 0) {
       payload.MdmsRes.tenant.localities = localities;
     }
-    dispatch(prepareFinalObject("applyScreenMdmsData", payload.MdmsRes));
+    const licenseType = get(
+      state.screenConfiguration,
+      "preparedFinalObject.applyScreenMdmsData.TradeLicense.licenseType",
+      []
+    );
+    const StructureType = get(
+      state.screenConfiguration,
+      "preparedFinalObject.applyScreenMdmsData.common-masters.StructureType",
+      []
+    );
+    const StructureTypeTransformed = get(
+      state.screenConfiguration,
+      "preparedFinalObject.applyScreenMdmsData.common-masters.StructureTypeTransformed",
+      []
+    );
+    const applyMdmsData = {
+      ...payload.MdmsRes,
+      ...{
+        TradeLicense: {
+          ...payload.MdmsRes.TradeLicense,
+          licenseType: licenseType
+        }
+      }
+    };
+    StructureType &&
+      set(applyMdmsData, "common-masters.StructureType", StructureType);
+    StructureTypeTransformed &&
+      set(
+        applyMdmsData,
+        "common-masters.StructureTypeTransformed",
+        StructureTypeTransformed
+      );
+    dispatch(prepareFinalObject("applyScreenMdmsData", applyMdmsData));
   } catch (e) {
     console.log(e);
   }
