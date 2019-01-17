@@ -19,10 +19,11 @@ class InboxData extends React.Component {
 
   onHistoryClick = async (moduleNumber) => {
     const { toggleSnackbarAndSetText } = this.props;
+    const tenantId = localStorage.getItem("tenant-id");
     this.setState({
       dialogOpen: true,
     });
-    const queryObject = [{ key: "businessIds", value: moduleNumber.text }, { key: "history", value: true }, { key: "tenantId", value: "pb" }];
+    const queryObject = [{ key: "businessIds", value: moduleNumber.text }, { key: "history", value: true }, { key: "tenantId", value: tenantId }];
     const payload = await httpRequest("egov-workflow-v2/egov-wf/process/_search?", "", queryObject);
     this.setState({
       workflowHistory: payload.ProcessInstances,
@@ -40,8 +41,9 @@ class InboxData extends React.Component {
     const status = index === 2 && item.text;
     const taskId = index === 1 && item.text;
     const tenantId = localStorage.getItem("tenant-id");
-    let baseUrl = "http://localhost:3000/";
-    let contextPath = status === "INITIATED" ? "integration/tradelicense/apply" : "integration/tradelicense/search-preview";
+    let baseUrl = process.env.NODE_ENV === "development" ? "https://egov-micro-dev.egovernments.org/" : window.origin;
+    // let baseUrl = "http://localhost:3000/";
+    let contextPath = status === "INITIATED" ? "employee/integration/tradelicense/apply" : "employee/integration/tradelicense/search-preview";
     let queryParams = `applicationNumber=${taskId}&tenantId=${tenantId}`;
     return `${baseUrl}${contextPath}?${queryParams}`;
   };
@@ -49,7 +51,6 @@ class InboxData extends React.Component {
   render() {
     const { data } = this.props;
     const { onHistoryClick, onDialogClose, getModuleLink } = this;
-    // let baseUrl = process.env.NODE_ENV === "development" ? "https://egov-micro-dev.egovernments.org/" : window.origin;
 
     return (
       <Table>

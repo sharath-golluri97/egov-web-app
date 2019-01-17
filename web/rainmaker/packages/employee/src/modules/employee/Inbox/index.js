@@ -9,8 +9,11 @@ import "./index.css";
 import { httpRequest } from "egov-ui-kit/utils/api";
 import _ from "lodash";
 
+// DUMMY CONTRACT FOR REFERENCE
 const taskboardData = [{ head: "34", body: "Total Task" }, { head: "12", body: "Nearing SLA" }, { head: "05", body: "Over SLA" }];
+// DUMMY CONTRACT FOR REFERENCE
 const tabdata = ["Assigned to me (4)", "All (30)"];
+// DUMMY CONTRACT FOR REFERENCE
 const inboxDataDUM = {
   headers: ["Module/Service", "Task ID", "Status", "Assigned By", "Assigned To", "SLA (Days Remaining)"],
   rows: [
@@ -79,15 +82,16 @@ class Inbox extends Component {
 
   componentDidMount = async () => {
     const uuid = _.get(this.props, "userInfo.uuid");
+    const tenantId = localStorage.getItem("tenant-id");
 
     const taskboardData = [];
     const tabData = [];
     const inboxData = [{ headers: [], rows: [] }];
 
-    const requestBody = [{ key: "tenantId", value: "pb" }];
+    const requestBody = [{ key: "tenantId", value: tenantId }];
     const responseData = await httpRequest("egov-workflow-v2/egov-wf/process/_search", "_search", requestBody);
 
-    const assignedData = _.filter(responseData.ProcessInstances, (item) => item.assigner.uuid === "4446312c-f21b-4cc3-9572-caca4e37225a");
+    const assignedData = _.filter(responseData.ProcessInstances, (item) => _.get(item.assignee, "uuid") === uuid);
     const allData = _.get(responseData, "ProcessInstances", []);
 
     const assignedDataRows = prepareInboxDataRows(assignedData);
