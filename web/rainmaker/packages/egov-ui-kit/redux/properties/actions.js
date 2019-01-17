@@ -584,7 +584,11 @@ var getSingleAssesmentandStatus = exports.getSingleAssesmentandStatus = function
 
             case 7:
               payloadReceipts = _context5.sent;
-              payloadWithReceiptAsId = (0, _cloneDeep2.default)(payloadReceipts["Receipt"]).map(function (item) {
+
+              console.log(payloadReceipts["Receipt"]);
+              payloadWithReceiptAsId = (0, _cloneDeep2.default)(payloadReceipts["Receipt"]).filter(function (item) {
+                return (0, _get2.default)(item, "Bill[0].billDetails[0].status") !== "Cancelled";
+              }).map(function (item) {
                 item.receiptNumber = (0, _get2.default)(item, "Bill[0].billDetails[0].receiptNumber", "");
                 return item;
               });
@@ -600,21 +604,21 @@ var getSingleAssesmentandStatus = exports.getSingleAssesmentandStatus = function
               }, {});
 
               dispatch(SingleAssessmentStatusFetchComplete(mergeReceiptsInProperty(receiptDetails, consumerCodes)));
-              _context5.next = 17;
+              _context5.next = 18;
               break;
 
-            case 14:
-              _context5.prev = 14;
+            case 15:
+              _context5.prev = 15;
               _context5.t0 = _context5["catch"](1);
 
               dispatch(SingleAssessmentStatusFetchError(_context5.t0.message));
 
-            case 17:
+            case 18:
             case "end":
               return _context5.stop();
           }
         }
-      }, _callee5, undefined, [[1, 14]]);
+      }, _callee5, undefined, [[1, 15]]);
     }));
 
     return function (_x6) {
