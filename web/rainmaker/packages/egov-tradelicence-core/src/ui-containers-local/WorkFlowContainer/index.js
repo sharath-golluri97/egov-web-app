@@ -79,7 +79,10 @@ class WorkFlowContainer extends React.Component {
   createWorkFLow = async label => {
     const { Licenses } = this.props;
     set(Licenses[0], "action", label);
-    const applicationNumber = getQueryArg(window.location.href, "applicationNumber");
+    const applicationNumber = getQueryArg(
+      window.location.href,
+      "applicationNumber"
+    );
     try {
       const payload = await httpRequest(
         "post",
@@ -99,7 +102,7 @@ class WorkFlowContainer extends React.Component {
         )}&applicationNumber=${applicationNumber}&tenantId=${tenant}`;
       }
     } catch (e) {
-      toggleSnackbarAndSetText(true, e.message, "warning");
+      toggleSnackbarAndSetText(true, "TL update error!", "error");
     }
   };
 

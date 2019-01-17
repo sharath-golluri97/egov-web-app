@@ -43,34 +43,8 @@ const fieldConfig = {
 
 class ActionDialog extends React.Component {
   state = {
-    employeeList: []
-  };
-
-  componentDidMount = async () => {
-    const { dialogData } = this.props;
-    const { roles } = dialogData;
-    const tenantId = localStorage.getItem("tenant-id");
-    const queryObj = [
-      { key: "roleCodes", value: roles, key: "tenantId", value: tenantId }
-    ];
-    const payload = await httpRequest(
-      "post",
-      "/hr-employee-v2/employees/_search",
-      "",
-      queryObj
-    );
-    const employeeList =
-      payload &&
-      payload.Employee.map((item, index) => {
-        return {
-          value: item.name,
-          label: item.code
-        };
-      });
-
-    this.setState({
-      employeeList: employeeList
-    });
+    employeeList: [],
+    roles: ""
   };
 
   getButtonName = action => {
@@ -102,13 +76,13 @@ class ActionDialog extends React.Component {
     const {
       open,
       onClose,
-      action,
+      dropDownData,
       handleFieldChange,
       onButtonClick,
       dialogData
     } = this.props;
     const { buttonLabel, showEmployeeList, dialogHeader } = dialogData;
-    const { getEmployeeList, getHeaderName, getButtonName } = this;
+    const { getButtonName } = this;
     return (
       <Dialog open={open} onClose={onClose} maxWidth="lg">
         <DialogContent
@@ -153,9 +127,10 @@ class ActionDialog extends React.Component {
                         style={{ marginRight: "15px" }}
                         label={fieldConfig.approverName.label}
                         placeholder={fieldConfig.approverName.placeholder}
-                        data={this.state.employeeList}
+                        data={dropDownData}
                         optionValue="value"
                         optionLabel="label"
+                        hasLocalization={false}
                         onChange={e =>
                           handleFieldChange(
                             "Licenses[0].assignee",
@@ -209,7 +184,7 @@ class ActionDialog extends React.Component {
                         accept: "image/*, .pdf, .png, .jpeg"
                       }}
                       buttonLabel={{ labelName: "UPLOAD FILES" }}
-                      jsonPath=""
+                      jsonPath="Licenses[0].wfDocumnets"
                       maxFileSize={5000}
                     />
                     <Grid sm={12} style={{ textAlign: "right" }}>

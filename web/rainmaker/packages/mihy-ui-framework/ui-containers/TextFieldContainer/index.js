@@ -98,11 +98,12 @@ var TextFieldContainer = function (_React$Component) {
           sourceJsonPath = _props2.sourceJsonPath,
           index = _props2.index,
           componentJsonpath = _props2.componentJsonpath,
+          hasLocalization = _props2.hasLocalization,
           state = _props2.state,
           infoIcon = _props2.infoIcon,
           dispatch = _props2.dispatch,
           title = _props2.title,
-          rest = (0, _objectWithoutProperties3.default)(_props2, ["label", "placeholder", "jsonPath", "iconObj", "value", "dropdownData", "data", "optionValue", "optionLabel", "sourceJsonPath", "index", "componentJsonpath", "state", "infoIcon", "dispatch", "title"]);
+          rest = (0, _objectWithoutProperties3.default)(_props2, ["label", "placeholder", "jsonPath", "iconObj", "value", "dropdownData", "data", "optionValue", "optionLabel", "sourceJsonPath", "index", "componentJsonpath", "hasLocalization", "state", "infoIcon", "dispatch", "title"]);
 
 
       if (!(0, _isEmpty2.default)(iconObj) && iconObj.onClickDefination) {
@@ -137,7 +138,13 @@ var TextFieldContainer = function (_React$Component) {
               translatedPlaceholder
             )
           ),
-          dropdownData.map(function (option, key) {
+          hasLocalization === false ? dropdownData.map(function (option, key) {
+            return _react2.default.createElement(
+              _MenuItem2.default,
+              { key: key, value: option.value },
+              option.label
+            );
+          }) : dropdownData.map(function (option, key) {
             return _react2.default.createElement(
               _MenuItem2.default,
               { key: key, value: option.value },
@@ -215,6 +222,7 @@ var mapStateToProps = function mapStateToProps(state, ownprops) {
       dropdownData = constructDropdown((0, _get2.default)(preparedFinalObject, sourceJsonPath, []));
     }
   }
+
   return { value: fieldValue, dropdownData: dropdownData, state: state };
 };
 

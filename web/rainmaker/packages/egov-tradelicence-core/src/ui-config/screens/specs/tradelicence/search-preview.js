@@ -354,10 +354,12 @@ const screenConfig = {
   beforeInitScreen: (action, state, dispatch) => {
     const status = getQueryArg(window.location.href, "status");
     applicationNumber = getQueryArg(window.location.href, "applicationNumber");
+    const tenantId = getQueryArg(window.location.href, "tenantId");
     //To set the application no. at the  top
     const queryObject = [
       { key: "businessIds", value: applicationNumber },
-      { key: "history", value: true }
+      { key: "history", value: true },
+      { key: "tenantId", value: tenantId }
     ];
     dispatch(getWorkFlowData(queryObject));
     set(

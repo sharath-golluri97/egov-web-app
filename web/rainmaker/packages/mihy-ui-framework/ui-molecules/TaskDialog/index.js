@@ -82,7 +82,7 @@ var TaskDialog = function TaskDialog(props) {
               return _react2.default.createElement(
                 "div",
                 null,
-                _react2.default.createElement(_TaskStatusComponents2.default, { currentStatus: item }),
+                _react2.default.createElement(_TaskStatusComponents2.default, { currentObj: item }),
                 _react2.default.createElement(_core.Divider, { className: classes.root })
               );
             })

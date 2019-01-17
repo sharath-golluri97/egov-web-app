@@ -37,13 +37,15 @@ class InboxData extends React.Component {
     });
   };
 
-  getModuleLink = (item, index) => {
-    const status = index === 2 && item.text;
+  getModuleLink = (item, row, index) => {
+    console.log("item is.....", row, item);
+    const status = row[2].text;
     const taskId = index === 1 && item.text;
     const tenantId = localStorage.getItem("tenant-id");
-    let baseUrl = process.env.NODE_ENV === "development" ? "https://egov-micro-dev.egovernments.org/" : window.origin;
-    // let baseUrl = "http://localhost:3000/";
-    let contextPath = status === "INITIATED" ? "employee/integration/tradelicense/apply" : "employee/integration/tradelicense/search-preview";
+    // let baseUrl = process.env.NODE_ENV === "development" ? "https://egov-micro-dev.egovernments.org/" : window.origin;
+    let baseUrl = "http://localhost:3000/";
+    //let contextPath = status === "INITIATED" ? "employee/integration/tradelicense/apply" : "employee/integration/tradelicense/search-preview";
+    let contextPath = status === "INITIATED" ? "mihy-ui-framework/tradelicence/apply" : "mihy-ui-framework/tradelicence/search-preview";
     let queryParams = `applicationNumber=${taskId}&tenantId=${tenantId}`;
     return `${baseUrl}${contextPath}?${queryParams}`;
   };
@@ -90,7 +92,7 @@ class InboxData extends React.Component {
                   } else {
                     return (
                       <TableCell className="inbox-data-table-bodycell">
-                        {index === 1 ? <a href={getModuleLink(item, index)}> {item.text} </a> : item.text}
+                        {index === 1 ? <a href={getModuleLink(item, row, index)}> {item.text} </a> : item.text}
                       </TableCell>
                     );
                   }

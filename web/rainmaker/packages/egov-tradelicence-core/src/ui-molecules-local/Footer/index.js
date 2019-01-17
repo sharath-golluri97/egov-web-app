@@ -2,6 +2,7 @@ import React from "react";
 import { Button } from "@material-ui/core";
 import { LabelContainer } from "mihy-ui-framework/ui-containers";
 import { ActionDialog } from "../";
+import { httpRequest } from "ui-utils/api";
 import "./index.css";
 
 const buttonStyle = {
@@ -30,18 +31,48 @@ const getButtonLabelKey = item => {
 class Footer extends React.Component {
   state = {
     open: false,
-    data: {}
+    data: {},
+    employeeList: []
   };
 
-  openActionDialog = item => {
+  openActionDialog = async item => {
+    const { handleFieldChange } = this.props;
+    handleFieldChange("Licenses[0].comment", "");
+    handleFieldChange("Licenses[0].assignee", "");
     if (item.isLast) {
       window.location.href = item.buttonUrl;
       return;
     }
-    let state = this.state;
-    state.open = true;
-    state.data = item;
-    this.setState(state);
+    const tenantId = localStorage.getItem("tenant-id");
+    const queryObj = [
+      {
+        key: "roleCodes",
+        value: item.roles
+      },
+      {
+        key: "tenantId",
+        value: tenantId
+      }
+    ];
+    const payload = await httpRequest(
+      "post",
+      "/hr-employee-v2/employees/_search",
+      "",
+      queryObj
+    );
+    const employeeList =
+      payload &&
+      payload.Employee.map((item, index) => {
+        return {
+          value: item.uuid,
+          label: item.name
+        };
+      });
+
+    // let state = this.state;
+    // state.open = true;
+    // state.data = item;
+    this.setState({ open: true, data: item, employeeList });
   };
 
   onClose = () => {
@@ -58,7 +89,7 @@ class Footer extends React.Component {
       handleFieldChange,
       onDialogButtonClick
     } = this.props;
-    const { open, data } = this.state;
+    const { open, data, employeeList } = this.state;
     return (
       <div className="col-xs-12 stepper-footer" style={{ textAlign: "right" }}>
         <div className="col-xs-6" style={{ float: "right", padding: 0 }}>
@@ -83,6 +114,7 @@ class Footer extends React.Component {
           open={open}
           onClose={this.onClose}
           dialogData={data}
+          dropDownData={employeeList}
           handleFieldChange={handleFieldChange}
           onButtonClick={onDialogButtonClick}
         />
