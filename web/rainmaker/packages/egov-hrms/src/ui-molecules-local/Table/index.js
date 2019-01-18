@@ -66,16 +66,18 @@ class Table extends React.Component {
     const { data, columns } = this.state;
     const { options, title } = this.props;
     return (
-      <MUIDataTable
-        title={title}
-        data={data}
-        columns={columns}
-        options={{
-          ...options,
-          onColumnSortChange: (columnName, order) =>
-            this.onColumnSortChange(columnName, order)
-        }}
-      />
+      <div className="hr-table-container">
+        <MUIDataTable
+          title={title}
+          data={data}
+          columns={columns}
+          options={{
+            ...options,
+            onColumnSortChange: (columnName, order) =>
+              this.onColumnSortChange(columnName, order)
+          }}
+        />
+      </div>
     );
   }
 }

@@ -2,6 +2,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 import get from "lodash/get";
 import { sortByEpoch, getEpochForDate } from "../../utils";
+import Icon from "@material-ui/core/Icon";
+import { LabelContainer } from "mihy-ui-framework/ui-containers";
+import Button from "@material-ui/core/Button";
+import DeleteIcon from "@material-ui/icons/Delete";
 
 const getLocalTextFromCode = localCode => {
   return JSON.parse(localStorage.getItem("localization_en_IN")).find(
@@ -10,47 +14,42 @@ const getLocalTextFromCode = localCode => {
 };
 
 export const textToLocalMapping = {
-  "Application No": get(
-    getLocalTextFromCode("TL_COMMON_TABLE_COL_APP_NO"),
+  "Employee ID": get(
+    getLocalTextFromCode("HR_COMMON_TABLE_COL_EMP_ID"),
     "message",
-    "Application No"
+    "Employee ID"
   ),
-  "License No": get(
-    getLocalTextFromCode("TL_COMMON_TABLE_COL_LIC_NO"),
+  Name: get(
+    getLocalTextFromCode("HR_COMMON_TABLE_COL_NAME"),
     "message",
-    "License No"
+    "Name"
   ),
-  "Trade Name": get(
-    getLocalTextFromCode("TL_COMMON_TABLE_COL_TRD_NAME"),
+  Role: get(
+    getLocalTextFromCode("HR_COMMON_TABLE_COL_ROLE"),
     "message",
-    "Trade Name"
+    "Role"
   ),
-  "Owner Name": get(
-    getLocalTextFromCode("TL_COMMON_TABLE_COL_OWN_NAME"),
+  Designation: get(
+    getLocalTextFromCode("HR_COMMON_TABLE_COL_DESG"),
     "message",
-    "Owner Name"
+    "Designation"
   ),
-  "Application Date": get(
-    getLocalTextFromCode("TL_COMMON_TABLE_COL_APP_DATE"),
+  Department: get(
+    getLocalTextFromCode("HR_COMMON_TABLE_COL_DEPT"),
     "message",
-    "Application Date"
+    "Department"
   ),
-  Status: get(
-    getLocalTextFromCode("TL_COMMON_TABLE_COL_STATUS"),
+  "Search Results for Employee": get(
+    getLocalTextFromCode("HR_HOME_SEARCH_RESULTS_TABLE_HEADING"),
     "message",
-    "Status"
-  ),
-  INITIATED: get(getLocalTextFromCode("TL_INITIATED"), "message", "INITIATED"),
-  APPLIED: get(getLocalTextFromCode("TL_APPLIED"), "message", "APPLIED"),
-  PAID: get(getLocalTextFromCode("TL_PAID"), "message", "PAID"),
-  APPROVED: get(getLocalTextFromCode("TL_APPROVED"), "message", "APPROVED"),
-  REJECTED: get(getLocalTextFromCode("TL_REJECTED"), "message", "REJECTED"),
-  CANCELLED: get(getLocalTextFromCode("TL_CANCELLED"), "message", "CANCELLED"),
-  "Search Results for Trade License Applications": get(
-    getLocalTextFromCode("TL_HOME_SEARCH_RESULTS_TABLE_HEADING"),
-    "message",
-    "Search Results for Trade License Applications"
+    "Search Results for Employee"
   )
+};
+
+const selectToolbarStyle = {
+  display: "flex",
+  alignItems: "center",
+  padding: "0 10px"
 };
 
 export const searchResults = {
@@ -60,7 +59,7 @@ export const searchResults = {
   props: {
     data: [],
     columns: {
-      [get(textToLocalMapping, "Application No")]: {
+      [get(textToLocalMapping, "Employee ID")]: {
         format: rowData => {
           return (
             <Link to={onRowClick(rowData)}>
@@ -69,76 +68,55 @@ export const searchResults = {
                   color: "#FE7A51"
                 }}
               >
-                {rowData[get(textToLocalMapping, "Application No")]}
+                {rowData[get(textToLocalMapping, "Employee ID")]}
               </span>
             </Link>
           );
         }
       },
-      [get(textToLocalMapping, "License No")]: {},
-      [get(textToLocalMapping, "Trade Name")]: {},
-      [get(textToLocalMapping, "Owner Name")]: {},
-      [get(textToLocalMapping, "Application Date")]: {},
-      [get(textToLocalMapping, "Status")]: {}
+      [get(textToLocalMapping, "Name")]: {},
+      [get(textToLocalMapping, "Role")]: {},
+      [get(textToLocalMapping, "Designation")]: {},
+      [get(textToLocalMapping, "Department")]: {}
     },
-    title: get(
-      textToLocalMapping,
-      "Search Results for Trade License Applications"
-    ),
+    title: get(textToLocalMapping, "Search Results for Employee"),
     options: {
       filter: false,
       download: false,
       responsive: "stacked",
-      selectableRows: false,
+      selectableRows: true,
       hover: true,
-      rowsPerPageOptions: [10, 15, 20]
-    },
-    customSortColumn: {
-      column: "Application Date",
-      sortingFn: (data, i, sortDateOrder) => {
-        const epochDates = data.reduce((acc, curr) => {
-          acc.push([...curr, getEpochForDate(curr[4], "dayend")]);
-          return acc;
-        }, []);
-        const order = sortDateOrder === "asc" ? true : false;
-        const finalData = sortByEpoch(epochDates, !order).map(item => {
-          item.pop();
-          return item;
-        });
-        return { data: finalData, currentOrder: !order ? "asc" : "desc" };
+      rowsPerPageOptions: [10, 15, 20],
+      filterType: "checkbox",
+      customToolbarSelect: (selectedRows, displayData, setSelectableRows) => {
+        return (
+          <Button style={{ color: "#FE7A51" }}>
+            <DeleteIcon style={{ color: "#FE7A51" }} />
+            DEACTIVATE
+          </Button>
+        );
       }
     }
+    // customSortColumn: {
+    //   column: "Application Date",
+    //   sortingFn: (data, i, sortDateOrder) => {
+    //     const epochDates = data.reduce((acc, curr) => {
+    //       acc.push([...curr, getEpochForDate(curr[4], "dayend")]);
+    //       return acc;
+    //     }, []);
+    //     const order = sortDateOrder === "asc" ? true : false;
+    //     const finalData = sortByEpoch(epochDates, !order).map(item => {
+    //       item.pop();
+    //       return item;
+    //     });
+    //     return { data: finalData, currentOrder: !order ? "asc" : "desc" };
+    //   }
+    // }
   }
 };
 
 const onRowClick = rowData => {
-  switch (rowData[get(textToLocalMapping, "Status")]) {
-    case get(textToLocalMapping, "APPLIED"):
-      return `/mihy-ui-framework/tradelicence/search-preview?status=pending_payment&role=approver&applicationNumber=${
-        rowData[get(textToLocalMapping, "Application No")]
-      }&tenantId=${rowData["tenantId"]}`;
-    case get(textToLocalMapping, "APPROVED"):
-      return `/mihy-ui-framework/tradelicence/search-preview?status=approved&role=approver&applicationNumber=${
-        rowData[get(textToLocalMapping, "Application No")]
-      }&tenantId=${rowData["tenantId"]}`;
-
-    case get(textToLocalMapping, "PAID"):
-      return `/mihy-ui-framework/tradelicence/search-preview?status=pending_approval&role=approver&applicationNumber=${
-        rowData[get(textToLocalMapping, "Application No")]
-      }&tenantId=${rowData["tenantId"]}`;
-    case get(textToLocalMapping, "CANCELLED"):
-      return `/mihy-ui-framework/tradelicence/search-preview?status=cancelled&role=approver&applicationNumber=${
-        rowData[get(textToLocalMapping, "Application No")]
-      }&tenantId=${rowData["tenantId"]}`;
-    case get(textToLocalMapping, "INITIATED"):
-      return `/mihy-ui-framework/tradelicence/apply?applicationNumber=${
-        rowData[get(textToLocalMapping, "Application No")]
-      }&tenantId=${rowData["tenantId"]}`;
-    case get(textToLocalMapping, "REJECTED"):
-      return `/mihy-ui-framework/tradelicence/search-preview?status=rejected&role=approver&applicationNumber=${
-        rowData[get(textToLocalMapping, "Application No")]
-      }&tenantId=${rowData["tenantId"]}`;
-    default:
-      return `/mihy-ui-framework/tradelicence/search`;
-  }
+  return `/mihy-ui-framework/tradelicence/apply?employeeID=${
+    rowData[get(textToLocalMapping, "Employee ID")]
+  }`;
 };

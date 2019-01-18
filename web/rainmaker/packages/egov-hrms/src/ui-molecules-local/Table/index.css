@@ -1,8 +1,8 @@
-div[class^=MUIDataTable-responsiveScroll] thead {
-  background: #F2F2F2;
+div[class^="MUIDataTable-responsiveScroll"] thead {
+  background: #f2f2f2;
 }
 
-div[class^=MUIDataTableHeadCell-data] {
+div[class^="MUIDataTableHeadCell-data"] {
   color: rgba(0, 0, 0, 0.8700000048);
   font-family: Roboto;
   font-size: 14px;
@@ -11,6 +11,10 @@ div[class^=MUIDataTableHeadCell-data] {
   text-align: left;
 }
 
-table tbody  tr  td {
-  padding:4px 8px 4px 24px !important;
+.hr-table-container th {
+  background-color: #f2f2f2;
+}
+
+.hr-table-container a {
+  text-decoration-color: rgb(254, 122, 81);
 }

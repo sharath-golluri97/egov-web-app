@@ -21,21 +21,14 @@ export const searchApiCall = async (state, dispatch) => {
     "searchScreen",
     {}
   );
-  const isSearchBoxFirstRowValid = validateFields(
-    "components.div.children.tradeLicenseApplication.children.cardContent.children.appTradeAndMobNumContainer.children",
+  const isSearchFormValid = validateFields(
+    "components.div.children.searchForm.children.cardContent.children.searchFormContainer.children",
     state,
     dispatch,
     "search"
   );
 
-  const isSearchBoxSecondRowValid = validateFields(
-    "components.div.children.tradeLicenseApplication.children.cardContent.children.appStatusAndToFromDateContainer.children",
-    state,
-    dispatch,
-    "search"
-  );
-
-  if (!(isSearchBoxFirstRowValid && isSearchBoxSecondRowValid)) {
+  if (!isSearchFormValid) {
     dispatch(
       toggleSnackbarAndSetText(
         true,
@@ -54,52 +47,62 @@ export const searchApiCall = async (state, dispatch) => {
         "warning"
       )
     );
-  } else if (
-    (searchScreenObject["fromDate"] === undefined ||
-      searchScreenObject["fromDate"].length === 0) &&
-    searchScreenObject["toDate"] !== undefined &&
-    searchScreenObject["toDate"].length !== 0
-  ) {
-    dispatch(
-      toggleSnackbarAndSetText(true, "Please fill From Date", "warning")
-    );
   } else {
     // showHideProgress(true, dispatch);
-    for (var key in searchScreenObject) {
-      if (
-        searchScreenObject.hasOwnProperty(key) &&
-        searchScreenObject[key].trim() !== ""
-      ) {
-        if (key === "fromDate") {
-          queryObject.push({
-            key: key,
-            value: convertDateToEpoch(searchScreenObject[key], "daystart")
-          });
-        } else if (key === "toDate") {
-          queryObject.push({
-            key: key,
-            value: convertDateToEpoch(searchScreenObject[key], "dayend")
-          });
-        } else {
-          queryObject.push({ key: key, value: searchScreenObject[key].trim() });
+    // const response = await getSearchResults(queryObject);
+    const response = {
+      Licenses: [
+        {
+          employeeID: "EMP-JAL-1234",
+          name: "Ravinder Pal Singh",
+          role: "Accountant",
+          designation: "Junior Accountant",
+          department: "Administration"
+        },
+        {
+          employeeID: "EMP-JAL-1234",
+          name: "Ravinder Pal Singh",
+          role: "Accountant",
+          designation: "Junior Accountant",
+          department: "Administration"
+        },
+        {
+          employeeID: "EMP-JAL-1234",
+          name: "Ravinder Pal Singh",
+          role: "Accountant",
+          designation: "Junior Accountant",
+          department: "Administration"
+        },
+        {
+          employeeID: "EMP-JAL-1234",
+          name: "Ravinder Pal Singh",
+          role: "Accountant",
+          designation: "Junior Accountant",
+          department: "Administration"
+        },
+        {
+          employeeID: "EMP-JAL-1234",
+          name: "Ravinder Pal Singh",
+          role: "Accountant",
+          designation: "Junior Accountant",
+          department: "Administration"
+        },
+        {
+          employeeID: "EMP-JAL-1234",
+          name: "Ravinder Pal Singh",
+          role: "Accountant",
+          designation: "Junior Accountant",
+          department: "Administration"
         }
-      }
-    }
-
-    const response = await getSearchResults(queryObject);
+      ]
+    };
     try {
       let data = response.Licenses.map(item => ({
-        [get(textToLocalMapping, "Application No")]:
-          item.applicationNumber || "-",
-        [get(textToLocalMapping, "License No")]: item.licenseNumber || "-",
-        [get(textToLocalMapping, "Trade Name")]: item.tradeName || "-",
-        [get(textToLocalMapping, "Owner Name")]:
-          item.tradeLicenseDetail.owners[0].name || "-",
-        [get(textToLocalMapping, "Application Date")]:
-          convertEpochToDate(item.applicationDate) || "-",
-        tenantId: item.tenantId,
-        [get(textToLocalMapping, "Status")]:
-          get(textToLocalMapping, item.status) || "-"
+        [get(textToLocalMapping, "Employee ID")]: item.employeeID || "-",
+        [get(textToLocalMapping, "Name")]: item.name || "-",
+        [get(textToLocalMapping, "Role")]: item.role || "-",
+        [get(textToLocalMapping, "Designation")]: item.designation || "-",
+        [get(textToLocalMapping, "Department")]: item.department || "-"
       }));
 
       dispatch(
@@ -115,9 +118,9 @@ export const searchApiCall = async (state, dispatch) => {
           "search",
           "components.div.children.searchResults",
           "props.title",
-          `${
-            textToLocalMapping["Search Results for Trade License Applications"]
-          } (${response.Licenses.length})`
+          `${textToLocalMapping["Search Results for Employee"]} (${
+            response.Licenses.length
+          })`
         )
       );
       // showHideProgress(false, dispatch);

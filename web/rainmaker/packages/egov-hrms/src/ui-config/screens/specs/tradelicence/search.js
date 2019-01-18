@@ -3,12 +3,14 @@ import {
   getLabel,
   getBreak
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
-import { tradeLicenseApplication } from "./searchResource/tradeLicenseApplication";
+import { searchForm } from "./searchResource/searchForm";
 
 import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
 import { pendingApprovals } from "./searchResource/pendingApprovals";
 // import { progressStatus } from "./searchResource/progressStatus";
 import { searchResults } from "./searchResource/searchResults";
+import { httpRequest } from "../../../../ui-utils";
+import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 
 const hasButton = getQueryArg(window.location.href, "hasButton");
 //const hasApproval = getQueryArg(window.location.href, "hasApproval");
@@ -17,12 +19,47 @@ let enableButton = true;
 enableButton = hasButton && hasButton === "false" ? false : true;
 
 const header = getCommonHeader({
-  labelName: "Trade License",
-  labelKey: "TL_COMMON_TL"
+  labelName: "Employee Management",
+  labelKey: "HR_COMMON_HEADER"
 });
-const tradeLicenseSearchAndResult = {
+
+const getMDMSData = async (action, state, dispatch) => {
+  let mdmsBody = {
+    MdmsCriteria: {
+      tenantId: "pb", // Why hardcoded?
+      moduleDetails: [
+        {
+          moduleName: "common-masters",
+          masterDetails: [{ name: "Department" }, { name: "Designation" }]
+        }
+      ]
+    }
+  };
+  try {
+    const payload = await httpRequest(
+      "post",
+      "/egov-mdms-service/v1/_search",
+      "_search",
+      [],
+      mdmsBody
+    );
+    dispatch(prepareFinalObject("searchScreenMdmsData", payload.MdmsRes));
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+const getData = async (action, state, dispatch) => {
+  await getMDMSData(action, state, dispatch);
+};
+
+const employeeSearchAndResult = {
   uiFramework: "material-ui",
   name: "search",
+  beforeInitScreen: (action, state, dispatch) => {
+    getData(action, state, dispatch);
+    return action;
+  },
   components: {
     div: {
       uiFramework: "custom-atoms",
@@ -76,13 +113,13 @@ const tradeLicenseSearchAndResult = {
                 },
 
                 buttonLabel: getLabel({
-                  labelName: "NEW APPLICATION",
-                  labelKey: "TL_HOME_SEARCH_RESULTS_NEW_APP_BUTTON"
+                  labelName: "ADD NEW EMPLOYEE",
+                  labelKey: "HR_ADD_NEW_EMPLOYEE_BUTTON"
                 })
               },
               onClickDefination: {
                 action: "page_change",
-                path: "/mihy-ui-framework/tradelicence/apply"
+                path: "/mihy-ui-framework/hrms/apply"
               },
               roleDefination: {
                 rolePath: "user-info.roles",
@@ -92,7 +129,7 @@ const tradeLicenseSearchAndResult = {
           }
         },
         pendingApprovals,
-        tradeLicenseApplication,
+        searchForm,
         breakAfterSearch: getBreak(),
         // progressStatus,
         searchResults
@@ -101,4 +138,4 @@ const tradeLicenseSearchAndResult = {
   }
 };
 
-export default tradeLicenseSearchAndResult;
+export default employeeSearchAndResult;
