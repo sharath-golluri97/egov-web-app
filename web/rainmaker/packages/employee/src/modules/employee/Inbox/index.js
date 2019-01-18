@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import Label from "egov-ui-kit/utils/translationNode";
 import { Taskboard } from "./components";
+import { getBuisnessServiceData } from "egov-ui-kit/redux/workFlow/actions";
 import InboxData from "./components";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
@@ -81,6 +82,7 @@ class Inbox extends Component {
   };
 
   componentDidMount = async () => {
+    const { getBuisnessServiceData } = this.props;
     const uuid = _.get(this.props, "userInfo.uuid");
     const tenantId = localStorage.getItem("tenant-id");
 
@@ -110,6 +112,8 @@ class Inbox extends Component {
 
     inboxData.push({ headers: ["Module/Service", "Task ID", "Status", "Assigned By", "Assigned To", "SLA (Days Remaining)"], rows: allDataRows });
     this.setState({ inboxData, taskboardData, tabData });
+
+    getBuisnessServiceData([{ key: "tenantId", value: localStorage.getItem("tenant-id") }]);
   };
 
   render() {
@@ -140,7 +144,13 @@ const mapStateToProps = (state) => {
   return { name };
 };
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getBuisnessServiceData: (queryObject) => dispatch(getBuisnessServiceData(queryObject)),
+  };
+};
+
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(Inbox);

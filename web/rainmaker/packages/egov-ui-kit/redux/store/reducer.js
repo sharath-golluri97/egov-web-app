@@ -40,9 +40,13 @@ var _reducer15 = require("../properties/reducer");
 
 var _reducer16 = _interopRequireDefault(_reducer15);
 
-var _reducer17 = require("mihy-ui-framework/ui-redux/screen-configuration/reducer");
+var _reducer17 = require("../workFlow/reducer");
 
 var _reducer18 = _interopRequireDefault(_reducer17);
+
+var _reducer19 = require("mihy-ui-framework/ui-redux/screen-configuration/reducer");
+
+var _reducer20 = _interopRequireDefault(_reducer19);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -56,7 +60,8 @@ var rootReducer = {
   formtemp: _reducer12.default,
   report: _report2.default,
   properties: _reducer16.default,
-  screenConfiguration: _reducer18.default
+  screenConfiguration: _reducer20.default,
+  workFlow: _reducer18.default
 };
 
 exports.default = rootReducer;
