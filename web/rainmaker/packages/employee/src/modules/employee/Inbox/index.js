@@ -83,8 +83,8 @@ class Inbox extends Component {
 
   setBusinessServiceDataToLocalStorage = async (queryObject) => {
     const payload = await httpRequest("egov-workflow-v2/egov-wf/businessservice/_search", "_search", queryObject);
-    localStorage.setItem('businessServiceData', JSON.stringify(payload));
-  }
+    localStorage.setItem("businessServiceData", JSON.stringify(_.get(payload, "BusinessServices")));
+  };
 
   componentDidMount = async () => {
     const { getBuisnessServiceData } = this.props;
