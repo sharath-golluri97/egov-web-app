@@ -81,6 +81,11 @@ class Inbox extends Component {
     this.setState({ value });
   };
 
+  setBusinessServiceDataToLocalStorage = async (queryObject) => {
+    const payload = await httpRequest("egov-workflow-v2/egov-wf/businessservice/_search", "_search", queryObject);
+    localStorage.setItem('businessServiceData', JSON.stringify(payload));
+  }
+
   componentDidMount = async () => {
     const { getBuisnessServiceData } = this.props;
     const uuid = _.get(this.props, "userInfo.uuid");
@@ -114,6 +119,7 @@ class Inbox extends Component {
     this.setState({ inboxData, taskboardData, tabData });
 
     getBuisnessServiceData([{ key: "tenantId", value: localStorage.getItem("tenant-id") }]);
+    this.setBusinessServiceDataToLocalStorage([{ key: "tenantId", value: localStorage.getItem("tenant-id") }]);
   };
 
   render() {
