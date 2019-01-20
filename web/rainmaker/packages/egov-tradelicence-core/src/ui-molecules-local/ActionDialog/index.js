@@ -47,30 +47,6 @@ class ActionDialog extends React.Component {
     roles: ""
   };
 
-  getButtonName = action => {
-    switch (action) {
-      case "FORWARD":
-        return { labelName: "FORWARD", labelKey: "TL_FORWARD_BUTTON" };
-      case "MARK":
-        return { labelName: "MARK", labelKey: "TL_MARK_BUTTON" };
-      case "APPROVE":
-        return {
-          labelName: "APPROVE",
-          labelKey: "TL_APPROVER_TRADE_APP_BUTTON_APPROVE"
-        };
-      case "CANCEL":
-        return {
-          labelName: "CANCEL",
-          labelKey: "TL_WORKFLOW_CANCEL_BUTTON_CANCEL"
-        };
-      default:
-        return {
-          labelName: "REJECT",
-          labelKey: "TL_APPROVER_TRADE_APP_BUTTON_REJECT"
-        };
-    }
-  };
-
   getEmployeeList = async roles => {};
   render() {
     const {
@@ -81,8 +57,12 @@ class ActionDialog extends React.Component {
       onButtonClick,
       dialogData
     } = this.props;
-    const { buttonLabel, showEmployeeList, dialogHeader } = dialogData;
-    const { getButtonName } = this;
+    const {
+      buttonLabel,
+      showEmployeeList,
+      dialogHeader,
+      moduleName
+    } = dialogData;
     return (
       <Dialog open={open} onClose={onClose} maxWidth="lg">
         <DialogContent
@@ -99,11 +79,7 @@ class ActionDialog extends React.Component {
                     sm={10}
                   >
                     <Typography component="h2" variant="subheading">
-                      <LabelContainer
-                        // labelName={getHeaderName(buttonLabel).labelName}
-                        // labelKey={getHeaderName(buttonLabel).labelKey}
-                        {...dialogHeader}
-                      />
+                      <LabelContainer {...dialogHeader} />
                     </Typography>
                   </Grid>
                   <Grid
@@ -199,8 +175,12 @@ class ActionDialog extends React.Component {
                         onClick={() => onButtonClick(buttonLabel)}
                       >
                         <LabelContainer
-                          labelName={getButtonName(buttonLabel).labelName}
-                          labelKey={getButtonName(buttonLabel).labelKey}
+                          labelName={buttonLabel}
+                          labelKey={
+                            moduleName
+                              ? `WF_${moduleName.toUpperCase()}_${buttonLabel}`
+                              : ""
+                          }
                         />
                       </Button>
                     </Grid>

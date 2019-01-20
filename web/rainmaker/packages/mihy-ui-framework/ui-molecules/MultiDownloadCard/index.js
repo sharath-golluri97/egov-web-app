@@ -69,65 +69,59 @@ var documentTitle = {
   lineHeight: "19px"
 };
 
-var getDocumentList = function getDocumentList(data, props) {
-  var classes = props.classes,
-      className = props.className;
-
-  return data.map(function (item, key) {
-    return _react2.default.createElement(
-      _Grid2.default,
-      {
-        item: true,
-        container: true,
-        xs: 6,
-        sm: 4,
-        className: props.backgroundGrey ? (0, _classnames2.default)(classes.whiteCard, "background-grey") : classes.whiteCard
-      },
-      _react2.default.createElement(
-        _Grid2.default,
-        { xs: 12 },
-        _react2.default.createElement(_uiContainers.LabelContainer, {
-          labelName: item.title,
-          labelKey: item.title,
-          style: documentTitle
-        })
-      ),
-      _react2.default.createElement(
-        _Grid2.default,
-        { container: true },
-        _react2.default.createElement(
-          _Grid2.default,
-          { xs: 6, className: classes.subtext },
-          _react2.default.createElement(
-            _Typography2.default,
-            null,
-            item.name
-          )
-        ),
-        _react2.default.createElement(
-          _Grid2.default,
-          { xs: 6, align: "right" },
-          _react2.default.createElement(
-            _Button2.default,
-            { href: item.link, color: "primary" },
-            item.linkText
-          )
-        )
-      )
-    );
-  });
-};
-
 function MultiCardDownloadGrid(props) {
   var classes = props.classes,
       data = props.data,
       documentData = props.documentData,
-      rest = (0, _objectWithoutProperties3.default)(props, ["classes", "data", "documentData"]);
+      className = props.className,
+      rest = (0, _objectWithoutProperties3.default)(props, ["classes", "data", "documentData", "className"]);
 
   return _react2.default.createElement(
     _Grid2.default,
     (0, _extends3.default)({ container: true }, rest),
-    documentData ? getDocumentList(documentData, props) : getDocumentList(data, props)
+    data && data.map(function (item, key) {
+      return _react2.default.createElement(
+        _Grid2.default,
+        {
+          item: true,
+          container: true,
+          xs: 6,
+          sm: 4,
+          className: props.backgroundGrey ? (0, _classnames2.default)(classes.whiteCard, "background-grey") : classes.whiteCard
+        },
+        _react2.default.createElement(
+          _Grid2.default,
+          { xs: 12 },
+          _react2.default.createElement(_uiContainers.LabelContainer, {
+            labelName: item.title,
+            labelKey: item.title,
+            style: documentTitle
+          })
+        ),
+        _react2.default.createElement(
+          _Grid2.default,
+          { container: true },
+          _react2.default.createElement(
+            _Grid2.default,
+            { xs: 6, className: classes.subtext },
+            _react2.default.createElement(
+              _Typography2.default,
+              null,
+              item.name
+            )
+          ),
+          _react2.default.createElement(
+            _Grid2.default,
+            { xs: 6, align: "right" },
+            _react2.default.createElement(
+              _Button2.default,
+              { href: item.link, color: "primary" },
+              item.linkText
+            )
+          )
+        )
+      );
+    })
   );
 }
 

@@ -19,8 +19,6 @@ const getButtonLabelKey = item => {
       return "TL_FORWARD_BUTTON";
     case "REJECT":
       return "TL_APPROVER_TRADE_APP_BUTTON_REJECT";
-    case "APPLY":
-      return "TL_APPLY_BUTTON";
     case "CANCEL":
       return "TL_ADD_HOC_CHARGES_POPUP_BUTTON_CANCEL";
     case "MARK":
@@ -37,41 +35,41 @@ class Footer extends React.Component {
 
   openActionDialog = async item => {
     const { handleFieldChange } = this.props;
+    let employeeList = [];
     handleFieldChange("Licenses[0].comment", "");
     handleFieldChange("Licenses[0].assignee", "");
     if (item.isLast) {
       window.location.href = item.buttonUrl;
       return;
     }
-    const tenantId = localStorage.getItem("tenant-id");
-    const queryObj = [
-      {
-        key: "roleCodes",
-        value: item.roles
-      },
-      {
-        key: "tenantId",
-        value: tenantId
-      }
-    ];
-    const payload = await httpRequest(
-      "post",
-      "/hr-employee-v2/employees/_search",
-      "",
-      queryObj
-    );
-    const employeeList =
-      payload &&
-      payload.Employee.map((item, index) => {
-        return {
-          value: item.uuid,
-          label: item.name
-        };
-      });
+    if (item.showEmployeeList) {
+      const tenantId = localStorage.getItem("tenant-id");
+      const queryObj = [
+        {
+          key: "roleCodes",
+          value: item.roles
+        },
+        {
+          key: "tenantId",
+          value: tenantId
+        }
+      ];
+      const payload = await httpRequest(
+        "post",
+        "/hr-employee-v2/employees/_search",
+        "",
+        queryObj
+      );
+      employeeList =
+        payload &&
+        payload.Employee.map((item, index) => {
+          return {
+            value: item.uuid,
+            label: item.name
+          };
+        });
+    }
 
-    // let state = this.state;
-    // state.open = true;
-    // state.data = item;
     this.setState({ open: true, data: item, employeeList });
   };
 
@@ -95,6 +93,7 @@ class Footer extends React.Component {
         <div className="col-xs-6" style={{ float: "right", padding: 0 }}>
           {contractData &&
             contractData.map(item => {
+              const { buttonLabel, moduleName } = item;
               return (
                 <Button
                   color={color}
@@ -103,8 +102,8 @@ class Footer extends React.Component {
                   onClick={() => this.openActionDialog(item)}
                 >
                   <LabelContainer
-                    labelName={item.buttonLabel}
-                    labelKey={() => getButtonLabelKey(item.buttonLabel)}
+                    labelName={buttonLabel}
+                    labelKey={`WF_${moduleName.toUpperCase()}_${buttonLabel}`}
                   />
                 </Button>
               );

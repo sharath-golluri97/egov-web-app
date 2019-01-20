@@ -48,16 +48,14 @@ const TaskDialog = props => {
                     history.map((item, index) => {
                       return (
                         <div>
-                          <TaskStatusComponents currentObj={item} />
+                          <TaskStatusComponents
+                            currentObj={item}
+                            index={index}
+                          />
                           <Divider className={classes.root} />
                         </div>
                       );
                     })}
-                  {/* <TaskStatusComponents />
-
-                  <TaskStatusComponents />
-                  <Divider className={classes.root} />
-                  <TaskStatusComponents /> */}
                 </Grid>
               </Grid>
             }

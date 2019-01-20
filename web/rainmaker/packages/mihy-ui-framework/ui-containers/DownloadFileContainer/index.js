@@ -42,6 +42,8 @@ var _get2 = _interopRequireDefault(_get);
 
 require("./index.css");
 
+var _constants = require("constants");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var DownloadFileContainer = function (_Component) {
@@ -68,8 +70,16 @@ var DownloadFileContainer = function (_Component) {
 
 var mapStateToProps = function mapStateToProps(state, ownProps) {
   var screenConfiguration = state.screenConfiguration;
+  var sourceJsonPath = ownProps.sourceJsonPath,
+      jsonPath = ownProps.jsonPath;
 
-  var data = (0, _get2.default)(screenConfiguration.preparedFinalObject, ownProps.sourceJsonPath, []);
+  var data = [];
+  if (jsonPath) {
+    var basePath = (0, _get2.default)(state, jsonPath);
+    data = (0, _get2.default)(basePath, sourceJsonPath);
+  } else {
+    data = (0, _get2.default)(screenConfiguration.preparedFinalObject, ownProps.sourceJsonPath);
+  }
   return { data: data };
 };
 

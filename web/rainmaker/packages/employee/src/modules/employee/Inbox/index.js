@@ -87,7 +87,6 @@ class Inbox extends Component {
   };
 
   componentDidMount = async () => {
-    const { getBuisnessServiceData } = this.props;
     const uuid = _.get(this.props, "userInfo.uuid");
     const tenantId = localStorage.getItem("tenant-id");
 
@@ -118,7 +117,7 @@ class Inbox extends Component {
     inboxData.push({ headers: ["Module/Service", "Task ID", "Status", "Assigned By", "Assigned To", "SLA (Days Remaining)"], rows: allDataRows });
     this.setState({ inboxData, taskboardData, tabData });
 
-    getBuisnessServiceData([{ key: "tenantId", value: localStorage.getItem("tenant-id") }]);
+    //getBuisnessServiceData([{ key: "tenantId", value: localStorage.getItem("tenant-id") }]);
     this.setBusinessServiceDataToLocalStorage([{ key: "tenantId", value: localStorage.getItem("tenant-id") }]);
   };
 
@@ -150,13 +149,7 @@ const mapStateToProps = (state) => {
   return { name };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    getBuisnessServiceData: (queryObject) => dispatch(getBuisnessServiceData(queryObject)),
-  };
-};
-
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  null
 )(Inbox);

@@ -48,6 +48,9 @@ var getLocaleLabelsforTL = function getLocaleLabelsforTL(label, labelKey, locali
   if (labelKey) {
     var translatedLabel = (0, _commons.getTranslatedLabel)(labelKey, localizationLabels);
     if (!translatedLabel || labelKey === translatedLabel) {
+      if (label === "CANCEL") {
+        console.log("label new 1.....", label, labelKey);
+      }
       return label;
     } else {
       return translatedLabel;
@@ -77,7 +80,7 @@ var LabelContainer = function (_React$Component) {
           rest = (0, _objectWithoutProperties3.default)(_props, ["labelName", "labelKey", "fieldValue"]);
 
       var transfomedKeys = (0, _commons.transformById)(localizationLabels, "code");
-      var translatedLabel = getLocaleLabelsforTL(labelName, labelKey && typeof labelKey === "string" ? labelKey.startsWith("TL_") ? labelKey : "TL_" + labelKey : labelKey, transfomedKeys);
+      var translatedLabel = getLocaleLabelsforTL(labelName, labelKey && typeof labelKey === "string" ? labelKey.startsWith("TL_") || labelKey.startsWith("WF_") ? labelKey : "TL_" + labelKey : labelKey, transfomedKeys);
       var fieldLabel = getLocaleLabelsforTL(fieldValue, "TL_" + fieldValue, transfomedKeys);
       return _react2.default.createElement(_uiAtoms.Label, (0, _extends3.default)({ label: fieldValue ? fieldLabel : translatedLabel }, rest));
     }

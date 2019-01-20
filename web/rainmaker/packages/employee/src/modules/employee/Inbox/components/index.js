@@ -38,7 +38,6 @@ class InboxData extends React.Component {
   };
 
   getModuleLink = (item, row, index) => {
-    console.log("item is.....", row, item);
     const status = row[2].text;
     const taskId = index === 1 && item.text;
     const tenantId = localStorage.getItem("tenant-id");

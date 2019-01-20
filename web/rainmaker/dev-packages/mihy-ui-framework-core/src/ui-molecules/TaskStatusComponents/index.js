@@ -22,8 +22,7 @@ const data = [
   }
 ];
 
-const TaskStatusComponents = ({ currentObj }) => {
-  console.log("currentObj is....", currentObj);
+const TaskStatusComponents = ({ currentObj, index }) => {
   return (
     <Grid container={true} sm={12}>
       <Grid item sm={2} style={{ paddingRight: 20 }}>
@@ -84,9 +83,10 @@ const TaskStatusComponents = ({ currentObj }) => {
       </Grid>
       {get(currentObj, "documents") && (
         <DownloadFileContainer
-          documentData={data}
           className="review-documents"
           backgroundGrey={true}
+          jsonPath={`workflow.ProcessInstances[${index}]`}
+          sourceJsonPath="documents"
         />
       )}
     </Grid>

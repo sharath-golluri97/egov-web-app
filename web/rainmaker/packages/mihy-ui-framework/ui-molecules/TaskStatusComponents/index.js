@@ -33,9 +33,9 @@ var data = [{
 }];
 
 var TaskStatusComponents = function TaskStatusComponents(_ref) {
-  var currentObj = _ref.currentObj;
+  var currentObj = _ref.currentObj,
+      index = _ref.index;
 
-  console.log("currentObj is....", currentObj);
   return _react2.default.createElement(
     _core.Grid,
     { container: true, sm: 12 },
@@ -124,9 +124,10 @@ var TaskStatusComponents = function TaskStatusComponents(_ref) {
       )
     ),
     (0, _get2.default)(currentObj, "documents") && _react2.default.createElement(_uiContainers.DownloadFileContainer, {
-      documentData: data,
       className: "review-documents",
-      backgroundGrey: true
+      backgroundGrey: true,
+      jsonPath: "workflow.ProcessInstances[" + index + "]",
+      sourceJsonPath: "documents"
     })
   );
 };

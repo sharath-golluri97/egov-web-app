@@ -51,13 +51,11 @@ class TastStatusContainer extends React.Component {
       ["auditDetails.lastModifiedTime"],
       ["desc"]
     );
-    console.log("sortedArray is.....", sortedArray[0]);
     return sortedArray[0];
   };
 
   render() {
     const { classes, ProcessInstances } = this.props;
-    console.log("ProcessInstances is.....", ProcessInstances);
     const currentObj =
       ProcessInstances && this.getLatestObjectbyTime(ProcessInstances);
     return (
@@ -92,7 +90,10 @@ class TastStatusContainer extends React.Component {
                       />
                     </Button>
                   </Grid>
-                  <TaskStatusComponents currentObj={currentObj} />
+                  <TaskStatusComponents
+                    currentObj={currentObj}
+                    index={ProcessInstances.length - 1}
+                  />
                 </Grid>
               }
             />
@@ -111,7 +112,6 @@ class TastStatusContainer extends React.Component {
 const mapStateToProps = (state, ownprops) => {
   const { workflow } = state;
   const { ProcessInstances } = workflow;
-
   return { ProcessInstances };
 };
 
