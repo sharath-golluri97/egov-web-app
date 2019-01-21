@@ -48,9 +48,6 @@ var getLocaleLabelsforTL = function getLocaleLabelsforTL(label, labelKey, locali
   if (labelKey) {
     var translatedLabel = (0, _commons.getTranslatedLabel)(labelKey, localizationLabels);
     if (!translatedLabel || labelKey === translatedLabel) {
-      if (label === "CANCEL") {
-        console.log("label new 1.....", label, labelKey);
-      }
       return label;
     } else {
       return translatedLabel;
