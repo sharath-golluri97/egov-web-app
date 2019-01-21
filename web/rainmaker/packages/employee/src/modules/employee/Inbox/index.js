@@ -63,7 +63,7 @@ const prepareInboxDataRows = (data) => {
       { text: item.state && item.state.state },
       { text: item.assigner ? item.assigner.name : "" },
       { text: item.assignee ? item.assignee.name : "" },
-      { text: Math.floor(sla), badge: true },
+      { text: Math.round(sla), badge: true },
       { historyButton: true },
     ];
   });
