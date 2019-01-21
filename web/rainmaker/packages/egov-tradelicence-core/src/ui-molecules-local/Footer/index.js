@@ -39,7 +39,7 @@ class Footer extends React.Component {
     handleFieldChange("Licenses[0].comment", "");
     handleFieldChange("Licenses[0].assignee", "");
     if (item.isLast) {
-      window.location.href = item.buttonUrl;
+      window.location.href = window.origin + item.buttonUrl;
       return;
     }
     if (item.showEmployeeList) {

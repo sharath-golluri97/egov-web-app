@@ -130,7 +130,7 @@ class WorkFlowContainer extends React.Component {
   getRedirectUrl = (action, businessId) => {
     switch (action) {
       case "PAY":
-        return `employee-tradelicence/mihy-ui-framework/tradelicence/pay?applicationNumber=${businessId}&tenantId=${tenant}&businessService=TL`;
+        return `/employee-tradelicence/mihy-ui-framework/tradelicence/pay?applicationNumber=${businessId}&tenantId=${tenant}&businessService=TL`;
     }
   };
 
