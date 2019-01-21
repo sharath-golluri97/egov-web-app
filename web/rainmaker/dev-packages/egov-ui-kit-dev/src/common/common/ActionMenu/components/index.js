@@ -8,8 +8,8 @@ import get from "lodash/get";
 import { split, orderBy, some } from "lodash";
 import { fetchFromLocalStorage } from "egov-ui-kit/utils/commons";
 import { TextFieldIcon } from "components";
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import Tooltip from "@material-ui/core/Tooltip";
 import Label from "egov-ui-kit/utils/translationNode";
 
@@ -85,7 +85,7 @@ class ActionMenuComp extends Component {
     const url = get(window, "location.pathname")
       .split("/")
       .pop();
-    if (url !== "landing-page" && menuPath) {
+    if (url !== "inbox" && menuPath) {
       const menupathArray = menuPath && menuPath.split(".");
       if (menupathArray && menupathArray.length > 1) {
         menupathArray.pop();
@@ -209,7 +209,7 @@ class ActionMenuComp extends Component {
   };
 
   render() {
-    let { role, actionListArr, activeRoutePath, updateActiveRoute,toggleDrawer,menuDrawerOpen } = this.props;
+    let { role, actionListArr, activeRoutePath, updateActiveRoute, toggleDrawer, menuDrawerOpen } = this.props;
     let { searchText, path, menuItems } = this.state;
     let { changeLevel, menuChange } = this;
     let actionList = actionListArr;
@@ -396,22 +396,28 @@ class ActionMenuComp extends Component {
           menuItemStyle={{ paddingLeft: "0", width: "100%" }}
         >
           {!path && (
-            <div onClick={()=>{toggleDrawer && toggleDrawer()}}><TextFieldIcon
-              value={searchText}
-              hintText={<Label label="PT_SEARCH_BUTTON" />}
-              iconStyle={styles.inputIconStyle}
-              inputStyle={styles.inputStyle}
-              textFieldStyle={styles.textFieldStyle}
-              onChange={(e) => {
-                this.handleChange(e);
+            <div
+              onClick={() => {
+                toggleDrawer && toggleDrawer();
               }}
-            /></div>
+            >
+              <TextFieldIcon
+                value={searchText}
+                hintText={<Label label="PT_SEARCH_BUTTON" />}
+                iconStyle={styles.inputIconStyle}
+                inputStyle={styles.inputStyle}
+                textFieldStyle={styles.textFieldStyle}
+                onChange={(e) => {
+                  this.handleChange(e);
+                }}
+              />
+            </div>
           )}
           {(path || searchText) && (
             <div
               className="pull-left whiteColor pointerCursor"
               onClick={() => {
-                toggleDrawer && toggleDrawer()
+                toggleDrawer && toggleDrawer();
                 changeLevel(path);
               }}
             >
@@ -434,22 +440,31 @@ class ActionMenuComp extends Component {
           <div className="clearfix" />
 
           <div style={{ paddingLeft: "-24px" }}>{showMenuItem()}</div>
-         {toggleDrawer ? <div className="sideMenuItem drawer-collapse-menu-item">
-                      <MenuItem
-                        innerDivStyle={styles.defaultMenuItemStyle}
-                        style={{ whiteSpace: "initial" }}
-                        onClick={() => {
-                          toggleDrawer && toggleDrawer(false);
-                        }}
-                        leftIcon={
-                            menuDrawerOpen ? <ChevronLeftIcon style={styles.fibreIconStyle} className="iconClassHover material-icons whiteColor"/> :  <Tooltip id={"menu-toggle-tooltip"} placement={"right"} title={<div style={{color:"black"}}>Expand menu</div>}><ChevronRightIcon style={styles.fibreIconStyle} className="iconClassHover material-icons whiteColor" /></Tooltip>
-                        }
-                        primaryText={<div className="menuStyle">{menuDrawerOpen ? "Collapse" : ""}</div>}
-                      />
-                    </div> : "" }
-
+          {toggleDrawer ? (
+            <div className="sideMenuItem drawer-collapse-menu-item">
+              <MenuItem
+                innerDivStyle={styles.defaultMenuItemStyle}
+                style={{ whiteSpace: "initial" }}
+                onClick={() => {
+                  toggleDrawer && toggleDrawer(false);
+                }}
+                leftIcon={
+                  menuDrawerOpen ? (
+                    <ChevronLeftIcon style={styles.fibreIconStyle} className="iconClassHover material-icons whiteColor" />
+                  ) : (
+                    <Tooltip id={"menu-toggle-tooltip"} placement={"right"} title={<div style={{ color: "black" }}>Expand menu</div>}>
+                      <ChevronRightIcon style={styles.fibreIconStyle} className="iconClassHover material-icons whiteColor" />
+                    </Tooltip>
+                  )
+                }
+                primaryText={<div className="menuStyle">{menuDrawerOpen ? "Collapse" : ""}</div>}
+              />
+            </div>
+          ) : (
+            ""
+          )}
         </Menu>
-      </div>      
+      </div>
     ) : null;
   }
 }

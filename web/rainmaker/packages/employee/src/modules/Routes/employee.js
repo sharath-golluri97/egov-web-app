@@ -29,13 +29,13 @@ const routes = [
     path: "user/login",
     component: Login,
     needsAuthentication: false,
-    redirectionUrl: "/landing-page",
+    redirectionUrl: "/inbox",
   },
   {
     path: "user/otp",
     component: OTP,
     needsAuthentication: false,
-    redirectionUrl: "/landing-page",
+    redirectionUrl: "/inbox",
   },
   {
     path: "privacy-policy",

@@ -46,7 +46,7 @@ var formConfig = {
     id: "employee-change-password-submit-action"
   },
   saveUrl: "/user/password/_update",
-  redirectionRoute: "/landing-page",
+  redirectionRoute: "/inbox",
   action: "_update"
 };
 

@@ -250,7 +250,7 @@ var ActionMenuComp = function (_Component) {
         parentMenu: true
       };
       var url = (0, _get2.default)(window, "location.pathname").split("/").pop();
-      if (url !== "landing-page" && menuPath) {
+      if (url !== "inbox" && menuPath) {
         var menupathArray = menuPath && menuPath.split(".");
         if (menupathArray && menupathArray.length > 1) {
           menupathArray.pop();
@@ -493,9 +493,11 @@ var ActionMenuComp = function (_Component) {
           },
           !path && _react2.default.createElement(
             "div",
-            { onClick: function onClick() {
+            {
+              onClick: function onClick() {
                 toggleDrawer && toggleDrawer();
-              } },
+              }
+            },
             _react2.default.createElement(_components.TextFieldIcon, {
               value: searchText,
               hintText: _react2.default.createElement(_translationNode2.default, { label: "PT_SEARCH_BUTTON" }),

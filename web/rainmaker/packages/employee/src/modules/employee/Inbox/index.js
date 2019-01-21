@@ -15,7 +15,7 @@ const prepareInboxDataRows = (data) => {
   return data.map((item) => {
     var sla = item.businesssServiceSla && item.businesssServiceSla / (1000 * 60 * 60 * 24);
     return [
-      { text: _.get(item, "moduleName", "--"), subtext: item.moduleName },
+      { text: _.get(item, "moduleName", "--"), subtext: item.businessService },
       { text: item.businessId },
       { text: item.state && item.state.state },
       { text: item.assigner ? item.assigner.name : "" },
