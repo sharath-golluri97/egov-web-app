@@ -30,9 +30,7 @@ class WorkFlowContainer extends React.Component {
           let fileStoreIdArr = eachInstance.documents.map(item => {
             return item.fileStoreId;
           });
-          result[eachInstance.state.applicationStatus] = fileStoreIdArr.join(
-            ","
-          );
+          result[eachInstance.id] = fileStoreIdArr.join(",");
         }
         return result;
       }, {})
@@ -132,7 +130,7 @@ class WorkFlowContainer extends React.Component {
   getRedirectUrl = (action, businessId) => {
     switch (action) {
       case "PAY":
-        return `/mihy-ui-framework/tradelicence/pay?applicationNumber=${businessId}&tenantId=${tenant}&businessService=TL`;
+        return `employee-tradelicence/mihy-ui-framework/tradelicence/pay?applicationNumber=${businessId}&tenantId=${tenant}&businessService=TL`;
     }
   };
 
