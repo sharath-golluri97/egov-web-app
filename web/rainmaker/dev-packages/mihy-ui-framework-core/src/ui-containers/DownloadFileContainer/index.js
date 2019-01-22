@@ -16,18 +16,23 @@ class DownloadFileContainer extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   const { screenConfiguration } = state;
-  const { sourceJsonPath, jsonPath } = ownProps;
-  let data = [];
-  if (jsonPath) {
-    const basePath = get(state, jsonPath);
-    data = get(basePath, sourceJsonPath);
+  //const { sourceJsonPath, jsonPath } = ownProps;
+  let { data } = ownProps;
+
+  // if (jsonPath) {
+  //   const basePath = get(state, jsonPath);
+  //   data = get(basePath, sourceJsonPath);
+  // } else {
+
+  if (data && data.length > 0) {
+    return { data };
   } else {
     data = get(
       screenConfiguration.preparedFinalObject,
       ownProps.sourceJsonPath
     );
+    return { data };
   }
-  return { data };
 };
 
 export default connect(

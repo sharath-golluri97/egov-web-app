@@ -3,7 +3,15 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.replaceStrInPath = exports.getLocaleLabels = exports.epochToYmd = exports.getTranslatedLabel = exports.transformById = exports.isFileValid = exports.getFileSize = exports.getImageUrlByFile = exports.getDateInEpoch = exports.trimObj = exports.fetchFromLocalStorage = exports.persistInLocalStorage = exports.slugify = exports.isFieldEmpty = exports.addQueryArg = exports.getQueryArg = exports.addComponentJsonpath = undefined;
+exports.addWflowFileUrl = exports.getFileUrlFromAPI = exports.replaceStrInPath = exports.getLocaleLabels = exports.epochToYmd = exports.getTranslatedLabel = exports.transformById = exports.isFileValid = exports.getFileSize = exports.getImageUrlByFile = exports.getDateInEpoch = exports.trimObj = exports.fetchFromLocalStorage = exports.persistInLocalStorage = exports.slugify = exports.isFieldEmpty = exports.addQueryArg = exports.getQueryArg = exports.addComponentJsonpath = undefined;
+
+var _regenerator = require("babel-runtime/regenerator");
+
+var _regenerator2 = _interopRequireDefault(_regenerator);
+
+var _asyncToGenerator2 = require("babel-runtime/helpers/asyncToGenerator");
+
+var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 
 var _extends2 = require("babel-runtime/helpers/extends");
 
@@ -19,7 +27,9 @@ var _isEmpty2 = _interopRequireDefault(_isEmpty);
 
 var _api = require("../ui-utils/api");
 
-var _actions = require("../ui-redux/screen-configuration/actions");
+var _cloneDeep = require("lodash/cloneDeep");
+
+var _cloneDeep2 = _interopRequireDefault(_cloneDeep);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -175,3 +185,113 @@ var replaceStrInPath = exports.replaceStrInPath = function replaceStrInPath(inpu
   };
   return inputString.replaceAll(search, replacement);
 };
+
+var getFileUrlFromAPI = exports.getFileUrlFromAPI = function () {
+  var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(fileStoreId) {
+    var queryObject, fileUrl;
+    return _regenerator2.default.wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            queryObject = [{ key: "tenantId", value: "pb" }, { key: "fileStoreIds", value: fileStoreId }];
+            _context.prev = 1;
+            _context.next = 4;
+            return (0, _api.httpRequest)("get", "/filestore/v1/files/url", "", queryObject);
+
+          case 4:
+            fileUrl = _context.sent;
+            return _context.abrupt("return", fileUrl);
+
+          case 8:
+            _context.prev = 8;
+            _context.t0 = _context["catch"](1);
+
+            console.log(_context.t0);
+
+          case 11:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee, undefined, [[1, 8]]);
+  }));
+
+  return function getFileUrlFromAPI(_x3) {
+    return _ref.apply(this, arguments);
+  };
+}();
+
+var getAllFileStoreIds = function () {
+  var _ref2 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2(ProcessInstances) {
+    return _regenerator2.default.wrap(function _callee2$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            return _context2.abrupt("return", ProcessInstances && ProcessInstances.reduce(function (result, eachInstance) {
+              if (eachInstance.documents) {
+                var fileStoreIdArr = eachInstance.documents.map(function (item) {
+                  return item.fileStoreId;
+                });
+                result[eachInstance.id] = fileStoreIdArr.join(",");
+              }
+              return result;
+            }, {}));
+
+          case 1:
+          case "end":
+            return _context2.stop();
+        }
+      }
+    }, _callee2, undefined);
+  }));
+
+  return function getAllFileStoreIds(_x4) {
+    return _ref2.apply(this, arguments);
+  };
+}();
+
+var addWflowFileUrl = exports.addWflowFileUrl = function () {
+  var _ref3 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee3(ProcessInstances) {
+    var fileStoreIdByAction, fileUrlPayload, processInstances;
+    return _regenerator2.default.wrap(function _callee3$(_context3) {
+      while (1) {
+        switch (_context3.prev = _context3.next) {
+          case 0:
+            _context3.next = 2;
+            return getAllFileStoreIds(ProcessInstances);
+
+          case 2:
+            fileStoreIdByAction = _context3.sent;
+            _context3.next = 5;
+            return getFileUrlFromAPI(Object.values(fileStoreIdByAction).join(","));
+
+          case 5:
+            fileUrlPayload = _context3.sent;
+            processInstances = (0, _cloneDeep2.default)(ProcessInstances);
+
+            processInstances.map(function (item) {
+              if (item.documents && item.documents.length > 0) {
+                item.documents.forEach(function (i) {
+                  i.link = fileUrlPayload[i.fileStoreId];
+                  i.title = i.documentType;
+                  i.name = decodeURIComponent(fileUrlPayload[i.fileStoreId].split(",")[0].split("?")[0].split("/").pop().slice(13));
+                  i.linkText = "View";
+                });
+              }
+            });
+            //setProcessInstances(processInstances);
+
+            localStorage.setItem("ProcessInstances", JSON.stringify(processInstances));
+
+          case 9:
+          case "end":
+            return _context3.stop();
+        }
+      }
+    }, _callee3, undefined);
+  }));
+
+  return function addWflowFileUrl(_x5) {
+    return _ref3.apply(this, arguments);
+  };
+}();

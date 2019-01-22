@@ -18,6 +18,8 @@ var _get = require("lodash/get");
 
 var _get2 = _interopRequireDefault(_get);
 
+require("./index.css");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var data = [{
@@ -85,7 +87,12 @@ var TaskStatusComponents = function TaskStatusComponents(_ref) {
       ),
       _react2.default.createElement(
         _core.Typography,
-        { variant: "body2" },
+        {
+          variant: "body2",
+          classes: {
+            body2: "body2-word-wrap"
+          }
+        },
         _react2.default.createElement(_uiContainers.LabelContainer, { labelName: (0, _get2.default)(currentObj, "state.state") })
       )
     ),
@@ -102,7 +109,12 @@ var TaskStatusComponents = function TaskStatusComponents(_ref) {
       ),
       _react2.default.createElement(
         _core.Typography,
-        { variant: "body2" },
+        {
+          variant: "body2",
+          classes: {
+            body2: "body2-word-wrap"
+          }
+        },
         _react2.default.createElement(_uiContainers.LabelContainer, { labelName: (0, _get2.default)(currentObj, "assignee.name") })
       )
     ),
@@ -119,15 +131,21 @@ var TaskStatusComponents = function TaskStatusComponents(_ref) {
       ),
       _react2.default.createElement(
         _core.Typography,
-        { variant: "body2" },
+        {
+          variant: "body2",
+          classes: {
+            body2: "body2-word-wrap"
+          }
+        },
         _react2.default.createElement(_uiContainers.LabelContainer, { labelName: (0, _get2.default)(currentObj, "comment") })
       )
     ),
     (0, _get2.default)(currentObj, "documents") && _react2.default.createElement(_uiContainers.DownloadFileContainer, {
+      data: (0, _get2.default)(currentObj, "documents"),
       className: "review-documents",
-      backgroundGrey: true,
-      jsonPath: "workflow.ProcessInstances[" + index + "]",
-      sourceJsonPath: "documents"
+      backgroundGrey: true
+      // jsonPath={`workflow.ProcessInstances[${index}]`}
+      // sourceJsonPath="documents"
     })
   );
 };

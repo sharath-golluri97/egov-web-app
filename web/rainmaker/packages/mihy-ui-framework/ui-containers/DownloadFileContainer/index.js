@@ -70,17 +70,21 @@ var DownloadFileContainer = function (_Component) {
 
 var mapStateToProps = function mapStateToProps(state, ownProps) {
   var screenConfiguration = state.screenConfiguration;
-  var sourceJsonPath = ownProps.sourceJsonPath,
-      jsonPath = ownProps.jsonPath;
+  //const { sourceJsonPath, jsonPath } = ownProps;
 
-  var data = [];
-  if (jsonPath) {
-    var basePath = (0, _get2.default)(state, jsonPath);
-    data = (0, _get2.default)(basePath, sourceJsonPath);
+  var data = ownProps.data;
+
+  // if (jsonPath) {
+  //   const basePath = get(state, jsonPath);
+  //   data = get(basePath, sourceJsonPath);
+  // } else {
+
+  if (data && data.length > 0) {
+    return { data: data };
   } else {
     data = (0, _get2.default)(screenConfiguration.preparedFinalObject, ownProps.sourceJsonPath);
+    return { data: data };
   }
-  return { data: data };
 };
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, null)(DownloadFileContainer);

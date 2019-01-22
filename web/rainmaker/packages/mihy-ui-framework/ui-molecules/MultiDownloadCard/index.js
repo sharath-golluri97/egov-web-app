@@ -57,6 +57,9 @@ var styles = {
   },
   subtext: {
     paddingTop: 7
+  },
+  body1: {
+    wordWrap: "break-word"
   }
 };
 
@@ -106,7 +109,7 @@ function MultiCardDownloadGrid(props) {
             { xs: 6, className: classes.subtext },
             _react2.default.createElement(
               _Typography2.default,
-              null,
+              { className: classes.body1 },
               item.name
             )
           ),

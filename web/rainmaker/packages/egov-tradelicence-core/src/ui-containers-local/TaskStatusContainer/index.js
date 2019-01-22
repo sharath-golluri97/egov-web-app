@@ -1,5 +1,4 @@
 import React from "react";
-import { connect } from "react-redux";
 import { Card, CardContent, Grid, Typography, Button } from "@material-ui/core";
 import { Container } from "mihy-ui-framework/ui-atoms";
 import { LabelContainer } from "mihy-ui-framework/ui-containers";
@@ -7,10 +6,8 @@ import {
   TaskDialog,
   TaskStatusComponents
 } from "mihy-ui-framework/ui-molecules";
-//import { TaskStatusComponents, TaskDialog } from "../../ui-molecules-local";
 import HistoryIcon from "@material-ui/icons/History";
 import { withStyles } from "@material-ui/core/styles";
-import orderBy from "lodash/orderBy";
 
 const styles = theme => ({
   button: {
@@ -45,19 +42,20 @@ class TastStatusContainer extends React.Component {
     });
   };
 
-  getLatestObjectbyTime = object => {
-    const sortedArray = orderBy(
-      object,
-      ["auditDetails.lastModifiedTime"],
-      ["desc"]
-    );
-    return sortedArray[0];
-  };
+  // getLatestObjectbyTime = object => {
+  //   const sortedArray = orderBy(
+  //     object,
+  //     ["auditDetails.lastModifiedTime"],
+  //     ["desc"]
+  //   );
+  //   return sortedArray[0];
+  // };
 
   render() {
     const { classes, ProcessInstances } = this.props;
     const currentObj =
-      ProcessInstances && this.getLatestObjectbyTime(ProcessInstances);
+      ProcessInstances && ProcessInstances[ProcessInstances.length - 1];
+    //ProcessInstances && this.getLatestObjectbyTime(ProcessInstances);
     return (
       <div>
         <Card className="">
@@ -109,15 +107,4 @@ class TastStatusContainer extends React.Component {
   }
 }
 
-const mapStateToProps = (state, ownprops) => {
-  const { workflow } = state;
-  const { ProcessInstances } = workflow;
-  return { ProcessInstances };
-};
-
-export default withStyles(styles)(
-  connect(
-    mapStateToProps,
-    {}
-  )(TastStatusContainer)
-);
+export default withStyles(styles)(TastStatusContainer);

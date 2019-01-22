@@ -2,7 +2,10 @@ import React from "react";
 import { connect } from "react-redux";
 import TaskStatusContainer from "../TaskStatusContainer";
 import { Footer, ActionDialog } from "../../ui-molecules-local";
-import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
+import {
+  getQueryArg,
+  addWflowFileUrl
+} from "mihy-ui-framework/ui-utils/commons";
 import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import { toggleSnackbarAndSetText } from "mihy-ui-framework/ui-redux/app/actions";
 import { httpRequest } from "ui-utils/api";
@@ -11,8 +14,8 @@ import get from "lodash/get";
 import set from "lodash/set";
 import orderBy from "lodash/orderBy";
 import find from "lodash/find";
-import { getFileUrlFromAPI } from "ui-utils/commons";
-import { setProcessInstances } from "ui-redux/workflow/actions";
+// import { getFileUrlFromAPI } from "ui-utils/commons";
+// import { setProcessInstances } from "ui-redux/workflow/actions";
 
 const tenant = getQueryArg(window.location.href, "tenantId");
 
@@ -22,50 +25,51 @@ class WorkFlowContainer extends React.Component {
     action: ""
   };
 
-  getAllFileStoreIds = async ProcessInstances => {
-    return (
-      ProcessInstances &&
-      ProcessInstances.reduce((result, eachInstance) => {
-        if (eachInstance.documents) {
-          let fileStoreIdArr = eachInstance.documents.map(item => {
-            return item.fileStoreId;
-          });
-          result[eachInstance.id] = fileStoreIdArr.join(",");
-        }
-        return result;
-      }, {})
-    );
-  };
+  // getAllFileStoreIds = async ProcessInstances => {
+  //   return (
+  //     ProcessInstances &&
+  //     ProcessInstances.reduce((result, eachInstance) => {
+  //       if (eachInstance.documents) {
+  //         let fileStoreIdArr = eachInstance.documents.map(item => {
+  //           return item.fileStoreId;
+  //         });
+  //         result[eachInstance.id] = fileStoreIdArr.join(",");
+  //       }
+  //       return result;
+  //     }, {})
+  //   );
+  // };
 
-  addWflowFileUrl = async ProcessInstances => {
-    const { setProcessInstances } = this.props;
-    const fileStoreIdByAction = await this.getAllFileStoreIds(ProcessInstances);
-    const fileUrlPayload = await getFileUrlFromAPI(
-      Object.values(fileStoreIdByAction).join(",")
-    );
-    const processInstances = cloneDeep(ProcessInstances);
-    processInstances.map(item => {
-      if (item.documents && item.documents.length > 0) {
-        item.documents.forEach(i => {
-          i.link = fileUrlPayload[i.fileStoreId];
-          i.title = i.documentType;
-          i.name = decodeURIComponent(
-            fileUrlPayload[i.fileStoreId]
-              .split(",")[0]
-              .split("?")[0]
-              .split("/")
-              .pop()
-              .slice(13)
-          );
-          i.linkText = "View";
-        });
-      }
-    });
-    setProcessInstances(processInstances);
-  };
+  // addWflowFileUrl = async ProcessInstances => {
+  //   const { setProcessInstances } = this.props;
+  //   const fileStoreIdByAction = await this.getAllFileStoreIds(ProcessInstances);
+  //   const fileUrlPayload = await getFileUrlFromAPI(
+  //     Object.values(fileStoreIdByAction).join(",")
+  //   );
+  //   const processInstances = cloneDeep(ProcessInstances);
+  //   processInstances.map(item => {
+  //     if (item.documents && item.documents.length > 0) {
+  //       item.documents.forEach(i => {
+  //         i.link = fileUrlPayload[i.fileStoreId];
+  //         i.title = i.documentType;
+  //         i.name = decodeURIComponent(
+  //           fileUrlPayload[i.fileStoreId]
+  //             .split(",")[0]
+  //             .split("?")[0]
+  //             .split("/")
+  //             .pop()
+  //             .slice(13)
+  //         );
+  //         i.linkText = "View";
+  //       });
+  //     }
+  //   });
+  //   setProcessInstances(processInstances);
+  // };
+
   componentDidMount = () => {
-    const { ProcessInstances } = this.props;
-    this.addWflowFileUrl(ProcessInstances);
+    //const { ProcessInstances } = this.props;
+    //addWflowFileUrl(ProcessInstances);
   };
 
   onClose = () => {
@@ -208,13 +212,13 @@ class WorkFlowContainer extends React.Component {
       checkIfTerminatedState,
       getEmployeeRoles
     } = this;
-    let sortedData = orderBy(data, "auditDetails.lastModifiedTime", "desc");
-    let businessId = get(sortedData[0], "businessId");
-    let actions = get(sortedData[0], "nextActions", []);
+    //let sortedData = orderBy(data, "auditDetails.lastModifiedTime", "desc");
+    let businessId = get(data[data.length - 1], "businessId");
+    let actions = get(data[data.length - 1], "nextActions", []);
     return actions.map(item => {
       return {
         buttonLabel: item.action,
-        moduleName: sortedData[0].businessService,
+        moduleName: data[data.length - 1].businessService,
         isLast: item.action === "PAY" ? true : false,
         buttonUrl: getRedirectUrl(item.action, businessId),
         dialogHeader: getHeaderName(item.action),
@@ -226,11 +230,14 @@ class WorkFlowContainer extends React.Component {
 
   render() {
     const { createWorkFLow } = this;
-    const { ProcessInstances, prepareFinalObject } = this.props;
+    const { prepareFinalObject } = this.props;
+    const ProcessInstances = JSON.parse(
+      localStorage.getItem("ProcessInstances")
+    );
     const workflowContract = this.prepareWorkflowContract(ProcessInstances);
     return (
       <div>
-        <TaskStatusContainer />
+        <TaskStatusContainer ProcessInstances={ProcessInstances} />
         <Footer
           handleFieldChange={prepareFinalObject}
           variant={"contained"}
@@ -254,8 +261,8 @@ const mapStateToProps = (state, ownprops) => {
 const mapDispacthToProps = dispatch => {
   return {
     prepareFinalObject: (path, value) =>
-      dispatch(prepareFinalObject(path, value)),
-    setProcessInstances: payload => dispatch(setProcessInstances(payload))
+      dispatch(prepareFinalObject(path, value))
+    //setProcessInstances: payload => dispatch(setProcessInstances(payload))
   };
 };
 

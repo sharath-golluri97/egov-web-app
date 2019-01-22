@@ -6,6 +6,7 @@ import {
 } from "mihy-ui-framework/ui-containers";
 import { convertEpochToDate } from "mihy-ui-framework/ui-config/screens/specs/utils";
 import get from "lodash/get";
+import "./index.css";
 
 const data = [
   {
@@ -55,7 +56,12 @@ const TaskStatusComponents = ({ currentObj, index }) => {
             labelKey="TL_COMMON_TABLE_COL_STATUS"
           />
         </Typography>
-        <Typography variant="body2">
+        <Typography
+          variant="body2"
+          classes={{
+            body2: "body2-word-wrap"
+          }}
+        >
           <LabelContainer labelName={get(currentObj, "state.state")} />
         </Typography>
       </Grid>
@@ -66,7 +72,12 @@ const TaskStatusComponents = ({ currentObj, index }) => {
             labelKey="TL_CURRENT_OWNER_LABEL"
           />
         </Typography>
-        <Typography variant="body2">
+        <Typography
+          variant="body2"
+          classes={{
+            body2: "body2-word-wrap"
+          }}
+        >
           <LabelContainer labelName={get(currentObj, "assignee.name")} />
         </Typography>
       </Grid>
@@ -77,16 +88,22 @@ const TaskStatusComponents = ({ currentObj, index }) => {
             labelKey="TL_APPROVAL_CHECKLIST_COMMENTS_LABEL"
           />
         </Typography>
-        <Typography variant="body2">
+        <Typography
+          variant="body2"
+          classes={{
+            body2: "body2-word-wrap"
+          }}
+        >
           <LabelContainer labelName={get(currentObj, "comment")} />
         </Typography>
       </Grid>
       {get(currentObj, "documents") && (
         <DownloadFileContainer
+          data={get(currentObj, "documents")}
           className="review-documents"
           backgroundGrey={true}
-          jsonPath={`workflow.ProcessInstances[${index}]`}
-          sourceJsonPath="documents"
+          // jsonPath={`workflow.ProcessInstances[${index}]`}
+          // sourceJsonPath="documents"
         />
       )}
     </Grid>
