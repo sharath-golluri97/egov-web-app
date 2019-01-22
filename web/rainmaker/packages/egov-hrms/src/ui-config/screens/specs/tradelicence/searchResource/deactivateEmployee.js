@@ -61,18 +61,11 @@ class AlertDialog extends React.Component {
   };
 
   render() {
-    const { classes, open } = this.props;
+    const { classes, open, onClose } = this.props;
     return (
       <div>
-        <Button
-          variant="outlined"
-          color="primary"
-          onClick={this.handleClickOpen}
-        >
-          Open alert dialog
-        </Button>
         <Dialog
-          open={this.state.open}
+          open={open}
           onClose={this.handleClose}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
@@ -135,11 +128,7 @@ class AlertDialog extends React.Component {
             />
           </DialogContent>
           <DialogActions>
-            <Button
-              onClick={this.handleClose}
-              color="primary"
-              variant="contained"
-            >
+            <Button onClick={onClose} color="primary" variant="contained">
               DEACTIVATE EMPLOYEE
             </Button>
           </DialogActions>

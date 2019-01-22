@@ -10,6 +10,7 @@ import AlertDialog from "../../ui-config/screens/specs/tradelicence/searchResour
 
 class Table extends React.Component {
   state = {
+    open: false,
     data: [],
     columns: [],
     customSortOrder: "asc"
@@ -66,7 +67,7 @@ class Table extends React.Component {
   };
 
   handleClickOpen = data => {
-    this.setState({ open: true, data: data });
+    this.setState({ open: true });
   };
 
   handleClose = () => {
@@ -114,7 +115,7 @@ class Table extends React.Component {
             }
           }}
         />
-        <AlertDialog open={this.state.open} />
+        <AlertDialog open={this.state.open} onClose={this.handleClose} />
       </div>
     );
   }
