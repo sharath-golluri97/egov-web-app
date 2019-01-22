@@ -57,6 +57,16 @@ const FeesEstimateCard = Loadable({
   loading: () => <Loading />
 });
 
+const SwitchWithLabel = Loadable({
+  loader: () => import("./SwitchWithLabel"),
+  loading: () => <Loading />
+});
+
+const DividerWithLabel = Loadable({
+  loader: () => import("./DividerWithLabel"),
+  loading: () => <Loading />
+});
+
 export {
   TestMolecules,
   Table,
@@ -68,5 +78,7 @@ export {
   DocumentList,
   // AutoSelector,
   MapLocator,
-  FeesEstimateCard
+  FeesEstimateCard,
+  SwitchWithLabel,
+  DividerWithLabel
 };

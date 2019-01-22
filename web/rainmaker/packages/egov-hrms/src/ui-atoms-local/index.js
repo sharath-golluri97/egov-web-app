@@ -48,6 +48,11 @@ const MenuButton = Loadable({
   loading: () => <Loading />
 });
 
+const Switch = Loadable({
+  loader: () => import("./MenuButton"),
+  loading: () => <Loading />
+});
+
 export {
   TestAtoms,
   ApplicationNoContainer,
@@ -57,5 +62,6 @@ export {
   MapLocation,
   AutoSuggest,
   Asteric,
-  MenuButton
+  MenuButton,
+  Switch
 };

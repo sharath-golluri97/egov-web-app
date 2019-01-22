@@ -97,7 +97,7 @@ export const searchResults = {
 };
 
 const onRowClick = rowData => {
-  return `/mihy-ui-framework/tradelicence/apply?employeeID=${
+  return `/mihy-ui-framework/tradelicence/view?employeeID=${
     rowData[get(textToLocalMapping, "Employee ID")]
   }`;
 };

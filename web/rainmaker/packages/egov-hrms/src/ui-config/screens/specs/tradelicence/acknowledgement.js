@@ -13,6 +13,7 @@ import { loadReceiptGenerationData } from "../utils/receiptTransformer";
 import set from "lodash/set";
 import { getCurrentFinancialYear } from "../utils";
 
+const goToHome = gotoHomeFooter();
 const getAcknowledgementCard = (
   state,
   dispatch,
@@ -104,6 +105,40 @@ const getAcknowledgementCard = (
         }
       },
       paymentSuccessFooter: paymentSuccessFooter()
+    };
+  } else if (purpose === "create" && status === "success") {
+    return {
+      header: getCommonContainer({
+        header: getCommonHeader({
+          labelName: `Create New Employee`
+          // labelKey: "TL_TRADE_APPLICATION"
+        })
+      }),
+      applicationSuccessCard: {
+        uiFramework: "custom-atoms",
+        componentPath: "Div",
+        children: {
+          card: acknowledgementCard({
+            icon: "done",
+            backgroundColor: "#39CB74",
+            header: {
+              labelName: "Employee Created Successfully",
+              labelKey: "HR_CREATE_SUCCESS_MESSAGE"
+            },
+            body: {
+              labelName:
+                "A notification has been sent to the created Employee at registered Mobile No.",
+              labelKey: "HR_CREATE_SUCCESS_SUBHEADER"
+            },
+            tailText: {
+              labelName: "Employee ID",
+              labelKey: "HR_EMP_ID_LABEL"
+            },
+            number: applicationNumber
+          })
+        }
+      },
+      goToHome
     };
   } else if (purpose === "approve" && status === "success") {
     loadReceiptGenerationData(applicationNumber, tenant);

@@ -119,7 +119,7 @@ const employeeSearchAndResult = {
               },
               onClickDefination: {
                 action: "page_change",
-                path: "/mihy-ui-framework/hrms/apply"
+                path: "/mihy-ui-framework/tradelicense/apply"
               },
               roleDefination: {
                 rolePath: "user-info.roles",

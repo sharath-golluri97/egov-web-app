@@ -87,7 +87,10 @@ export const getUploadFilesMultiple = jsonPath => {
       inputProps: {
         accept: "image/*, .pdf, .png, .jpeg"
       },
-      buttonLabel: "UPLOAD FILES",
+      buttonLabel: {
+        labelKey: "HR_UPLOAD_FILES_LABEL",
+        labelName: "UPLOAD FILES"
+      },
       maxFileSize: 5000
     }
   };

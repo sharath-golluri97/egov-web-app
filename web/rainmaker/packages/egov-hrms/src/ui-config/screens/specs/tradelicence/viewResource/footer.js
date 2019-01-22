@@ -1,7 +1,7 @@
 import { getLabel } from "mihy-ui-framework/ui-config/screens/specs/utils";
 import { ifUserRoleExists } from "../../utils";
 
-const getCommonApplyFooter = children => {
+const getCommonCreateFooter = children => {
   return {
     uiFramework: "custom-atoms",
     componentPath: "Div",
@@ -12,10 +12,13 @@ const getCommonApplyFooter = children => {
   };
 };
 
-export const gotoHomeFooter = () => {
-  const redirectionURL = "/mihy-ui-framework/tradelicence/search";
-
-  return getCommonApplyFooter({
+export const hrCommonFooter = () => {
+  const purpose = "create";
+  const status = "success";
+  const applicationNo = "EMP-JAL-123";
+  const tenantId = "pb.amritsar";
+  const redirectionURL = `/mihy-ui-framework/tradelicence/acknowledgement?purpose=${purpose}&status=${status}&applicationNumber=${applicationNo}&tenantId=${tenantId}`;
+  return getCommonCreateFooter({
     gotoHome: {
       componentPath: "Button",
       props: {
@@ -24,13 +27,13 @@ export const gotoHomeFooter = () => {
         style: {
           minWidth: "200px",
           height: "48px",
-          marginRight: "16px"
+          marginRight: "45px"
         }
       },
       children: {
         downloadReceiptButtonLabel: getLabel({
-          labelName: "GO TO HOME",
-          labelKey: "TL_COMMON_BUTTON_HOME"
+          labelName: "SUBMIT",
+          labelKey: "HR_SUBMIT_LABEL"
         })
       },
       onClickDefination: {
