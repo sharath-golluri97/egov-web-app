@@ -4,8 +4,6 @@ import get from "lodash/get";
 import { sortByEpoch, getEpochForDate } from "../../utils";
 import Icon from "@material-ui/core/Icon";
 import { LabelContainer } from "mihy-ui-framework/ui-containers";
-import Button from "@material-ui/core/Button";
-import DeleteIcon from "@material-ui/icons/Delete";
 
 const getLocalTextFromCode = localCode => {
   return JSON.parse(localStorage.getItem("localization_en_IN")).find(
@@ -79,24 +77,7 @@ export const searchResults = {
       [get(textToLocalMapping, "Designation")]: {},
       [get(textToLocalMapping, "Department")]: {}
     },
-    title: get(textToLocalMapping, "Search Results for Employee"),
-    options: {
-      filter: false,
-      download: false,
-      responsive: "stacked",
-      selectableRows: true,
-      hover: true,
-      rowsPerPageOptions: [10, 15, 20],
-      filterType: "checkbox",
-      customToolbarSelect: (selectedRows, displayData, setSelectableRows) => {
-        return (
-          <Button style={{ color: "#FE7A51" }}>
-            <DeleteIcon style={{ color: "#FE7A51" }} />
-            DEACTIVATE
-          </Button>
-        );
-      }
-    }
+    title: get(textToLocalMapping, "Search Results for Employee")
     // customSortColumn: {
     //   column: "Application Date",
     //   sortingFn: (data, i, sortDateOrder) => {

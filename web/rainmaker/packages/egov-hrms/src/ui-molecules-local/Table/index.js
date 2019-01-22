@@ -4,6 +4,13 @@ import get from "lodash/get";
 import PropTypes from "prop-types";
 import cloneDeep from "lodash/cloneDeep";
 import "./index.css";
+import Button from "@material-ui/core/Button";
+import DeleteIcon from "@material-ui/icons/Delete";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
 
 class Table extends React.Component {
   state = {
@@ -62,6 +69,14 @@ class Table extends React.Component {
     }
   };
 
+  handleClickOpen = data => {
+    this.setState({ open: true, data: data });
+  };
+
+  handleClose = () => {
+    this.setState({ open: false });
+  };
+
   render() {
     const { data, columns } = this.state;
     const { options, title } = this.props;
@@ -74,9 +89,58 @@ class Table extends React.Component {
           options={{
             ...options,
             onColumnSortChange: (columnName, order) =>
-              this.onColumnSortChange(columnName, order)
+              this.onColumnSortChange(columnName, order),
+            filter: false,
+            download: false,
+            responsive: "stacked",
+            selectableRows: true,
+            hover: true,
+            rowsPerPageOptions: [10, 15, 20],
+            filterType: "checkbox",
+            customToolbarSelect: (
+              selectedRows,
+              displayData,
+              setSelectableRows
+            ) => {
+              console.log("========", displayData);
+              let selectedData = selectedRows.data.map(item => {
+                return displayData[item.dataIndex].data;
+              });
+              return (
+                <Button
+                  style={{ color: "#FE7A51" }}
+                  onClick={() => this.handleClickOpen(selectedData)}
+                >
+                  <DeleteIcon style={{ color: "#FE7A51" }} />
+                  DEACTIVATE
+                </Button>
+              );
+            }
           }}
         />
+        <Dialog
+          open={this.state.open}
+          onClose={this.handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            {"Deactivate Employee"}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              {this.state.data}
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleClose} color="primary">
+              Disagree
+            </Button>
+            <Button onClick={this.handleClose} color="primary" autoFocus>
+              Agree
+            </Button>
+          </DialogActions>
+        </Dialog>
       </div>
     );
   }
