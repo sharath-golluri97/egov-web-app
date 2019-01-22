@@ -35,7 +35,7 @@
     "mihy-ui-framework-atoms": "babel dev-packages/mihy-ui-framework-core/src/ui-atoms --out-dir packages/mihy-ui-framework/ui-atoms --copy-files",
     "mihy-ui-framework-molecules": "babel dev-packages/mihy-ui-framework-core/src/ui-molecules --out-dir packages/mihy-ui-framework/ui-molecules --copy-files",
     "mihy-ui-framework-containers": "babel dev-packages/mihy-ui-framework-core/src/ui-containers --out-dir packages/mihy-ui-framework/ui-containers --copy-files",
-    "mihy-ui-framework": "npm run mihy-ui-framework-redux && npm run mihy-ui-framework-utils && npm run mihy-ui-framework-atoms && npm run mihy-ui-framework-molecules && npm run mihy-ui-framework-containers && npm run mihy-ui-framework-hocs && npm run mihy-ui-framework-config"
+    "mihy-ui-framework": "babel dev-packages/mihy-ui-framework-core/src --out-dir packages/mihy-ui-framework --copy-files"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
