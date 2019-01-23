@@ -1,6 +1,6 @@
 {
-  "name": "egov-tradelicence-core",
-  "version": "0.0.5",
+  "name": "egov-hrms",
+  "version": "0.0.1",
   "private": true,
   "homepage": "https://egov-micro-dev.egovernments.org/employee-tradelicence/",
   "proxy": "https://egov-micro-dev.egovernments.org/",

@@ -6,7 +6,7 @@ import {
   getDivider,
   getLabel
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
-import { changeStep } from "../applyResource/footer";
+import { changeStep } from "../createResource/footer";
 
 const assignmentCard = {
   uiFramework: "custom-containers",
@@ -15,64 +15,59 @@ const assignmentCard = {
     className: "review-hr",
     scheama: getCommonGrayCard({
       assignmentCardContainer: getCommonContainer({
-        reviewAssignedFrom: getLabelWithValue(
+        reviewStatus: getLabelWithValue(
           {
-            labelName: "Assigned From Date",
-            labelKey: "HR_ASMT_FROM_DATE_LABEL"
+            labelName: "Status",
+            labelKey: "HR_STATUS_LABEL"
+          },
+          {
+            labelName: "Active"
+          }
+          //   { jsonPath: "Employee[0].serviceHistory[0].serviceStatus" }
+        ),
+        reviewServiceFrom: getLabelWithValue(
+          {
+            labelName: "Service From Date",
+            labelKey: "HR_SER_FROM_DATE_LABEL"
           },
           {
             labelName: "23/01/2018"
           }
-          //   { jsonPath: "Licenses[0].licenseType" }
+          //   { jsonPath: "Employee[0].serviceHistory[0].serviceFrom" }
         ),
-        reviewAssignedTo: getLabelWithValue(
+        reviewServiceTo: getLabelWithValue(
           {
-            labelName: "Assigned To Date",
-            labelKey: "HR_ASMT_TO_DATE_LABEL"
+            labelName: "Service To Date",
+            labelKey: "HR_SER_TO_DATE_LABEL"
           },
           {
             labelName: "23/01/2019"
           }
-          //   { jsonPath: "Licenses[0].tradeName" }
+          //   { jsonPath: "Employee[0].serviceHistory[0].serviceTo" }
         ),
-        reviewCurrentAssigned: getLabelWithValue(
+        reviewLocation: getLabelWithValue(
           {
-            labelName: "Currently Assigned Here",
-            labelKey: "HR_CURR_ASSIGN_LABEL"
+            labelName: "Location",
+            labelKey: "HR_LOCATION_LABEL"
+          },
+          { labelName: "Amritsar" }
+          // {jsonPath: "Employee[0].serviceHistory[0].location"}
+        ),
+        reviewOrderNo: getLabelWithValue(
+          { labelName: "Order No", labelKey: "HR_ORDER_NO_LABEL" },
+          { labelName: "23234" }
+          // {
+          //   jsonPath: "Employee[0].serviceHistory[0].orderNo",
+          // }
+        ),
+        reviewCurrentWorking: getLabelWithValue(
+          {
+            labelName: "Currently Working Here",
+            labelKey: "HR_CURR_WORKING_LABEL"
           },
           { labelName: "Yes" }
-          // {jsonPath: "Licenses[0].validFrom"}
-        ),
-        reviewDepartment: getLabelWithValue(
-          { labelName: "Department", labelKey: "HR_DEPT_LABEL" },
-          { labelName: "IT" }
           // {
-          //   jsonPath: "Licenses[0].validTo",
-          //   callBack: convertEpochToDate
-          // }
-        ),
-        reviewDesignation: getLabelWithValue(
-          { labelName: "Designation", labelKey: "HR_DESG_LABEL" },
-          { labelName: "Junior Engineer" }
-          // {
-          //   jsonPath: "Licenses[0].validTo",
-          //   callBack: convertEpochToDate
-          // }
-        ),
-        reviewReportTo: getLabelWithValue(
-          { labelName: "Reporting To", labelKey: "HR_REP_TO_LABEL" },
-          { labelName: "Rahul Dev" }
-          // {
-          //   jsonPath: "Licenses[0].validTo",
-          //   callBack: convertEpochToDate
-          // }
-        ),
-        reviewHOD: getLabelWithValue(
-          { labelName: "Head of Department", labelKey: "HR_HOD_LABEL" },
-          { labelName: "Yes" }
-          // {
-          //   jsonPath: "Licenses[0].validTo",
-          //   callBack: convertEpochToDate
+          //   jsonPath: "Employee[0].serviceHistory[0].isCurrentPosition",
           // }
         )
       })
@@ -81,7 +76,7 @@ const assignmentCard = {
     items: [],
     hasAddItem: false,
     isReviewPage: true,
-    sourceJsonPath: "Licenses[0].tradeLicenseDetail.accessories",
+    sourceJsonPath: "Employee[0].serviceHistory",
     prefixSourceJsonPath:
       "children.cardContent.children.accessoriesCardContainer.children",
     afterPrefixJsonPath: "children.value.children.key"
@@ -89,7 +84,7 @@ const assignmentCard = {
   type: "array"
 };
 
-export const getAssignmentDetailsView = (isReview = true) => {
+export const getServiceDetailsView = (isReview = true) => {
   return getCommonGrayCard({
     headerDiv: {
       uiFramework: "custom-atoms",
@@ -104,8 +99,8 @@ export const getAssignmentDetailsView = (isReview = true) => {
             sm: 10
           },
           ...getCommonSubHeader({
-            labelName: "Assignment Details",
-            labelKey: "HR_ASSIGN_DET_HEADER"
+            labelName: "Service Details",
+            labelKey: "HR_SER_DET_HEADER"
           })
         },
         editSection: {

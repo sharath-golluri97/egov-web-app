@@ -23,7 +23,7 @@ const assignmentCard = {
           {
             labelName: "23/01/2018"
           }
-          //   { jsonPath: "Licenses[0].licenseType" }
+          //   { jsonPath: "Employee[0].assignments[0].fromDate" }
         ),
         reviewAssignedTo: getLabelWithValue(
           {
@@ -33,7 +33,7 @@ const assignmentCard = {
           {
             labelName: "23/01/2019"
           }
-          //   { jsonPath: "Licenses[0].tradeName" }
+          //   { jsonPath: "Employee[0].assignments[0].toDate" }
         ),
         reviewCurrentAssigned: getLabelWithValue(
           {
@@ -41,37 +41,34 @@ const assignmentCard = {
             labelKey: "HR_CURR_ASSIGN_LABEL"
           },
           { labelName: "Yes" }
-          // {jsonPath: "Licenses[0].validFrom"}
+          // {jsonPath: "Employee[0].assignments[0].department"}
         ),
         reviewDepartment: getLabelWithValue(
           { labelName: "Department", labelKey: "HR_DEPT_LABEL" },
           { labelName: "IT" }
           // {
-          //   jsonPath: "Licenses[0].validTo",
-          //   callBack: convertEpochToDate
+          //   jsonPath: "Employee[0].assignments[0].department",
           // }
         ),
         reviewDesignation: getLabelWithValue(
           { labelName: "Designation", labelKey: "HR_DESG_LABEL" },
           { labelName: "Junior Engineer" }
           // {
-          //   jsonPath: "Licenses[0].validTo",
-          //   callBack: convertEpochToDate
+          //   jsonPath: "Employee[0].assignments[0].designation",
           // }
         ),
         reviewReportTo: getLabelWithValue(
           { labelName: "Reporting To", labelKey: "HR_REP_TO_LABEL" },
           { labelName: "Rahul Dev" }
           // {
-          //   jsonPath: "Licenses[0].validTo",
-          //   callBack: convertEpochToDate
+          //   jsonPath: "Employee[0].assignments[0].reportingTo",
           // }
         ),
         reviewHOD: getLabelWithValue(
           { labelName: "Head of Department", labelKey: "HR_HOD_LABEL" },
           { labelName: "Yes" }
           // {
-          //   jsonPath: "Licenses[0].validTo",
+          //   jsonPath: "Employee[0].assignments[0].isHOD",
           //   callBack: convertEpochToDate
           // }
         )
@@ -81,7 +78,7 @@ const assignmentCard = {
     items: [],
     hasAddItem: false,
     isReviewPage: true,
-    sourceJsonPath: "Licenses[0].tradeLicenseDetail.accessories",
+    sourceJsonPath: "Employee[0].assignments",
     prefixSourceJsonPath:
       "children.cardContent.children.accessoriesCardContainer.children",
     afterPrefixJsonPath: "children.value.children.key"

@@ -71,7 +71,7 @@ const educationCard = {
           {
             labelName: "BE"
           }
-          //   { jsonPath: "Licenses[0].licenseType" }
+          //   { jsonPath: "Employee[0].education[0].qualification" }
         ),
         reviewYear: getLabelWithValue(
           {
@@ -81,17 +81,17 @@ const educationCard = {
           {
             labelName: "2010"
           }
-          //   { jsonPath: "Licenses[0].tradeName" }
+          //   { jsonPath: "Employee[0].education[0].yearOfPassing" }
         ),
         reviewUniversity: getLabelWithValue(
           { labelName: "University", labelKey: "HR_UNIVERSITY_LABEL" },
           { labelName: "VTU" }
-          // {jsonPath: "Licenses[0].validFrom"}
+          // {jsonPath: "Employee[0].education[0].university"}
         ),
         reviewStream: getLabelWithValue(
           { labelName: "Stream", labelKey: "HR_STREAM_LABEL" },
           { labelName: "CS" }
-          // {jsonPath: "Licenses[0].validFrom"}
+          // {jsonPath: "Employee[0].education[0].stream"}
         )
       })
     }),
@@ -99,7 +99,7 @@ const educationCard = {
     items: [],
     hasAddItem: false,
     isReviewPage: true,
-    sourceJsonPath: "Licenses[0].tradeLicenseDetail.accessories",
+    sourceJsonPath: "Licenses[0].education",
     prefixSourceJsonPath:
       "children.cardContent.children.accessoriesCardContainer.children",
     afterPrefixJsonPath: "children.value.children.key"
@@ -122,7 +122,7 @@ const deptCard = {
           {
             labelName: "Value"
           }
-          //   { jsonPath: "Licenses[0].licenseType" }
+          //   { jsonPath: "Employee[0].tests[0].test" }
         ),
         reviewYear: getLabelWithValue(
           {
@@ -132,21 +132,21 @@ const deptCard = {
           {
             labelName: "2009"
           }
-          //   { jsonPath: "Licenses[0].tradeName" }
+          //   { jsonPath: "Employee[0].tests[0].yearOfPassing" }
         ),
         reviewRemarks: getLabelWithValue(
           { labelName: "Remarks", labelKey: "HR_REMARKS_LABEL" },
           { labelName: "Additional Remarks" }
-          // {jsonPath: "Licenses[0].validFrom"}
-        ),
-        documents: getDocuments()
+          // {jsonPath: "EmployeeTemp[0].tests[0].remarks"}
+        )
+        // documents: getDocuments()
       })
     }),
 
     items: [],
     hasAddItem: false,
     isReviewPage: true,
-    sourceJsonPath: "Licenses[0].tradeLicenseDetail.accessories",
+    sourceJsonPath: "Licenses[0].tests",
     prefixSourceJsonPath:
       "children.cardContent.children.accessoriesCardContainer.children",
     afterPrefixJsonPath: "children.value.children.key"

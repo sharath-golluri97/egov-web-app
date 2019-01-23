@@ -29,7 +29,7 @@ const assignmentDetailsCard = {
                   labelKey: "HR_ASMT_FROM_DATE_PLACEHOLDER"
                 },
                 pattern: getPattern("Date"),
-                jsonPath: "EmployeeTemp[0].assignmentDetails[0].fromDate",
+                jsonPath: "EmployeeTemp[0].assignments[0].fromDate",
                 props: {
                   // inputProps: {
                   //   min: getTodaysDateInYMD(),
@@ -49,7 +49,7 @@ const assignmentDetailsCard = {
                   labelKey: "HR_ASMT_TO_DATE_PLACEHOLDER"
                 },
                 pattern: getPattern("Date"),
-                jsonPath: "EmployeeTemp[0].assignmentDetails[0].toDate",
+                jsonPath: "EmployeeTemp[0].assignments[0].toDate",
                 props: {
                   // inputProps: {
                   //   min: getTodaysDateInYMD(),
@@ -94,7 +94,7 @@ const assignmentDetailsCard = {
                 labelKey: "HR_DEPT_PLACEHOLDER"
               },
               required: true,
-              jsonPath: "EmployeeTemp[0].jurisdictionDetails[0].department",
+              jsonPath: "EmployeeTemp[0].assignments[0].department",
               props: {
                 className: "hr-generic-selectfield",
                 data: [
@@ -120,7 +120,7 @@ const assignmentDetailsCard = {
                 labelKey: "HR_DEPT_PLACEHOLDER"
               },
               required: true,
-              jsonPath: "EmployeeTemp[0].jurisdictionDetails[0].designation",
+              jsonPath: "EmployeeTemp[0].assignments[0].designation",
               props: {
                 className: "hr-generic-selectfield",
                 data: [
@@ -149,7 +149,7 @@ const assignmentDetailsCard = {
                 labelKey: "HR_REP_TO_LABEL"
               },
               pattern: getPattern("TradeName") || null,
-              jsonPath: "EmployeeTemp[0].jurisdictionDetails[0].reportingTo"
+              jsonPath: "EmployeeTemp[0].assignments[0].reportingTo"
             })
           },
           headOfDepartmentCont: {
@@ -196,7 +196,7 @@ const assignmentDetailsCard = {
     headerName: "Jurisdiction",
     headerJsonPath:
       "children.cardContent.children.header.children.head.children.Accessories.props.label",
-    sourceJsonPath: "Employee[0].jurisdictionDetails",
+    sourceJsonPath: "Employee[0].assignments",
     prefixSourceJsonPath:
       "children.cardContent.children.tradeUnitCardContainer.children"
   },

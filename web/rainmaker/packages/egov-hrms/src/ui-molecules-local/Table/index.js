@@ -6,7 +6,8 @@ import cloneDeep from "lodash/cloneDeep";
 import "./index.css";
 import Button from "@material-ui/core/Button";
 import DeleteIcon from "@material-ui/icons/Delete";
-import AlertDialog from "../../ui-config/screens/specs/tradelicence/searchResource/deactivateEmployee";
+import EditIcon from "@material-ui/icons/Edit";
+import AlertDialog from "./deactivateEmployee";
 
 class Table extends React.Component {
   state = {
@@ -99,18 +100,23 @@ class Table extends React.Component {
               displayData,
               setSelectableRows
             ) => {
-              console.log("========", displayData);
               let selectedData = selectedRows.data.map(item => {
                 return displayData[item.dataIndex].data;
               });
               return (
-                <Button
-                  style={{ color: "#FE7A51" }}
-                  onClick={() => this.handleClickOpen(selectedData)}
-                >
-                  <DeleteIcon style={{ color: "#FE7A51" }} />
-                  DEACTIVATE
-                </Button>
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <Button
+                    style={{ color: "#FE7A51" }}
+                    onClick={() => this.handleClickOpen(selectedData)}
+                  >
+                    <DeleteIcon style={{ color: "#FE7A51" }} />
+                    DEACTIVATE
+                  </Button>
+                  <Button style={{ color: "#FE7A51" }}>
+                    <EditIcon style={{ color: "#FE7A51" }} />
+                    Edit
+                  </Button>
+                </div>
               );
             }
           }}

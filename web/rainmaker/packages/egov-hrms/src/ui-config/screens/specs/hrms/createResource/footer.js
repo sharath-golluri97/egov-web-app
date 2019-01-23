@@ -4,11 +4,15 @@ import {
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 import get from "lodash/get";
 import some from "lodash/some";
-import { getButtonVisibility, getCommonApplyFooter } from "../../utils";
+import {
+  getButtonVisibility,
+  getCommonApplyFooter,
+  validateFields,
+  ifUserRoleExists
+} from "../../utils";
 import { setRoute } from "mihy-ui-framework/ui-redux/app/actions";
-import { ifUserRoleExists } from "../../utils";
+import { toggleSnackbarAndSetText } from "mihy-ui-framework/ui-redux/app/actions";
 import "./index.css";
-import generateReceipt from "../../utils/receiptPdf";
 
 const moveToReview = dispatch => {
   dispatch(setRoute(`/mihy-ui-framework/hrms/review`));
@@ -20,7 +24,17 @@ export const callBackForNext = async (state, dispatch) => {
     "components.div.children.stepper.props.activeStep",
     0
   );
+  let isFormValid = true;
   if (activeStep === 0) {
+    const isEmployeeDetailsValid = validateFields(
+      "components.div.children.formwizardFirstStep.children.employeeDetails.children.cardContent.children.employeeDetailsContainer.children",
+      state,
+      dispatch,
+      "create"
+    );
+    if (!isEmployeeDetailsValid) {
+      isFormValid = false;
+    }
   }
 
   if (activeStep === 1) {
@@ -31,7 +45,12 @@ export const callBackForNext = async (state, dispatch) => {
     moveToReview(dispatch);
   }
   if (activeStep !== 4) {
-    changeStep(state, dispatch);
+    if (isFormValid) {
+      changeStep(state, dispatch);
+    } else {
+      const errorMessage = "Please fill all fields";
+      dispatch(toggleSnackbarAndSetText(true, errorMessage, "warning"));
+    }
   }
 };
 

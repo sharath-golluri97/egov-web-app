@@ -53,8 +53,7 @@ export const otherDetails = getCommonCard({
                   labelName: "Select Degree",
                   labelKey: "HR_DEGREE_PLACEHOLDER"
                 },
-                jsonPath:
-                  "EmployeeTemp[0].otherDetails.educationDetails[0].degree",
+                jsonPath: "EmployeeTemp[0].education[0].qualification",
                 gridDefination: {
                   xs: 12,
                   sm: 4
@@ -86,8 +85,7 @@ export const otherDetails = getCommonCard({
                   labelName: "Select Year",
                   labelKey: "HR_YEAR_PLACEHOLDER"
                 },
-                jsonPath:
-                  "EmployeeTemp[0].otherDetails.educationDetails[0].year",
+                jsonPath: "EmployeeTemp[0].education[0].yearOfPassing",
                 gridDefination: {
                   xs: 12,
                   sm: 4
@@ -119,8 +117,7 @@ export const otherDetails = getCommonCard({
                   labelName: "Select University",
                   labelKey: "HR_UNIVERSITY_PLACEHOLDER"
                 },
-                jsonPath:
-                  "EmployeeTemp[0].otherDetails.educationDetails[0].university",
+                jsonPath: "EmployeeTemp[0].education[0].university",
                 gridDefination: {
                   xs: 12,
                   sm: 4
@@ -152,8 +149,7 @@ export const otherDetails = getCommonCard({
                   labelName: "Select Stream",
                   labelKey: "HR_STREAM_PLACEHOLDER"
                 },
-                jsonPath:
-                  "EmployeeTemp[0].otherDetails.educationDetails[0].stream",
+                jsonPath: "EmployeeTemp[0].education[0].stream",
                 gridDefination: {
                   xs: 12,
                   sm: 4
@@ -190,8 +186,7 @@ export const otherDetails = getCommonCard({
                   xs: 12,
                   sm: 4
                 },
-                jsonPath:
-                  "EmployeeTemp[0].otherDetails.educationDetails[0].remarks"
+                jsonPath: "EmployeeTemp[0].education[0].remarks"
               })
             }
           },
@@ -207,7 +202,7 @@ export const otherDetails = getCommonCard({
       headerName: "Education Qualification",
       headerJsonPath:
         "children.cardContent.children.header.children.head.children.Accessories.props.label",
-      sourceJsonPath: "Employee[0].otherDetails.educationDetails",
+      sourceJsonPath: "Employee[0].education",
       prefixSourceJsonPath:
         "children.cardContent.children.tradeUnitCardContainer.children"
     },
@@ -242,8 +237,7 @@ export const otherDetails = getCommonCard({
                   labelName: "Select Test Name",
                   labelKey: "HR_TEST_NAME_PLACEHOLDER"
                 },
-                jsonPath:
-                  "EmployeeTemp[0].otherDetails.deptTestDetails[0].testName",
+                jsonPath: "EmployeeTemp[0].tests[0].test",
                 gridDefination: {
                   xs: 12,
                   sm: 4
@@ -275,8 +269,7 @@ export const otherDetails = getCommonCard({
                   labelName: "Select Year",
                   labelKey: "HR_YEAR_PLACEHOLDER"
                 },
-                jsonPath:
-                  "EmployeeTemp[0].otherDetails.deptTestDetails[0].year",
+                jsonPath: "EmployeeTemp[0].tests[0].yearOfPassing",
                 gridDefination: {
                   xs: 12,
                   sm: 4
@@ -313,8 +306,7 @@ export const otherDetails = getCommonCard({
                   xs: 12,
                   sm: 4
                 },
-                jsonPath:
-                  "EmployeeTemp[0].otherDetails.deptTestDetails[0].remarks"
+                jsonPath: "EmployeeTemp[0].tests[0].remarks"
               })
             },
             uploadFile: getUploadFilesMultiple(
@@ -333,7 +325,7 @@ export const otherDetails = getCommonCard({
       headerName: "Department Test Details",
       headerJsonPath:
         "children.cardContent.children.header.children.head.children.Accessories.props.label",
-      sourceJsonPath: "Employee[0].serviceDetails",
+      sourceJsonPath: "Employee[0].tests",
       prefixSourceJsonPath:
         "children.cardContent.children.tradeUnitCardContainer.children"
     },

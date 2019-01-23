@@ -35,7 +35,7 @@ export const employeeDetails = getCommonCard({
         },
         required: true,
         pattern: getPattern("TradeName") || null,
-        jsonPath: "Employee[0].employeeName"
+        jsonPath: "Employee[0].user.name"
       })
     },
     employeeID: {
@@ -49,7 +49,7 @@ export const employeeDetails = getCommonCard({
           labelKey: "HR_EMP_ID_PLACEHOLDER"
         },
         pattern: getPattern("TradeName") || null,
-        jsonPath: "Employee[0].employeeID"
+        jsonPath: "Employee[0].id"
       })
     },
     mobileNumber: {
@@ -64,7 +64,7 @@ export const employeeDetails = getCommonCard({
         },
         required: true,
         pattern: getPattern("MobileNo"),
-        jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].mobileNumber"
+        jsonPath: "Employee[0].user.mobileNumber"
       })
     },
     gender: {
@@ -75,7 +75,7 @@ export const employeeDetails = getCommonCard({
           labelKey: "HR_GENDER_PLACEHOLDER"
         },
         required: true,
-        jsonPath: "Licenses[0].gender",
+        jsonPath: "Employee[0].user.gender",
         props: {
           className: "hr-generic-selectfield",
           data: [
@@ -104,7 +104,7 @@ export const employeeDetails = getCommonCard({
           labelKey: "HR_APPT_DATE_PLACEHOLDER"
         },
         pattern: getPattern("Date"),
-        jsonPath: "Licenses[0].appointmentDate",
+        jsonPath: "Employee[0].dateOfAppointment",
         props: {
           // inputProps: {
           //   min: getTodaysDateInYMD(),
@@ -122,7 +122,7 @@ export const employeeDetails = getCommonCard({
           labelKey: "HR_EMP_TYPE_PLACEHOLDER"
         },
         required: true,
-        jsonPath: "Licenses[0].employeeType",
+        jsonPath: "Employee[0].employeeType",
         props: {
           className: "hr-generic-selectfield",
           data: [
@@ -149,7 +149,7 @@ export const employeeDetails = getCommonCard({
           labelKey: "HR_STATUS_PLACEHOLDER"
         },
         required: true,
-        jsonPath: "Licenses[0].status",
+        jsonPath: "Employee[0].employeeStatus",
         props: {
           className: "hr-generic-selectfield",
           data: [
@@ -176,7 +176,7 @@ export const employeeDetails = getCommonCard({
           labelKey: "HR_ROLE_PLACEHOLDER"
         },
         required: true,
-        jsonPath: "Licenses[0].role",
+        jsonPath: "Employee[0].user.role",
         props: {
           className: "hr-generic-selectfield",
           data: [

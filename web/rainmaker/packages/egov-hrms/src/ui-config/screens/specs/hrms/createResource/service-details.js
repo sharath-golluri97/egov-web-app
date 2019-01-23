@@ -27,7 +27,7 @@ const serviceDetailsCard = {
                 labelName: "Select Status",
                 labelKey: "HR_STATUS_PLACEHOLDER"
               },
-              jsonPath: "EmployeeTemp[0].serviceDetails[0].status",
+              jsonPath: "EmployeeTemp[0].serviceHistory[0].serviceStatus",
               gridDefination: {
                 xs: 12,
                 sm: 4
@@ -60,7 +60,7 @@ const serviceDetailsCard = {
                 labelKey: "HR_SER_FROM_DATE_LABEL"
               },
               pattern: getPattern("Date"),
-              jsonPath: "EmployeeTemp[0].serviceDetails[0].fromDate",
+              jsonPath: "EmployeeTemp[0].serviceHistory[0].serviceFrom",
               gridDefination: {
                 xs: 12,
                 sm: 4
@@ -84,7 +84,7 @@ const serviceDetailsCard = {
                 labelKey: "HR_SER_TO_DATE_LABEL"
               },
               pattern: getPattern("Date"),
-              jsonPath: "EmployeeTemp[0].service[0].toDate",
+              jsonPath: "EmployeeTemp[0].serviceHistory[0].serviceTo",
               gridDefination: {
                 xs: 12,
                 sm: 4
@@ -107,7 +107,7 @@ const serviceDetailsCard = {
                 labelName: "Select Location",
                 labelKey: "HR_LOCATION_PLACEHOLDER"
               },
-              jsonPath: "EmployeeTemp[0].serviceDetails[0].location",
+              jsonPath: "EmployeeTemp[0].serviceHistory[0].location",
               gridDefination: {
                 xs: 12,
                 sm: 4
@@ -140,7 +140,7 @@ const serviceDetailsCard = {
                 labelKey: "HR_ORDER_NO_PLACEHOLDER"
               },
               pattern: getPattern("TradeName") || null,
-              jsonPath: "Employee[0].serviceDetails[0].orderNo"
+              jsonPath: "Employee[0].serviceHistory[0].orderNo"
             }),
             gridDefination: {
               xs: 12,

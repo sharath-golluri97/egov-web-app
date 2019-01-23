@@ -23,7 +23,7 @@ const jurisdictionCard = {
           {
             labelName: "Value"
           }
-          //   { jsonPath: "Licenses[0].licenseType" }
+          //   { jsonPath: "Employee[0].jurisdictions[0].hierarchy" }
         ),
         reviewBoundaryType: getLabelWithValue(
           {
@@ -33,12 +33,12 @@ const jurisdictionCard = {
           {
             labelName: "Value"
           }
-          //   { jsonPath: "Licenses[0].tradeName" }
+          //   { jsonPath: "Employee[0].jurisdictions[0].boundaryType" }
         ),
         reviewBoundary: getLabelWithValue(
           { labelName: "Boundary", labelKey: "HR_BOUNDARY_LABEL" },
           { labelName: "Value" }
-          // {jsonPath: "Licenses[0].validFrom"}
+          // {jsonPath: "Employee[0].jurisdictions[0].boundary"}
         )
       })
     }),
@@ -46,7 +46,7 @@ const jurisdictionCard = {
     items: [],
     hasAddItem: false,
     isReviewPage: true,
-    sourceJsonPath: "Licenses[0].tradeLicenseDetail.accessories",
+    sourceJsonPath: "Employee[0].jurisdictions",
     prefixSourceJsonPath:
       "children.cardContent.children.accessoriesCardContainer.children",
     afterPrefixJsonPath: "children.value.children.key"

@@ -69,7 +69,7 @@ export const getEmployeeDetailsView = (isReview = true) => {
         {
           labelName: "Ravi Verma"
         }
-        //   { jsonPath: "Licenses[0].licenseType" }
+        //   { jsonPath: "Employee[0].user.name" }
       ),
       reviewEmpID: getLabelWithValue(
         {
@@ -79,51 +79,46 @@ export const getEmployeeDetailsView = (isReview = true) => {
         {
           labelName: "324244"
         }
-        //   { jsonPath: "Licenses[0].tradeName" }
+        //   { jsonPath: "Employee[0].id" }
       ),
       reviewMobile: getLabelWithValue(
         { labelName: "Mobile No", labelKey: "HR_MOB_NO_LABEL" },
         { labelName: "9611046140" }
-        // {jsonPath: "Licenses[0].validFrom"}
+        // {jsonPath: "Employee[0].user.mobileNumber"}
       ),
       reviewGender: getLabelWithValue(
         { labelName: "Gender", labelKey: "HR_GENDER_LABEL" },
         { labelName: "9611046140" }
         // {
-        //   jsonPath: "Licenses[0].validTo",
-        //   callBack: convertEpochToDate
+        //   jsonPath: "Employee[0].user.gender",
         // }
       ),
       reviewDOA: getLabelWithValue(
         { labelName: "Date of Appointment", labelKey: "HR_APPT_DATE_LABEL" },
         { labelName: "12/12/2018" }
         // {
-        //   jsonPath: "Licenses[0].validTo",
-        //   callBack: convertEpochToDate
+        //   jsonPath: "Employee[0].dateOfAppointment",
         // }
       ),
       reviewEmpType: getLabelWithValue(
         { labelName: "Employee Type", labelKey: "HR_EMP_TYPE_LABEL" },
         { labelName: "Temporary" }
         // {
-        //   jsonPath: "Licenses[0].validTo",
-        //   callBack: convertEpochToDate
+        //   jsonPath: "Employee[0].employeeType",
         // }
       ),
       reviewStatus: getLabelWithValue(
         { labelName: "Status", labelKey: "HR_STATUS_LABEL" },
         { labelName: "Active" }
         // {
-        //   jsonPath: "Licenses[0].validTo",
-        //   callBack: convertEpochToDate
+        //   jsonPath: "Employee[0].employeeStatus",
         // }
       ),
       reviewRole: getLabelWithValue(
         { labelName: "Role", labelKey: "HR_ROLE_LABEL" },
         { labelName: "JE-1" }
         // {
-        //   jsonPath: "Licenses[0].validTo",
-        //   callBack: convertEpochToDate
+        //   jsonPath: "Employee[0].user.role",
         // }
       )
     })
