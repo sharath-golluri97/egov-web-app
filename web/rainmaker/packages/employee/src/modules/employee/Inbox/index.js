@@ -85,7 +85,7 @@ class Inbox extends Component {
         <Label className="landingPageUser" label={` Welcome ${name}, `} />
         <Taskboard data={taskboardData} />
         <div className="col-sm-12">
-          <Tabs value={value} onChange={this.handleChange} className="">
+          <Tabs value={value} onChange={this.handleChange} className="" indicatorColor="primary">
             {tabData.map((item) => {
               return <Tab className="inbox-tab" label={item} />;
             })}
