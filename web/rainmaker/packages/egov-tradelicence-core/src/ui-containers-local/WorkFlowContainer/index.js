@@ -5,9 +5,9 @@ import { Footer, ActionDialog } from "../../ui-molecules-local";
 import {
   getQueryArg,
   addWflowFileUrl
-} from "mihy-ui-framework/ui-utils/commons";
-import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
-import { toggleSnackbarAndSetText } from "mihy-ui-framework/ui-redux/app/actions";
+} from "egov-ui-framework/ui-utils/commons";
+import { prepareFinalObject } from "egov-ui-framework/ui-redux/screen-configuration/actions";
+import { toggleSnackbarAndSetText } from "egov-ui-framework/ui-redux/app/actions";
 import { httpRequest } from "ui-utils/api";
 import cloneDeep from "lodash/cloneDeep";
 import get from "lodash/get";
@@ -134,7 +134,7 @@ class WorkFlowContainer extends React.Component {
   getRedirectUrl = (action, businessId) => {
     switch (action) {
       case "PAY":
-        return `/employee-tradelicence/mihy-ui-framework/tradelicence/pay?applicationNumber=${businessId}&tenantId=${tenant}&businessService=TL`;
+        return `/employee-tradelicence/egov-ui-framework/tradelicence/pay?applicationNumber=${businessId}&tenantId=${tenant}&businessService=TL`;
     }
   };
 

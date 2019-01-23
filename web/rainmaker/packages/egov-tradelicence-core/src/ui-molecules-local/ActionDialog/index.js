@@ -1,10 +1,10 @@
 import React from "react";
 import { Grid, Typography, Button } from "@material-ui/core";
-import { Container } from "mihy-ui-framework/ui-atoms";
+import { Container } from "egov-ui-framework/ui-atoms";
 import {
   LabelContainer,
   TextFieldContainer
-} from "mihy-ui-framework/ui-containers";
+} from "egov-ui-framework/ui-containers";
 import { Dialog, DialogContent } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import { withStyles } from "@material-ui/core/styles";
