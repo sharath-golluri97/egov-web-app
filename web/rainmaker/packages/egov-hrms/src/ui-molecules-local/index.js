@@ -67,6 +67,11 @@ const DividerWithLabel = Loadable({
   loading: () => <Loading />
 });
 
+const ActionDialog = Loadable({
+  loader: () => import("./ActionDialog"),
+  loading: () => <Loading />
+});
+
 export {
   TestMolecules,
   Table,
@@ -80,5 +85,6 @@ export {
   MapLocator,
   FeesEstimateCard,
   SwitchWithLabel,
-  DividerWithLabel
+  DividerWithLabel,
+  ActionDialog
 };

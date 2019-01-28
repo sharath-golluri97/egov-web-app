@@ -47,26 +47,26 @@ const styles = theme => ({
   }
 });
 
-class AlertDialog extends React.Component {
-  state = {
-    open: true
-  };
-
-  handleClickOpen = () => {
-    this.setState({ open: true });
-  };
-
-  handleClose = () => {
-    this.setState({ open: false });
-  };
+class ActionDialog extends React.Component {
+  deactivateEmployeeClick() {
+    console.log("DEACTIVATE EMPLOYEE!");
+  }
 
   render() {
-    const { classes, open, onClose } = this.props;
+    const {
+      classes,
+      open,
+      onFieldChange,
+      screenKey,
+      componentJsonpath
+    } = this.props;
     return (
       <div>
         <Dialog
           open={open}
-          onClose={this.handleClose}
+          onClose={() =>
+            onFieldChange(screenKey, componentJsonpath, "props.open", false)
+          }
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
@@ -77,7 +77,6 @@ class AlertDialog extends React.Component {
                 {data.content.dropdown.text}
               </InputLabel>
               <Select
-                value={this.state.age}
                 onChange={this.handleChange}
                 input={<Input name="age" id="age-label-placeholder" />}
                 displayEmpty
@@ -128,7 +127,11 @@ class AlertDialog extends React.Component {
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={onClose} color="primary" variant="contained">
+            <Button
+              onClick={this.deactivateEmployeeClick}
+              color="primary"
+              variant="contained"
+            >
               DEACTIVATE EMPLOYEE
             </Button>
           </DialogActions>
@@ -138,4 +141,4 @@ class AlertDialog extends React.Component {
   }
 }
 
-export default withStyles(styles)(AlertDialog);
+export default withStyles(styles)(ActionDialog);

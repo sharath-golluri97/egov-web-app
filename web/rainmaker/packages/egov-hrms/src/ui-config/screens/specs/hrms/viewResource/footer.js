@@ -1,5 +1,6 @@
 import { getLabel } from "mihy-ui-framework/ui-config/screens/specs/utils";
 import { ifUserRoleExists } from "../../utils";
+import { toggleDeactivateDialog } from "../../utils";
 
 const getCommonCreateFooter = children => {
   return {
@@ -62,6 +63,10 @@ export const hrViewFooter = () => {
           labelName: "DEACTIVATE EMPLOYEE",
           labelKey: "HR_DEACTIVATE_EMPLOYEE_LABEL"
         })
+      },
+      onClickDefination: {
+        action: "condition",
+        callBack: toggleDeactivateDialog
       }
     },
     editDetails: {

@@ -46,6 +46,14 @@ const screenConfig = {
         tradeView,
         footer: hrViewFooter()
       }
+    },
+    deactivateEmployee: {
+      uiFramework: "custom-molecules-local",
+      componentPath: "ActionDialog",
+      props: {
+        open: false
+      },
+      type: "array"
     }
   }
 };

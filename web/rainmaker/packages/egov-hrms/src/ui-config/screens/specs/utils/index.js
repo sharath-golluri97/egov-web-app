@@ -1993,3 +1993,15 @@ export const getEpochForDate = date => {
   const dateSplit = date.split("/");
   return new Date(dateSplit[2], dateSplit[1] - 1, dateSplit[0]).getTime();
 };
+
+// HRMS
+export const toggleDeactivateDialog = (state, dispatch) => {
+  let toggle = get(
+    state.screenConfiguration.screenConfig["view"],
+    "components.deactivateEmployee.props.open",
+    false
+  );
+  dispatch(
+    handleField("view", "components.deactivateEmployee", "props.open", !toggle)
+  );
+};
