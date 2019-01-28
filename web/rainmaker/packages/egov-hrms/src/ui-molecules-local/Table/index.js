@@ -4,10 +4,6 @@ import get from "lodash/get";
 import PropTypes from "prop-types";
 import cloneDeep from "lodash/cloneDeep";
 import "./index.css";
-import Button from "@material-ui/core/Button";
-import DeleteIcon from "@material-ui/icons/Delete";
-import EditIcon from "@material-ui/icons/Edit";
-import AlertDialog from "./deactivateEmployee";
 
 class Table extends React.Component {
   state = {
@@ -85,43 +81,9 @@ class Table extends React.Component {
           data={data}
           columns={columns}
           options={{
-            ...options,
-            onColumnSortChange: (columnName, order) =>
-              this.onColumnSortChange(columnName, order),
-            filter: false,
-            download: false,
-            responsive: "stacked",
-            selectableRows: true,
-            hover: true,
-            rowsPerPageOptions: [10, 15, 20],
-            filterType: "checkbox",
-            customToolbarSelect: (
-              selectedRows,
-              displayData,
-              setSelectableRows
-            ) => {
-              let selectedData = selectedRows.data.map(item => {
-                return displayData[item.dataIndex].data;
-              });
-              return (
-                <div style={{ display: "flex", alignItems: "center" }}>
-                  <Button
-                    style={{ color: "#FE7A51" }}
-                    onClick={() => this.handleClickOpen(selectedData)}
-                  >
-                    <DeleteIcon style={{ color: "#FE7A51" }} />
-                    DEACTIVATE
-                  </Button>
-                  <Button style={{ color: "#FE7A51" }}>
-                    <EditIcon style={{ color: "#FE7A51" }} />
-                    Edit
-                  </Button>
-                </div>
-              );
-            }
+            selectableRows: false
           }}
         />
-        <AlertDialog open={this.state.open} onClose={this.handleClose} />
       </div>
     );
   }
