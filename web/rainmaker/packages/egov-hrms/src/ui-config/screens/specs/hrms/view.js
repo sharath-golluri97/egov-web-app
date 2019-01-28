@@ -8,6 +8,7 @@ import {
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 
 import { employeeReviewDetails } from "./viewResource/employee-review";
+import { hrViewFooter } from "./viewResource/footer";
 
 export const header = getCommonContainer({
   header: getCommonHeader({
@@ -42,7 +43,8 @@ const screenConfig = {
             }
           }
         },
-        tradeView
+        tradeView,
+        footer: hrViewFooter()
       }
     }
   }

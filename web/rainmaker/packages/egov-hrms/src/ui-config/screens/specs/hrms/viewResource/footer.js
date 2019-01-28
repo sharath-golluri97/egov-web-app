@@ -43,3 +43,51 @@ export const hrCommonFooter = () => {
     }
   });
 };
+
+export const hrViewFooter = () => {
+  return getCommonCreateFooter({
+    deactivateEmployee: {
+      componentPath: "Button",
+      props: {
+        variant: "outlined",
+        color: "primary",
+        style: {
+          minWidth: "200px",
+          height: "48px",
+          marginRight: "45px"
+        }
+      },
+      children: {
+        deactivateEmployeeButtonLabel: getLabel({
+          labelName: "DEACTIVATE EMPLOYEE",
+          labelKey: "HR_DEACTIVATE_EMPLOYEE_LABEL"
+        })
+      }
+    },
+    editDetails: {
+      componentPath: "Button",
+      props: {
+        variant: "contained",
+        color: "primary",
+        style: {
+          minWidth: "200px",
+          height: "48px",
+          marginRight: "45px"
+        }
+      },
+      children: {
+        editDetailsButtonLabel: getLabel({
+          labelName: "EDIT DETAILS",
+          labelKey: "HR_EDIT_DETAILS_LABEL"
+        }),
+        editDetailsButtonIcon: {
+          uiFramework: "custom-atoms",
+          componentPath: "Icon",
+          props: {
+            iconName: "keyboard_arrow_right"
+          }
+        }
+      }
+    }
+  });
+};
