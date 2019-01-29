@@ -56,7 +56,7 @@ export const searchForm = getCommonCard({
       required: false,
       pattern: /^[a-zA-Z0-9-]*$/i,
       errorMessage: "HR_EMP_ID_ERR_MSG",
-      jsonPath: "searchScreen.employeeID"
+      jsonPath: "searchScreen.id"
     }),
 
     department: getSelectField({
@@ -66,14 +66,14 @@ export const searchForm = getCommonCard({
         labelKey: "HR_DEPT_PLACEHOLDER"
       },
       required: false,
-      jsonPath: "searchScreen.department",
+      jsonPath: "searchScreen.departments",
       gridDefination: {
         xs: 12,
         sm: 4
       },
       sourceJsonPath: "searchScreenMdmsData.common-masters.Department",
       optionLabel: "code",
-      optionValue: "name"
+      optionValue: "code"
     }),
     designation: getSelectField({
       label: { labelName: "Designation", labelKey: "HR_DESG_LABEL" },
@@ -82,14 +82,14 @@ export const searchForm = getCommonCard({
         labelKey: "HR_DEPT_PLACEHOLDER"
       },
       required: false,
-      jsonPath: "searchScreen.designation",
+      jsonPath: "searchScreen.designations",
       gridDefination: {
         xs: 12,
         sm: 4
       },
       sourceJsonPath: "searchScreenMdmsData.common-masters.Designation",
       optionLabel: "code",
-      optionValue: "name"
+      optionValue: "code"
     })
   }),
 

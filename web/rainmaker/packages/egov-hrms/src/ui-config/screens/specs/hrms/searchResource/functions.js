@@ -56,59 +56,62 @@ export const searchApiCall = async (state, dispatch) => {
       }
     }
     let response = await getSearchResults(queryObject);
-    response = {
-      Licenses: [
-        {
-          employeeID: "EMP-JAL-12345",
-          name: "Ravinder Pal Singh",
-          role: "Accountant",
-          designation: "Junior Accountant",
-          department: "Administration"
-        },
-        {
-          employeeID: "EMP-JAL-1234",
-          name: "Ravinder Pal Singh",
-          role: "Accountant",
-          designation: "Junior Accountant",
-          department: "Administration"
-        },
-        {
-          employeeID: "EMP-JAL-1234",
-          name: "Ravinder Pal Singh",
-          role: "Accountant",
-          designation: "Junior Accountant",
-          department: "Administration"
-        },
-        {
-          employeeID: "EMP-JAL-1234",
-          name: "Ravinder Pal Singh",
-          role: "Accountant",
-          designation: "Junior Accountant",
-          department: "Administration"
-        },
-        {
-          employeeID: "EMP-JAL-1234",
-          name: "Ravinder Pal Singh",
-          role: "Accountant",
-          designation: "Junior Accountant",
-          department: "Administration"
-        },
-        {
-          employeeID: "EMP-JAL-1234",
-          name: "Ravinder Pal Singh",
-          role: "Accountant",
-          designation: "Junior Accountant",
-          department: "Administration"
-        }
-      ]
-    };
+    // response = {
+    //   Licenses: [
+    //     {
+    //       employeeID: "EMP-JAL-12345",
+    //       name: "Ravinder Pal Singh",
+    //       role: "Accountant",
+    //       designation: "Junior Accountant",
+    //       department: "Administration"
+    //     },
+    //     {
+    //       employeeID: "EMP-JAL-1234",
+    //       name: "Ravinder Pal Singh",
+    //       role: "Accountant",
+    //       designation: "Junior Accountant",
+    //       department: "Administration"
+    //     },
+    //     {
+    //       employeeID: "EMP-JAL-1234",
+    //       name: "Ravinder Pal Singh",
+    //       role: "Accountant",
+    //       designation: "Junior Accountant",
+    //       department: "Administration"
+    //     },
+    //     {
+    //       employeeID: "EMP-JAL-1234",
+    //       name: "Ravinder Pal Singh",
+    //       role: "Accountant",
+    //       designation: "Junior Accountant",
+    //       department: "Administration"
+    //     },
+    //     {
+    //       employeeID: "EMP-JAL-1234",
+    //       name: "Ravinder Pal Singh",
+    //       role: "Accountant",
+    //       designation: "Junior Accountant",
+    //       department: "Administration"
+    //     },
+    //     {
+    //       employeeID: "EMP-JAL-1234",
+    //       name: "Ravinder Pal Singh",
+    //       role: "Accountant",
+    //       designation: "Junior Accountant",
+    //       department: "Administration"
+    //     }
+    //   ]
+    // };
     try {
-      let data = response.Licenses.map(item => ({
-        [get(textToLocalMapping, "Employee ID")]: item.employeeID || "-",
-        [get(textToLocalMapping, "Name")]: item.name || "-",
-        [get(textToLocalMapping, "Role")]: item.role || "-",
-        [get(textToLocalMapping, "Designation")]: item.designation || "-",
-        [get(textToLocalMapping, "Department")]: item.department || "-"
+      let data = response.Employees.map(item => ({
+        [get(textToLocalMapping, "Employee ID")]: get(item, "id", "-") || "-",
+        [get(textToLocalMapping, "Name")]: get(item, "user.name", "-") || "-",
+        [get(textToLocalMapping, "Role")]:
+          get(item, "user.roles[0].name", "-") || "-",
+        [get(textToLocalMapping, "Designation")]:
+          get(item, "assignments[0].designation", "-") || "-",
+        [get(textToLocalMapping, "Department")]:
+          get(item, "assignments[0].department", "-") || "-"
       }));
 
       dispatch(
@@ -125,7 +128,7 @@ export const searchApiCall = async (state, dispatch) => {
           "components.div.children.searchResults",
           "props.title",
           `${textToLocalMapping["Search Results for Employee"]} (${
-            response.Licenses.length
+            response.Employees.length
           })`
         )
       );
