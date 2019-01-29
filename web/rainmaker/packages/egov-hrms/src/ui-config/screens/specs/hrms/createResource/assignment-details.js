@@ -29,7 +29,7 @@ const assignmentDetailsCard = {
                   labelKey: "HR_ASMT_FROM_DATE_PLACEHOLDER"
                 },
                 pattern: getPattern("Date"),
-                jsonPath: "EmployeeTemp[0].assignments[0].fromDate",
+                jsonPath: "Employee[0].assignments[0].fromDate",
                 props: {
                   // inputProps: {
                   //   min: getTodaysDateInYMD(),
@@ -49,7 +49,7 @@ const assignmentDetailsCard = {
                   labelKey: "HR_ASMT_TO_DATE_PLACEHOLDER"
                 },
                 pattern: getPattern("Date"),
-                jsonPath: "EmployeeTemp[0].assignments[0].toDate",
+                jsonPath: "Employee[0].assignments[0].toDate",
                 props: {
                   // inputProps: {
                   //   min: getTodaysDateInYMD(),
@@ -80,7 +80,8 @@ const assignmentDetailsCard = {
                 SwitchProps: {
                   color: "primary"
                 }
-              }
+              },
+              jsonPath: "Employee[0].assignments[0].isCurrentAssignment"
             }
           }),
           department: {
@@ -94,7 +95,7 @@ const assignmentDetailsCard = {
                 labelKey: "HR_DEPT_PLACEHOLDER"
               },
               required: true,
-              jsonPath: "EmployeeTemp[0].assignments[0].department",
+              jsonPath: "Employee[0].assignments[0].department",
               props: {
                 className: "hr-generic-selectfield",
                 data: [
@@ -120,7 +121,7 @@ const assignmentDetailsCard = {
                 labelKey: "HR_DEPT_PLACEHOLDER"
               },
               required: true,
-              jsonPath: "EmployeeTemp[0].assignments[0].designation",
+              jsonPath: "Employee[0].assignments[0].designation",
               props: {
                 className: "hr-generic-selectfield",
                 data: [
@@ -149,7 +150,7 @@ const assignmentDetailsCard = {
                 labelKey: "HR_REP_TO_LABEL"
               },
               pattern: getPattern("TradeName") || null,
-              jsonPath: "EmployeeTemp[0].assignments[0].reportingTo"
+              jsonPath: "Employee[0].assignments[0].reportingTo"
             })
           },
           headOfDepartmentCont: {
@@ -181,7 +182,8 @@ const assignmentDetailsCard = {
                   }
                 }
               }
-            }
+            },
+            jsonPath: "Employee[0].assignments[0].hod"
           }
         },
         {

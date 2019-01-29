@@ -25,7 +25,7 @@ const jurisdictionDetailsCard = {
                 labelKey: "HR_HIERARCHY_PLACEHOLDER"
               },
               required: true,
-              jsonPath: "EmployeeTemp[0].jurisdictions[0].hierarchy",
+              jsonPath: "Employee[0].jurisdictions[0].hierarchy",
               props: {
                 className: "hr-generic-selectfield",
                 data: [
@@ -54,7 +54,7 @@ const jurisdictionDetailsCard = {
                 labelKey: "HR_BOUNDARY_TYPE_PLACEHOLDER"
               },
               required: true,
-              jsonPath: "EmployeeTemp[0].jurisdictions[0].boundaryType",
+              jsonPath: "Employee[0].jurisdictions[0].boundaryType",
               props: {
                 className: "hr-generic-selectfield",
                 data: [
@@ -80,7 +80,7 @@ const jurisdictionDetailsCard = {
                 labelKey: "HR_BOUNDARY_PLACEHOLDER"
               },
               required: true,
-              jsonPath: "EmployeeTemp[0].jurisdictions[0].boundary",
+              jsonPath: "Employee[0].jurisdictions[0].boundary",
               props: {
                 className: "hr-generic-selectfield",
                 data: [
