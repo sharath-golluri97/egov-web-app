@@ -134,7 +134,7 @@ export const employeeDetails = getCommonCard({
         },
         required: true,
         pattern: getPattern("Address"),
-        jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].permanentAddress"
+        jsonPath: "Employee[0].user.correspondenceAddress"
       })
     }
   })
@@ -163,7 +163,7 @@ export const professionalDetails = getCommonCard({
           labelName: "Enter Employee ID",
           labelKey: "HR_EMPLOYEE_ID_PLACEHOLDER"
         },
-        jsonPath: "Employee[0].user.id"
+        jsonPath: "Employee[0].code"
       })
     },
     dateOfAppointment: {
@@ -243,7 +243,7 @@ export const professionalDetails = getCommonCard({
           labelKey: "HR_ROLE_PLACEHOLDER"
         },
         required: true,
-        jsonPath: "Employee[0].user.role",
+        jsonPath: "Employee[0].user.roles",
         props: {
           className: "hr-generic-selectfield",
           data: [
