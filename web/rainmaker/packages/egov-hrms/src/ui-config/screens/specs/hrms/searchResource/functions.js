@@ -104,7 +104,7 @@ export const searchApiCall = async (state, dispatch) => {
     // };
     try {
       let data = response.Employees.map(item => ({
-        [get(textToLocalMapping, "Employee ID")]: get(item, "id", "-") || "-",
+        [get(textToLocalMapping, "Employee ID")]: get(item, "code", "-") || "-",
         [get(textToLocalMapping, "Name")]: get(item, "user.name", "-") || "-",
         [get(textToLocalMapping, "Role")]:
           get(item, "user.roles[0].name", "-") || "-",

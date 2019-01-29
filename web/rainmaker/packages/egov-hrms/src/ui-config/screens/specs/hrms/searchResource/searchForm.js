@@ -37,7 +37,7 @@ export const searchForm = getCommonCard({
       required: false,
       pattern: /^[a-zA-Z0-9-]*$/i,
       errorMessage: "HR_EMP_NAME_ERR_MSG",
-      jsonPath: "searchScreen.employeeName"
+      jsonPath: "searchScreen.names"
     }),
 
     employeeID: getTextField({
@@ -56,7 +56,7 @@ export const searchForm = getCommonCard({
       required: false,
       pattern: /^[a-zA-Z0-9-]*$/i,
       errorMessage: "HR_EMP_ID_ERR_MSG",
-      jsonPath: "searchScreen.id"
+      jsonPath: "searchScreen.codes"
     }),
 
     department: getSelectField({
