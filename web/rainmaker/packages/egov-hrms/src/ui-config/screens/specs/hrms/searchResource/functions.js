@@ -12,9 +12,7 @@ export const searchApiCall = async (state, dispatch) => {
     {
       key: "tenantId",
       value: JSON.parse(localStorage.getItem("user-info")).tenantId
-    },
-    { key: "limit", value: "200" },
-    { key: "offset", value: "0" }
+    }
   ];
   let searchScreenObject = get(
     state.screenConfiguration.preparedFinalObject,
@@ -48,12 +46,20 @@ export const searchApiCall = async (state, dispatch) => {
       )
     );
   } else {
-    // showHideProgress(true, dispatch);
-    // const response = await getSearchResults(queryObject);
-    const response = {
+    // Add selected search fields to queryobject
+    for (var key in searchScreenObject) {
+      if (
+        searchScreenObject.hasOwnProperty(key) &&
+        searchScreenObject[key].trim() !== ""
+      ) {
+        queryObject.push({ key: key, value: searchScreenObject[key].trim() });
+      }
+    }
+    let response = await getSearchResults(queryObject);
+    response = {
       Licenses: [
         {
-          employeeID: "EMP-JAL-1234",
+          employeeID: "EMP-JAL-12345",
           name: "Ravinder Pal Singh",
           role: "Accountant",
           designation: "Junior Accountant",

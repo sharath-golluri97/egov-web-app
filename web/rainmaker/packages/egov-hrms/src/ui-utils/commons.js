@@ -66,11 +66,12 @@ export const getFileUrlFromAPI = async fileStoreId => {
   }
 };
 
+// HRMS Search API
 export const getSearchResults = async queryObject => {
   try {
     const response = await httpRequest(
       "post",
-      "/tl-services/v1/_search",
+      "/egov-hrms/employees/_search",
       "",
       queryObject
     );
