@@ -13,8 +13,8 @@ import {
 export const employeeDetails = getCommonCard({
   header: getCommonTitle(
     {
-      labelName: "Employee Details",
-      labelKey: "HR_NEW_EMPLOYEE_FORM_HEADER"
+      labelName: "Personal Details",
+      labelKey: "HR_PERSONAL_DETAILS_FORM_HEADER"
     },
     {
       style: {
@@ -27,29 +27,15 @@ export const employeeDetails = getCommonCard({
       ...getTextField({
         label: {
           labelName: "Name",
-          labelKey: "HR_COMMON_TABLE_COL_NAME"
+          labelKey: "HR_NAME_LABEL"
         },
         placeholder: {
           labelName: "Enter Employee Name",
-          labelKey: "HR_EMP_NAME_PLACEHOLDER"
+          labelKey: "HR_NAME_PLACEHOLDER"
         },
         required: true,
-        pattern: getPattern("TradeName") || null,
+        pattern: getPattern("Name") || null,
         jsonPath: "Employee[0].user.name"
-      })
-    },
-    employeeID: {
-      ...getTextField({
-        label: {
-          labelName: "Employee ID",
-          labelKey: "HR_EMP_ID_LABEL"
-        },
-        placeholder: {
-          labelName: "Enter Employee ID",
-          labelKey: "HR_EMP_ID_PLACEHOLDER"
-        },
-        pattern: getPattern("TradeName") || null,
-        jsonPath: "Employee[0].id"
       })
     },
     mobileNumber: {
@@ -65,6 +51,21 @@ export const employeeDetails = getCommonCard({
         required: true,
         pattern: getPattern("MobileNo"),
         jsonPath: "Employee[0].user.mobileNumber"
+      })
+    },
+    fatherHusbandName: {
+      ...getTextField({
+        label: {
+          labelName: "Father/Husband's Name",
+          labelKey: "HR_FATHER_HUSBAND_NAME_LABEL"
+        },
+        placeholder: {
+          labelName: "Enter Father/Husband's Name",
+          labelKey: "HR_FATHER_HUSBAND_NAME_PLACEHOLDER"
+        },
+        required: true,
+        pattern: getPattern("Name") || null,
+        jsonPath: "Employee[0].user.fatherOrHusbandName"
       })
     },
     gender: {
@@ -93,33 +94,101 @@ export const employeeDetails = getCommonCard({
         }
       })
     },
+    dateOfBirth: {
+      ...getDateField({
+        label: {
+          labelName: "Date of Birth",
+          labelKey: "HR_BIRTH_DATE_LABEL"
+        },
+        placeholder: {
+          labelName: "Enter Date of Birth",
+          labelKey: "HR_BIRTH_DATE_PLACEHOLDER"
+        },
+        pattern: getPattern("Date"),
+        jsonPath: "Employee[0].user.dob"
+      })
+    },
+    email: {
+      ...getTextField({
+        label: {
+          labelName: "Email",
+          labelKey: "HR_EMAIL_LABEL"
+        },
+        placeholder: {
+          labelName: "Enter Email",
+          labelKey: "HR_EMAIL_PLACEHOLDER"
+        },
+        pattern: getPattern("Email"),
+        jsonPath: "Employee[0].user.emailId"
+      })
+    },
+    correspondenceAddress: {
+      ...getTextField({
+        label: {
+          labelName: "Correspondence Address",
+          labelKey: "HR_CORRESPONDENCE_ADDRESS_LABEL"
+        },
+        placeholder: {
+          labelName: "Enter Corrospondence Address",
+          labelKey: "HR_CORRESPONDENCE_ADDRESS_PLACEHOLDER"
+        },
+        required: true,
+        pattern: getPattern("Address"),
+        jsonPath: "Licenses[0].tradeLicenseDetail.owners[0].permanentAddress"
+      })
+    }
+  })
+});
+
+export const professionalDetails = getCommonCard({
+  header: getCommonTitle(
+    {
+      labelName: "Professional Details",
+      labelKey: "HR_PROFESSIONAL_DETAILS_FORM_HEADER"
+    },
+    {
+      style: {
+        marginBottom: 18
+      }
+    }
+  ),
+  employeeDetailsContainer: getCommonContainer({
+    employeeId: {
+      ...getTextField({
+        label: {
+          labelName: "Employee ID",
+          labelKey: "HR_EMPLOYEE_ID_LABEL"
+        },
+        placeholder: {
+          labelName: "Enter Employee ID",
+          labelKey: "HR_EMPLOYEE_ID_PLACEHOLDER"
+        },
+        jsonPath: "Employee[0].user.id"
+      })
+    },
     dateOfAppointment: {
       ...getDateField({
         label: {
           labelName: "Date of Appointment",
-          labelKey: "HR_APPT_DATE_LABEL"
+          labelKey: "HR_APPOINTMENT_DATE_LABEL"
         },
         placeholder: {
-          labelName: "Enter Date of Appointment",
-          labelKey: "HR_APPT_DATE_PLACEHOLDER"
+          labelName: "Enter Date of Birth",
+          labelKey: "HR_APPOINTMENT_DATE_PLACEHOLDER"
         },
         pattern: getPattern("Date"),
-        jsonPath: "Employee[0].dateOfAppointment",
-        props: {
-          // inputProps: {
-          //   min: getTodaysDateInYMD(),
-          //   max: getFinancialYearDates("yyyy-mm-dd").endDate
-          // }
-        }
+        jsonPath: "Employee[0].dateOfAppointment"
       })
     },
-
-    employeeType: {
+    employmentType: {
       ...getSelectField({
-        label: { labelName: "Employee Type", labelKey: "HR_EMP_TYPE_LABEL" },
+        label: {
+          labelName: "Employement Type",
+          labelKey: "HR_EMPLOYMENT_TYPE_LABEL"
+        },
         placeholder: {
-          labelName: "Select Employee Type",
-          labelKey: "HR_EMP_TYPE_PLACEHOLDER"
+          labelName: "Select Employment Type",
+          labelKey: "HR_EMPLOYMENT_TYPE_PLACEHOLDER"
         },
         required: true,
         jsonPath: "Employee[0].employeeType",
@@ -140,7 +209,6 @@ export const employeeDetails = getCommonCard({
         }
       })
     },
-
     status: {
       ...getSelectField({
         label: { labelName: "Status", labelKey: "HR_STATUS_LABEL" },
@@ -167,7 +235,6 @@ export const employeeDetails = getCommonCard({
         }
       })
     },
-
     role: {
       ...getSelectField({
         label: { labelName: "Role", labelKey: "HR_ROLE_LABEL" },

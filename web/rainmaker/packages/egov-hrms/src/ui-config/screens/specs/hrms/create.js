@@ -5,7 +5,7 @@ import {
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 
 import { footer } from "./createResource/footer";
-import { employeeDetails } from "./createResource/employee-details";
+import { employeeDetails, professionalDetails } from "./createResource/employee-details";
 import { jurisdictionDetails } from "./createResource/jurisdiction-details";
 import { assignmentDetails } from "./createResource/assignment-details";
 import { serviceDetails } from "./createResource/service-details";
@@ -44,7 +44,8 @@ export const formwizardFirstStep = {
     id: "apply_form1"
   },
   children: {
-    employeeDetails
+    employeeDetails,
+    professionalDetails
   }
 };
 
