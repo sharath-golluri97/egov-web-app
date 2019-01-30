@@ -1,7 +1,12 @@
 import get from "lodash/get";
 import set from "lodash/set";
-import { createEmployee } from "../../../../..//ui-utils/commons";
+import {
+  createEmployee,
+  getSearchResults
+} from "../../../../..//ui-utils/commons";
 import { convertDateToEpoch } from "../../utils";
+import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
+import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 
 export const createApiCall = async (state, dispatch) => {
   const tenantId = JSON.parse(localStorage.getItem("user-info")).tenantId;
@@ -52,4 +57,16 @@ export const createApiCall = async (state, dispatch) => {
 
   let response = await createEmployee(queryObject, employeeObject);
   console.log("Create========", response);
+};
+
+export const searchApiCall = async (state, dispatch) => {
+  let employeeId = getQueryArg(window.location.href, "employeeID");
+  let queryObject = [
+    {
+      key: "codes",
+      value: employeeId
+    }
+  ];
+  let response = await getSearchResults(queryObject);
+  dispatch(prepareFinalObject("Employee", get(response, "Employees")));
 };
