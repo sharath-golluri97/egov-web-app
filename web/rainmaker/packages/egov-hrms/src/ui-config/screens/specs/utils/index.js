@@ -469,6 +469,23 @@ export const objectToDropdown = object => {
   return dropDown;
 };
 
+// Prepare dropdown data with object as value from array
+export const objectArrayToDropdown = (objectArray, labelName) => {
+  return objectArray.map(item => {
+    if (item.hasOwnProperty(labelName))
+      return { name: item[labelName], value: JSON.stringify(item) };
+  });
+
+  // let dropDown = [];
+  // for (var item in objectArray) {
+  //   console.log(item);
+  //   if (item.hasOwnProperty(labelName)) {
+  //     dropDown.push({ label: item.labelName, value: item });
+  //   }
+  // }
+  // return dropDown;
+};
+
 // Search API call
 export const getSearchResults = async queryObject => {
   try {

@@ -79,11 +79,11 @@ export const employeeDetails = getCommonCard({
           className: "hr-generic-selectfield",
           data: [
             {
-              value: "Male",
+              value: "MALE",
               label: "Male"
             },
             {
-              value: "Female",
+              value: "FEMALE",
               label: "Female"
             }
           ],
@@ -194,12 +194,12 @@ export const professionalDetails = getCommonCard({
           className: "hr-generic-selectfield",
           data: [
             {
-              value: "Male",
-              label: "Male"
+              value: "ACTIVE",
+              label: "Active"
             },
             {
-              value: "Female",
-              label: "Female"
+              value: "RETIRED",
+              label: "Retired"
             }
           ],
           optionValue: "value",
@@ -220,11 +220,11 @@ export const professionalDetails = getCommonCard({
           className: "hr-generic-selectfield",
           data: [
             {
-              value: "Permanent",
+              value: "PERMANENT",
               label: "Permanent"
             },
             {
-              value: "Temporary",
+              value: "TEMPORARY",
               label: "Temporary"
             }
           ],
@@ -242,21 +242,7 @@ export const professionalDetails = getCommonCard({
         },
         required: true,
         jsonPath: "Employee[0].user.roles",
-        props: {
-          className: "hr-generic-selectfield",
-          data: [
-            {
-              value: "JE-1",
-              label: "JE-1"
-            },
-            {
-              value: "JE-2",
-              label: "JE-2"
-            }
-          ],
-          optionValue: "value",
-          optionLabel: "label"
-        }
+        sourceJsonPath: "createScreenMdmsData.ACCESSCONTROL-ROLES.roles"
       })
     }
   })

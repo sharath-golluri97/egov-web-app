@@ -5,11 +5,19 @@ import {
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 
 import { footer } from "./createResource/footer";
-import { employeeDetails, professionalDetails } from "./createResource/employee-details";
+import {
+  employeeDetails,
+  professionalDetails
+} from "./createResource/employee-details";
 import { jurisdictionDetails } from "./createResource/jurisdiction-details";
 import { assignmentDetails } from "./createResource/assignment-details";
 import { serviceDetails } from "./createResource/service-details";
 import { otherDetails } from "./createResource/other-details";
+import set from "lodash/set";
+import get from "lodash/get";
+import { httpRequest } from "../../../../ui-utils";
+import { commonTransform, objectArrayToDropdown } from "../utils";
+import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 
 export const stepsData = [
   { labelName: "Employee Details", labelKey: "HR_NEW_EMPLOYEE_FORM_HEADER" },
@@ -97,46 +105,112 @@ export const formwizardFifthStep = {
   visible: false
 };
 
+export const getMdmsData = async (action, state, dispatch, tenantId) => {
+  let mdmsBody = {
+    MdmsCriteria: {
+      tenantId: tenantId,
+      moduleDetails: [
+        {
+          moduleName: "common-masters",
+          masterDetails: [
+            {
+              name: "Department"
+            },
+            {
+              name: "Designation"
+            }
+          ]
+        },
+        {
+          moduleName: "ACCESSCONTROL-ROLES",
+          masterDetails: [
+            {
+              name: "roles"
+            }
+          ]
+        }
+      ]
+    }
+  };
+  try {
+    const response = await httpRequest(
+      "post",
+      "/egov-mdms-service/v1/_search",
+      "_search",
+      [],
+      mdmsBody
+    );
+    // set(
+    //   payload,
+    //   "MdmsRes.TradeLicense.MdmsTradeType",
+    //   get(payload, "MdmsRes.TradeLicense.TradeType", [])
+    // );
+    // payload = commonTransform(payload, "MdmsRes.TradeLicense.TradeType");
+    // payload = commonTransform(
+    //   payload,
+    //   "MdmsRes.common-masters.OwnerShipCategory"
+    // );
+    // const MdmsRes = {};
+    // const rolesData = get(response, "MdmsRes.ACCESSCONTROL-ROLES.roles", []);
+    // const rolesDataDropdown = objectArrayToDropdown(rolesData, "name");
+    // set(MdmsRes, "rolesTransformed", rolesDataDropdown);
+    // const localities = get(
+    //   state.screenConfiguration,
+    //   "preparedFinalObject.applyScreenMdmsData.tenant.localities",
+    //   []
+    // );
+    // if (localities && localities.length > 0) {
+    //   payload.MdmsRes.tenant.localities = localities;
+    // }
+    dispatch(
+      prepareFinalObject("createScreenMdmsData", get(response, "MdmsRes"))
+    );
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 const screenConfig = {
   uiFramework: "material-ui",
   name: "create",
   // hasBeforeInitAsync:true,
-  // beforeInitScreen: (action, state, dispatch) => {
-  //   dispatch(prepareFinalObject("Licenses", [{ licenseType: "PERMANENT" }]));
-  //   dispatch(prepareFinalObject("LicensesTemp", []));
-  //   // getData(action, state, dispatch);
-  //   getData(action, state, dispatch).then(responseAction => {
-  //     const tenantId = localStorage.getItem("tenant-id");
-  //     const queryObj = [{ key: "tenantId", value: tenantId }];
-  //     getBoundaryData(action, state, dispatch, queryObj);
-  //     let props = get(
-  //       action.screenConfig,
-  //       "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocCity.props",
-  //       {}
-  //     );
-  //     props.value = tenantId;
-  //     props.disabled = true;
-  //     set(
-  //       action.screenConfig,
-  //       "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocCity.props",
-  //       props
-  //     );
-  //     dispatch(
-  //       prepareFinalObject(
-  //         "Licenses[0].tradeLicenseDetail.address.city",
-  //         tenantId
-  //       )
-  //     );
-  //     //hardcoding license type to permanent
-  //     set(
-  //       action.screenConfig,
-  //       "components.div.children.formwizardFirstStep.children.tradeDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLicenseType.props.value",
-  //       "PERMANENT"
-  //     );
-  //   });
+  beforeInitScreen: (action, state, dispatch) => {
+    const tenantId = localStorage.getItem("tenant-id");
+    getMdmsData(action, state, dispatch, tenantId);
+    //   dispatch(prepareFinalObject("Licenses", [{ licenseType: "PERMANENT" }]));
+    //   dispatch(prepareFinalObject("LicensesTemp", []));
+    //   // getData(action, state, dispatch);
+    //   getData(action, state, dispatch).then(responseAction => {
+    //     const queryObj = [{ key: "tenantId", value: tenantId }];
+    //     getBoundaryData(action, state, dispatch, queryObj);
+    //     let props = get(
+    //       action.screenConfig,
+    //       "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocCity.props",
+    //       {}
+    //     );
+    //     props.value = tenantId;
+    //     props.disabled = true;
+    //     set(
+    //       action.screenConfig,
+    //       "components.div.children.formwizardFirstStep.children.tradeLocationDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLocCity.props",
+    //       props
+    //     );
+    //     dispatch(
+    //       prepareFinalObject(
+    //         "Licenses[0].tradeLicenseDetail.address.city",
+    //         tenantId
+    //       )
+    //     );
+    //     //hardcoding license type to permanent
+    //     set(
+    //       action.screenConfig,
+    //       "components.div.children.formwizardFirstStep.children.tradeDetails.children.cardContent.children.tradeDetailsConatiner.children.tradeLicenseType.props.value",
+    //       "PERMANENT"
+    //     );
+    //   });
 
-  //   return action;
-  // },
+    return action;
+  },
 
   components: {
     div: {
