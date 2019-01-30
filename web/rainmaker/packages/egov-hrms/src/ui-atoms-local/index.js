@@ -33,11 +33,6 @@ const MapLocation = Loadable({
   loading: () => <Loading />
 });
 
-const AutoSuggest = Loadable({
-  loader: () => import("./AutoSuggest"),
-  loading: () => <Loading />
-});
-
 const Asteric = Loadable({
   loader: () => import("./Asteric"),
   loading: () => <Loading />
@@ -60,7 +55,6 @@ export {
   Checkbox,
   UploadedDocument,
   MapLocation,
-  AutoSuggest,
   Asteric,
   MenuButton,
   Switch
