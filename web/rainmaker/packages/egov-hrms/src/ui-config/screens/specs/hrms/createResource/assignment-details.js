@@ -96,20 +96,11 @@ const assignmentDetailsCard = {
               },
               required: true,
               jsonPath: "Employee[0].assignments[0].department",
+              sourceJsonPath: "createScreenMdmsData.common-masters.Department",
               props: {
                 className: "hr-generic-selectfield",
-                data: [
-                  {
-                    value: "Value 1",
-                    label: "Value 1"
-                  },
-                  {
-                    value: "Value 2",
-                    label: "Value 2"
-                  }
-                ],
-                optionValue: "value",
-                optionLabel: "label"
+                optionValue: "code",
+                optionLabel: "name"
               }
             })
           },
@@ -122,20 +113,11 @@ const assignmentDetailsCard = {
               },
               required: true,
               jsonPath: "Employee[0].assignments[0].designation",
+              sourceJsonPath: "createScreenMdmsData.common-masters.Designation",
               props: {
                 className: "hr-generic-selectfield",
-                data: [
-                  {
-                    value: "Male",
-                    label: "Male"
-                  },
-                  {
-                    value: "Female",
-                    label: "Female"
-                  }
-                ],
-                optionValue: "value",
-                optionLabel: "label"
+                optionValue: "code",
+                optionLabel: "name"
               }
             })
           },

@@ -36,7 +36,7 @@ const screenConfig = {
                 description: "Employee in the ULB"
               }
             ],
-            tenantId: "pb.amritsar"
+            // tenantId: "pb.amritsar"
           },
           code: "123",
           dateOfAppointment: 1548671668,
@@ -47,38 +47,38 @@ const screenConfig = {
               hierarchy: "Value 1",
               boundaryType: "Value 1",
               boundary: "Value 1",
-              tenantId: "pb.amritsar"
+              // tenantId: "pb.amritsar"
             }
           ],
-          assignments: [
-            {
-              fromDate: 1548671668,
-              toDate: 1548681668,
-              department: "Value 1",
-              designation: "Male",
-              reportingTo: "baba"
-            }
-          ],
-          serviceHistory: [
-            {
-              serviceStatus: "Value 1",
-              serviceFrom: 1548671668,
-              serviceTo: 1548681668,
-              location: "Value 1",
-              orderNo: "ordr123"
-            }
-          ],
-          education: [
-            {
-              qualification: "Male",
-              yearOfPassing: 1548671668,
-              university: "Male",
-              stream: "Male",
-              remarks: "asd"
-            }
-          ],
-          tests: [{ test: "Male", yearOfPassing: 1548671668, remarks: "asd" }],
-          tenantId: "pb.amritsar"
+          // assignments: [
+          //   {
+          //     fromDate: 1548671668,
+          //     toDate: 1548681668,
+          //     department: "Value 1",
+          //     designation: "Male",
+          //     reportingTo: "baba"
+          //   }
+          // ],
+          // serviceHistory: [
+          //   {
+          //     serviceStatus: "Value 1",
+          //     serviceFrom: 1548671668,
+          //     serviceTo: 1548681668,
+          //     location: "Value 1",
+          //     orderNo: "ordr123"
+          //   }
+          // ],
+          // education: [
+          //   {
+          //     qualification: "Male",
+          //     yearOfPassing: 1548671668,
+          //     university: "Male",
+          //     stream: "Male",
+          //     remarks: "asd"
+          //   }
+          // ],
+          // tests: [{ test: "Male", yearOfPassing: 1548671668, remarks: "asd" }],
+          // tenantId: "pb.amritsar"
         }
       ])
     );

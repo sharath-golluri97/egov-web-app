@@ -22,20 +22,11 @@ const jurisdictionDetailsCard = {
               },
               required: true,
               jsonPath: "Employee[0].jurisdictions[0].hierarchy",
+              sourceJsonPath: "createScreenMdmsData.egov-location.TenantBoundary",
               props: {
                 className: "hr-generic-selectfield",
-                data: [
-                  {
-                    value: "Value 1",
-                    label: "Value 1"
-                  },
-                  {
-                    value: "Value 2",
-                    label: "Value 2"
-                  }
-                ],
-                optionValue: "value",
-                optionLabel: "label"
+                optionValue: "code",
+                optionLabel: "name"
               }
             })
           },
@@ -55,12 +46,12 @@ const jurisdictionDetailsCard = {
                 className: "hr-generic-selectfield",
                 data: [
                   {
-                    value: "Value 1",
-                    label: "Value 1"
+                    value: "Block",
+                    label: "Block"
                   },
                   {
-                    value: "Value 2",
-                    label: "Value 2"
+                    value: "Zone",
+                    label: "Zone"
                   }
                 ],
                 optionValue: "value",
@@ -81,12 +72,12 @@ const jurisdictionDetailsCard = {
                 className: "hr-generic-selectfield",
                 data: [
                   {
-                    value: "Value 1",
-                    label: "Value 1"
+                    value: "B1",
+                    label: "Block 1"
                   },
                   {
-                    value: "Value 2",
-                    label: "Value 2"
+                    value: "B2",
+                    label: "Block 2"
                   }
                 ],
                 optionValue: "value",

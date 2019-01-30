@@ -128,6 +128,15 @@ export const getMdmsData = async (action, state, dispatch, tenantId) => {
               name: "roles"
             }
           ]
+        },
+        {
+          moduleName: "egov-location",
+          masterDetails: [
+            {
+              name: "TenantBoundary",
+              filter: "$.*.hierarchyType"
+            }
+          ]
         }
       ]
     }
