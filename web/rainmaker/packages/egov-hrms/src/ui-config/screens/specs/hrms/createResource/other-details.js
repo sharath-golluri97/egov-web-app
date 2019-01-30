@@ -4,7 +4,6 @@ import {
   getCommonTitle,
   getCommonSubHeader,
   getTextField,
-  getDateField,
   getSelectField,
   getCommonContainer,
   getPattern

@@ -2,12 +2,8 @@ import {
   getCommonCard,
   getCommonGrayCard,
   getCommonTitle,
-  getCommonSubHeader,
-  getTextField,
-  getDateField,
   getSelectField,
-  getCommonContainer,
-  getPattern
+  getCommonContainer
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 
 const jurisdictionDetailsCard = {

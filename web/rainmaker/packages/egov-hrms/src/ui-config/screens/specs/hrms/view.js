@@ -1,10 +1,6 @@
 import {
-  getStepperObject,
   getCommonHeader,
-  getCommonCard,
-  getCommonContainer,
-  getCommonTitle,
-  getCommonParagraph
+  getCommonContainer
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 
 import { employeeReviewDetails } from "./viewResource/employee-review";
