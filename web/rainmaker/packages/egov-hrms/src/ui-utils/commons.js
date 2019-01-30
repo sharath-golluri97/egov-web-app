@@ -97,6 +97,22 @@ export const createEmployee = async (queryObject, payload) => {
   }
 };
 
+// HRMS Update API
+export const updateEmployee = async (queryObject, payload) => {
+  try {
+    const response = await httpRequest(
+      "post",
+      "/egov-hrms/employees/_update",
+      "",
+      queryObject,
+      { Employees: payload }
+    );
+    return response;
+  } catch (error) {
+    store.dispatch(toggleSnackbarAndSetText(true, error.message, "error"));
+  }
+};
+
 export const updatePFOforSearchResults = async (
   action,
   state,

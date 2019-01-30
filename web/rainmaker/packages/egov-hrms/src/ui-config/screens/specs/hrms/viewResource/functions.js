@@ -2,10 +2,24 @@ import get from "lodash/get";
 import set from "lodash/set";
 import {
   createEmployee,
+  updateEmployee,
   getSearchResults
 } from "../../../../..//ui-utils/commons";
 import { convertDateToEpoch } from "../../utils";
 import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
+
+export const handleCreateUpdateEmployee = (state, dispatch) => {
+  let uuid = get(
+    state.screenConfiguration.preparedFinalObject,
+    "Employee[0].uuid",
+    null
+  );
+  if (uuid) {
+    updateApiCall(state, dispatch);
+  } else {
+    createApiCall(state, dispatch);
+  }
+};
 
 export const createApiCall = async (state, dispatch) => {
   const tenantId = JSON.parse(localStorage.getItem("user-info")).tenantId;
@@ -56,6 +70,23 @@ export const createApiCall = async (state, dispatch) => {
 
   let response = await createEmployee(queryObject, employeeObject);
   console.log("Create========", response);
+};
+
+export const updateApiCall = async (state, dispatch) => {
+  const tenantId = JSON.parse(localStorage.getItem("user-info")).tenantId;
+  let queryObject = [
+    {
+      key: "tenantId",
+      value: tenantId
+    }
+  ];
+  let employeeObject = get(
+    state.screenConfiguration.preparedFinalObject,
+    "Employee",
+    []
+  );
+  let response = await updateEmployee(queryObject, employeeObject);
+  console.log("Update========", response);
 };
 
 export const getEmployeeData = async (dispatch, employeeId) => {

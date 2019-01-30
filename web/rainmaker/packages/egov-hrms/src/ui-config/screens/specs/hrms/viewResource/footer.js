@@ -1,7 +1,7 @@
 import { getLabel } from "mihy-ui-framework/ui-config/screens/specs/utils";
 import { ifUserRoleExists } from "../../utils";
 import { toggleDeactivateDialog } from "../../utils";
-import { createApiCall } from "./functions";
+import { handleCreateUpdateEmployee } from "./functions";
 import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
 
 const getCommonCreateFooter = children => {
@@ -36,7 +36,7 @@ export const hrCommonFooter = () => {
       },
       onClickDefination: {
         action: "condition",
-        callBack: createApiCall
+        callBack: handleCreateUpdateEmployee
       }
     }
   });
