@@ -4,6 +4,7 @@ import {
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 
 import { employeeReviewDetails } from "./viewResource/employee-review";
+import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 
 export const header = getCommonContainer({
   header: getCommonHeader({
@@ -17,6 +18,72 @@ const tradeReview = employeeReviewDetails(true);
 const screenConfig = {
   uiFramework: "material-ui",
   name: "review",
+  beforeInitScreen: (action, state, dispatch) => {
+    dispatch(
+      prepareFinalObject("Employee", [
+        {
+          user: {
+            name: "Avijeet ",
+            mobileNumber: "9999999999",
+            fatherOrHusbandName: "Father",
+            gender: "Male",
+            dob: 1548671668,
+            correspondenceAddress: "asd",
+            roles: [
+              {
+                name: "Employee",
+                code: "EMPLOYEE",
+                description: "Employee in the ULB"
+              }
+            ],
+            tenantId: "pb.amritsar"
+          },
+          code: "123",
+          dateOfAppointment: 1548671668,
+          employeeType: "Male",
+          employeeStatus: "Permanent",
+          jurisdictions: [
+            {
+              hierarchy: "Value 1",
+              boundaryType: "Value 1",
+              boundary: "Value 1",
+              tenantId: "pb.amritsar"
+            }
+          ],
+          assignments: [
+            {
+              fromDate: 1548671668,
+              toDate: 1548681668,
+              department: "Value 1",
+              designation: "Male",
+              reportingTo: "baba"
+            }
+          ],
+          serviceHistory: [
+            {
+              serviceStatus: "Value 1",
+              serviceFrom: 1548671668,
+              serviceTo: 1548681668,
+              location: "Value 1",
+              orderNo: "ordr123"
+            }
+          ],
+          education: [
+            {
+              qualification: "Male",
+              yearOfPassing: 1548671668,
+              university: "Male",
+              stream: "Male",
+              remarks: "asd"
+            }
+          ],
+          tests: [{ test: "Male", yearOfPassing: 1548671668, remarks: "asd" }],
+          tenantId: "pb.amritsar"
+        }
+      ])
+    );
+    return action;
+  },
   components: {
     div: {
       uiFramework: "custom-atoms",

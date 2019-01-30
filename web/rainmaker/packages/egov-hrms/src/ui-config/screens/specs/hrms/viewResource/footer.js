@@ -1,6 +1,7 @@
 import { getLabel } from "mihy-ui-framework/ui-config/screens/specs/utils";
 import { ifUserRoleExists } from "../../utils";
 import { toggleDeactivateDialog } from "../../utils";
+import { createApiCall } from "./functions";
 
 const getCommonCreateFooter = children => {
   return {
@@ -14,13 +15,13 @@ const getCommonCreateFooter = children => {
 };
 
 export const hrCommonFooter = () => {
-  const purpose = "create";
-  const status = "success";
-  const applicationNo = "EMP-JAL-123";
-  const tenantId = "pb.amritsar";
-  const redirectionURL = `/mihy-ui-framework/hrms/acknowledgement?purpose=${purpose}&status=${status}&applicationNumber=${applicationNo}&tenantId=${tenantId}`;
+  // const purpose = "create";
+  // const status = "success";
+  // const applicationNo = "EMP-JAL-123";
+  // const tenantId = "pb.amritsar";
+  // const redirectionURL = `/mihy-ui-framework/hrms/acknowledgement?purpose=${purpose}&status=${status}&applicationNumber=${applicationNo}&tenantId=${tenantId}`;
   return getCommonCreateFooter({
-    gotoHome: {
+    submitButton: {
       componentPath: "Button",
       props: {
         variant: "contained",
@@ -32,14 +33,14 @@ export const hrCommonFooter = () => {
         }
       },
       children: {
-        downloadReceiptButtonLabel: getLabel({
+        submitButtonLabel: getLabel({
           labelName: "SUBMIT",
           labelKey: "HR_SUBMIT_LABEL"
         })
       },
       onClickDefination: {
-        action: "page_change",
-        path: `${redirectionURL}`
+        action: "condition",
+        callBack: createApiCall
       }
     }
   });

@@ -81,6 +81,22 @@ export const getSearchResults = async queryObject => {
   }
 };
 
+// HRMS Search API
+export const createEmployee = async (queryObject, payload) => {
+  try {
+    const response = await httpRequest(
+      "post",
+      "/egov-hrms/employees/_create",
+      "",
+      queryObject,
+      { Employees: payload }
+    );
+    return response;
+  } catch (error) {
+    store.dispatch(toggleSnackbarAndSetText(true, error.message, "error"));
+  }
+};
+
 export const updatePFOforSearchResults = async (
   action,
   state,
