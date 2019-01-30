@@ -28,11 +28,6 @@ const UploadSingleFile = Loadable({
   loading: () => <Loading />
 });
 
-const FeesEstimateCard = Loadable({
-  loader: () => import("./FeesEstimateCard"),
-  loading: () => <Loading />
-});
-
 const SwitchWithLabel = Loadable({
   loader: () => import("./SwitchWithLabel"),
   loading: () => <Loading />
@@ -54,7 +49,6 @@ export {
   Tooltip,
   UploadMultipleFiles,
   UploadSingleFile,
-  FeesEstimateCard,
   SwitchWithLabel,
   DividerWithLabel,
   ActionDialog

@@ -12,18 +12,9 @@ const DownloadFileContainer = Loadable({
   loader: () => import("./DownloadFileContainer"),
   loading: () => <Loading />
 });
-const EstimateCardContainer = Loadable({
-  loader: () => import("./EstimateCardContainer"),
-  loading: () => <Loading />
-});
 const PaymentRedirectPage = Loadable({
   loader: () => import("./PaymentRedirectPage"),
   loading: () => <Loading />
 });
 
-export {
-  CheckboxContainer,
-  DownloadFileContainer,
-  EstimateCardContainer,
-  PaymentRedirectPage
-};
+export { CheckboxContainer, DownloadFileContainer, PaymentRedirectPage };
