@@ -27,7 +27,7 @@ const screenConfig = {
             mobileNumber: "9999999999",
             fatherOrHusbandName: "Father",
             gender: "Male",
-            dob: 1548671668,
+            dob: "1991-06-28",
             correspondenceAddress: "asd",
             roles: [
               {
@@ -39,7 +39,7 @@ const screenConfig = {
             // tenantId: "pb.amritsar"
           },
           code: "123",
-          dateOfAppointment: 1548671668,
+          dateOfAppointment: "2019-01-01",
           employeeType: "Male",
           employeeStatus: "Permanent",
           jurisdictions: [
@@ -50,20 +50,20 @@ const screenConfig = {
               // tenantId: "pb.amritsar"
             }
           ],
-          // assignments: [
-          //   {
-          //     fromDate: 1548671668,
-          //     toDate: 1548681668,
-          //     department: "Value 1",
-          //     designation: "Male",
-          //     reportingTo: "baba"
-          //   }
-          // ],
+          assignments: [
+            {
+              fromDate: "2019-01-01",
+              toDate: "2020-01-01",
+              department: "Value 1",
+              designation: "Male",
+              reportingTo: "baba"
+            }
+          ],
           // serviceHistory: [
           //   {
           //     serviceStatus: "Value 1",
-          //     serviceFrom: 1548671668,
-          //     serviceTo: 1548681668,
+          //     serviceFrom: "2019-01-01",
+          //     serviceTo: "2020-01-01",
           //     location: "Value 1",
           //     orderNo: "ordr123"
           //   }
