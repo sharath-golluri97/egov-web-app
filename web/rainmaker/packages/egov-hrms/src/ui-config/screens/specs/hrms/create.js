@@ -18,6 +18,8 @@ import get from "lodash/get";
 import { httpRequest } from "../../../../ui-utils";
 import { commonTransform, objectArrayToDropdown } from "../utils";
 import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
+import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
+import { getEmployeeData } from "./viewResource/functions";
 
 export const stepsData = [
   { labelName: "Employee Details", labelKey: "HR_NEW_EMPLOYEE_FORM_HEADER" },
@@ -105,7 +107,7 @@ export const formwizardFifthStep = {
   visible: false
 };
 
-export const getMdmsData = async (action, state, dispatch, tenantId) => {
+const getMdmsData = async (state, dispatch, tenantId) => {
   let mdmsBody = {
     MdmsCriteria: {
       tenantId: tenantId,
@@ -149,28 +151,6 @@ export const getMdmsData = async (action, state, dispatch, tenantId) => {
       [],
       mdmsBody
     );
-    // set(
-    //   payload,
-    //   "MdmsRes.TradeLicense.MdmsTradeType",
-    //   get(payload, "MdmsRes.TradeLicense.TradeType", [])
-    // );
-    // payload = commonTransform(payload, "MdmsRes.TradeLicense.TradeType");
-    // payload = commonTransform(
-    //   payload,
-    //   "MdmsRes.common-masters.OwnerShipCategory"
-    // );
-    // const MdmsRes = {};
-    // const rolesData = get(response, "MdmsRes.ACCESSCONTROL-ROLES.roles", []);
-    // const rolesDataDropdown = objectArrayToDropdown(rolesData, "name");
-    // set(MdmsRes, "rolesTransformed", rolesDataDropdown);
-    // const localities = get(
-    //   state.screenConfiguration,
-    //   "preparedFinalObject.applyScreenMdmsData.tenant.localities",
-    //   []
-    // );
-    // if (localities && localities.length > 0) {
-    //   payload.MdmsRes.tenant.localities = localities;
-    // }
     dispatch(
       prepareFinalObject("createScreenMdmsData", get(response, "MdmsRes"))
     );
@@ -185,7 +165,9 @@ const screenConfig = {
   // hasBeforeInitAsync:true,
   beforeInitScreen: (action, state, dispatch) => {
     const tenantId = localStorage.getItem("tenant-id");
-    getMdmsData(action, state, dispatch, tenantId);
+    getMdmsData(state, dispatch, tenantId);
+    let employeeCode = getQueryArg(window.location.href, "employeeCode");
+    employeeCode && getEmployeeData(dispatch, employeeCode);
     //   dispatch(prepareFinalObject("Licenses", [{ licenseType: "PERMANENT" }]));
     //   dispatch(prepareFinalObject("LicensesTemp", []));
     //   // getData(action, state, dispatch);

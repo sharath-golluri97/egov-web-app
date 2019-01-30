@@ -5,7 +5,6 @@ import {
   getSearchResults
 } from "../../../../..//ui-utils/commons";
 import { convertDateToEpoch } from "../../utils";
-import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
 import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 
 export const createApiCall = async (state, dispatch) => {
@@ -59,8 +58,7 @@ export const createApiCall = async (state, dispatch) => {
   console.log("Create========", response);
 };
 
-export const searchApiCall = async (state, dispatch) => {
-  let employeeId = getQueryArg(window.location.href, "employeeID");
+export const getEmployeeData = async (dispatch, employeeId) => {
   let queryObject = [
     {
       key: "codes",

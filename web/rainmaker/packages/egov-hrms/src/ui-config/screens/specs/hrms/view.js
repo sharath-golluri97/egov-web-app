@@ -5,7 +5,8 @@ import {
 
 import { employeeReviewDetails } from "./viewResource/employee-review";
 import { hrViewFooter } from "./viewResource/footer";
-import { searchApiCall } from "./viewResource/functions";
+import { getEmployeeData } from "./viewResource/functions";
+import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
 
 export const header = getCommonContainer({
   header: getCommonHeader({
@@ -20,7 +21,8 @@ const screenConfig = {
   uiFramework: "material-ui",
   name: "view",
   beforeInitScreen: (action, state, dispatch) => {
-    searchApiCall(state, dispatch);
+    let employeeCode = getQueryArg(window.location.href, "employeeID");
+    getEmployeeData(dispatch, employeeCode);
     return action;
   },
   components: {

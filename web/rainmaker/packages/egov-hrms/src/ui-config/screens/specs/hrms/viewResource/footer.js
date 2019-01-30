@@ -2,6 +2,7 @@ import { getLabel } from "mihy-ui-framework/ui-config/screens/specs/utils";
 import { ifUserRoleExists } from "../../utils";
 import { toggleDeactivateDialog } from "../../utils";
 import { createApiCall } from "./functions";
+import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
 
 const getCommonCreateFooter = children => {
   return {
@@ -15,11 +16,6 @@ const getCommonCreateFooter = children => {
 };
 
 export const hrCommonFooter = () => {
-  // const purpose = "create";
-  // const status = "success";
-  // const applicationNo = "EMP-JAL-123";
-  // const tenantId = "pb.amritsar";
-  // const redirectionURL = `/mihy-ui-framework/hrms/acknowledgement?purpose=${purpose}&status=${status}&applicationNumber=${applicationNo}&tenantId=${tenantId}`;
   return getCommonCreateFooter({
     submitButton: {
       componentPath: "Button",
@@ -47,6 +43,7 @@ export const hrCommonFooter = () => {
 };
 
 export const hrViewFooter = () => {
+  const employeeCode = getQueryArg(window.location.href, "employeeID");
   return getCommonCreateFooter({
     deactivateEmployee: {
       componentPath: "Button",
@@ -93,6 +90,10 @@ export const hrViewFooter = () => {
             iconName: "keyboard_arrow_right"
           }
         }
+      },
+      onClickDefination: {
+        action: "page_change",
+        path: `/mihy-ui-framework/hrms/create?employeeCode=${employeeCode}`
       }
     }
   });
