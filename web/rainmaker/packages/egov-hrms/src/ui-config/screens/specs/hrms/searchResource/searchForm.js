@@ -5,8 +5,6 @@ import {
   getSelectField,
   getCommonContainer,
   getCommonParagraph,
-  getPattern,
-  getDateField,
   getLabel
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 import { searchApiCall } from "./functions";

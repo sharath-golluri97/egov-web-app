@@ -1,9 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import get from "lodash/get";
-import { sortByEpoch, getEpochForDate } from "../../utils";
-import Icon from "@material-ui/core/Icon";
-import { LabelContainer } from "mihy-ui-framework/ui-containers";
 
 const getLocalTextFromCode = localCode => {
   return JSON.parse(localStorage.getItem("localization_en_IN")).find(
