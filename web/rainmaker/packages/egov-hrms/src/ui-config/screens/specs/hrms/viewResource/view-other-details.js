@@ -68,30 +68,22 @@ const educationCard = {
             labelName: "Degree",
             labelKey: "HR_DEGREE_LABEL"
           },
-          {
-            labelName: "BE"
-          }
-          //   { jsonPath: "Employee[0].education[0].qualification" }
+          { jsonPath: "Employee[0].education[0].qualification" }
         ),
         reviewYear: getLabelWithValue(
           {
             labelName: "Year",
             labelKey: "HR_YEAR_LABEL"
           },
-          {
-            labelName: "2010"
-          }
-          //   { jsonPath: "Employee[0].education[0].yearOfPassing" }
+          { jsonPath: "Employee[0].education[0].yearOfPassing" }
         ),
         reviewUniversity: getLabelWithValue(
           { labelName: "University", labelKey: "HR_UNIVERSITY_LABEL" },
-          { labelName: "VTU" }
-          // {jsonPath: "Employee[0].education[0].university"}
+          { jsonPath: "Employee[0].education[0].university" }
         ),
         reviewStream: getLabelWithValue(
           { labelName: "Stream", labelKey: "HR_STREAM_LABEL" },
-          { labelName: "CS" }
-          // {jsonPath: "Employee[0].education[0].stream"}
+          { jsonPath: "Employee[0].education[0].stream" }
         )
       })
     }),
@@ -119,25 +111,18 @@ const deptCard = {
             labelName: "Test Name",
             labelKey: "HR_TEST_NAME_LABEL"
           },
-          {
-            labelName: "Value"
-          }
-          //   { jsonPath: "Employee[0].tests[0].test" }
+          { jsonPath: "Employee[0].tests[0].test" }
         ),
         reviewYear: getLabelWithValue(
           {
             labelName: "Year",
             labelKey: "HR_YEAR_LABEL"
           },
-          {
-            labelName: "2009"
-          }
-          //   { jsonPath: "Employee[0].tests[0].yearOfPassing" }
+          { jsonPath: "Employee[0].tests[0].yearOfPassing" }
         ),
         reviewRemarks: getLabelWithValue(
           { labelName: "Remarks", labelKey: "HR_REMARKS_LABEL" },
-          { labelName: "Additional Remarks" }
-          // {jsonPath: "EmployeeTemp[0].tests[0].remarks"}
+          { jsonPath: "Employee[0].tests[0].remarks" }
         )
         // documents: getDocuments()
       })

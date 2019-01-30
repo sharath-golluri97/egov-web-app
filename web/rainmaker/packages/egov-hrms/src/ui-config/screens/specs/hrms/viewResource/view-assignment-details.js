@@ -20,57 +20,46 @@ const assignmentCard = {
             labelName: "Assigned From Date",
             labelKey: "HR_ASMT_FROM_DATE_LABEL"
           },
-          {
-            labelName: "23/01/2018"
-          }
-          //   { jsonPath: "Employee[0].assignments[0].fromDate" }
+          { jsonPath: "Employee[0].assignments[0].fromDate" }
         ),
         reviewAssignedTo: getLabelWithValue(
           {
             labelName: "Assigned To Date",
             labelKey: "HR_ASMT_TO_DATE_LABEL"
           },
-          {
-            labelName: "23/01/2019"
-          }
-          //   { jsonPath: "Employee[0].assignments[0].toDate" }
+          { jsonPath: "Employee[0].assignments[0].toDate" }
         ),
         reviewCurrentAssigned: getLabelWithValue(
           {
             labelName: "Currently Assigned Here",
             labelKey: "HR_CURR_ASSIGN_LABEL"
           },
-          { labelName: "Yes" }
-          // {jsonPath: "Employee[0].assignments[0].department"}
+          { jsonPath: "Employee[0].assignments[0].department" }
         ),
         reviewDepartment: getLabelWithValue(
           { labelName: "Department", labelKey: "HR_DEPT_LABEL" },
-          { labelName: "IT" }
-          // {
-          //   jsonPath: "Employee[0].assignments[0].department",
-          // }
+          {
+            jsonPath: "Employee[0].assignments[0].department"
+          }
         ),
         reviewDesignation: getLabelWithValue(
           { labelName: "Designation", labelKey: "HR_DESG_LABEL" },
-          { labelName: "Junior Engineer" }
-          // {
-          //   jsonPath: "Employee[0].assignments[0].designation",
-          // }
+          {
+            jsonPath: "Employee[0].assignments[0].designation"
+          }
         ),
         reviewReportTo: getLabelWithValue(
           { labelName: "Reporting To", labelKey: "HR_REP_TO_LABEL" },
-          { labelName: "Rahul Dev" }
-          // {
-          //   jsonPath: "Employee[0].assignments[0].reportingTo",
-          // }
+          {
+            jsonPath: "Employee[0].assignments[0].reportingTo"
+          }
         ),
         reviewHOD: getLabelWithValue(
           { labelName: "Head of Department", labelKey: "HR_HOD_LABEL" },
-          { labelName: "Yes" }
-          // {
-          //   jsonPath: "Employee[0].assignments[0].isHOD",
-          //   callBack: convertEpochToDate
-          // }
+          {
+            jsonPath: "Employee[0].assignments[0].isHOD"
+            // callBack: convertEpochToDate
+          }
         )
       })
     }),

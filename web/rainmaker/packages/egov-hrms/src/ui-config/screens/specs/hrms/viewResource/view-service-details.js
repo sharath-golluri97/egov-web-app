@@ -20,55 +20,43 @@ const assignmentCard = {
             labelName: "Status",
             labelKey: "HR_STATUS_LABEL"
           },
-          {
-            labelName: "Active"
-          }
-          //   { jsonPath: "Employee[0].serviceHistory[0].serviceStatus" }
+          { jsonPath: "Employee[0].serviceHistory[0].serviceStatus" }
         ),
         reviewServiceFrom: getLabelWithValue(
           {
             labelName: "Service From Date",
             labelKey: "HR_SER_FROM_DATE_LABEL"
           },
-          {
-            labelName: "23/01/2018"
-          }
-          //   { jsonPath: "Employee[0].serviceHistory[0].serviceFrom" }
+          { jsonPath: "Employee[0].serviceHistory[0].serviceFrom" }
         ),
         reviewServiceTo: getLabelWithValue(
           {
             labelName: "Service To Date",
             labelKey: "HR_SER_TO_DATE_LABEL"
           },
-          {
-            labelName: "23/01/2019"
-          }
-          //   { jsonPath: "Employee[0].serviceHistory[0].serviceTo" }
+          { jsonPath: "Employee[0].serviceHistory[0].serviceTo" }
         ),
         reviewLocation: getLabelWithValue(
           {
             labelName: "Location",
             labelKey: "HR_LOCATION_LABEL"
           },
-          { labelName: "Amritsar" }
-          // {jsonPath: "Employee[0].serviceHistory[0].location"}
+          { jsonPath: "Employee[0].serviceHistory[0].location" }
         ),
         reviewOrderNo: getLabelWithValue(
           { labelName: "Order No", labelKey: "HR_ORDER_NO_LABEL" },
-          { labelName: "23234" }
-          // {
-          //   jsonPath: "Employee[0].serviceHistory[0].orderNo",
-          // }
+          {
+            jsonPath: "Employee[0].serviceHistory[0].orderNo"
+          }
         ),
         reviewCurrentWorking: getLabelWithValue(
           {
             labelName: "Currently Working Here",
             labelKey: "HR_CURR_WORKING_LABEL"
           },
-          { labelName: "Yes" }
-          // {
-          //   jsonPath: "Employee[0].serviceHistory[0].isCurrentPosition",
-          // }
+          {
+            jsonPath: "Employee[0].serviceHistory[0].isCurrentPosition"
+          }
         )
       })
     }),
