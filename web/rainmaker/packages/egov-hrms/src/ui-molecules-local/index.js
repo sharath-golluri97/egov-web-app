@@ -7,10 +7,6 @@ const TestMolecules = Loadable({
   loader: () => import("./TestMolecules"),
   loading: () => <Loading />
 });
-const RadioButtonsGroup = Loadable({
-  loader: () => import("./RadioGroup"),
-  loading: () => <Loading />
-});
 
 const Table = Loadable({
   loader: () => import("./Table"),
@@ -22,11 +18,6 @@ const Tooltip = Loadable({
   loading: () => <Loading />
 });
 
-const CustomTab = Loadable({
-  loader: () => import("./CustomTab"),
-  loading: () => <Loading />
-});
-
 const UploadMultipleFiles = Loadable({
   loader: () => import("./UploadMultipleFiles"),
   loading: () => <Loading />
@@ -34,21 +25,6 @@ const UploadMultipleFiles = Loadable({
 
 const UploadSingleFile = Loadable({
   loader: () => import("./UploadSingleFile"),
-  loading: () => <Loading />
-});
-
-const DocumentList = Loadable({
-  loader: () => import("./DocumentList"),
-  loading: () => <Loading />
-});
-
-// const AutoSelector = Loadable({
-//   loader: () => import("./AutoSelector"),
-//   loading: () => <Loading />
-// });
-
-const MapLocator = Loadable({
-  loader: () => import("./MapLocator"),
   loading: () => <Loading />
 });
 
@@ -75,14 +51,9 @@ const ActionDialog = Loadable({
 export {
   TestMolecules,
   Table,
-  RadioButtonsGroup,
   Tooltip,
-  CustomTab,
   UploadMultipleFiles,
   UploadSingleFile,
-  DocumentList,
-  // AutoSelector,
-  MapLocator,
   FeesEstimateCard,
   SwitchWithLabel,
   DividerWithLabel,
