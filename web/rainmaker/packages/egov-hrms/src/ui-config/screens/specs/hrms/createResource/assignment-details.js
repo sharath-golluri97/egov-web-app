@@ -2,7 +2,6 @@ import {
   getCommonCard,
   getCommonGrayCard,
   getCommonTitle,
-  getCommonSubHeader,
   getTextField,
   getDateField,
   getSelectField,
@@ -79,9 +78,10 @@ const assignmentDetailsCard = {
                 ],
                 SwitchProps: {
                   color: "primary"
-                }
-              },
-              jsonPath: "Employee[0].assignments[0].isCurrentAssignment"
+                },
+                jsonPath: "Employee[0].assignments[0].currentAssignment"
+              }
+              // jsonPath: "Employee[0].assignments[0].currentAssignment"
             }
           }),
           department: {
@@ -161,11 +161,12 @@ const assignmentDetailsCard = {
                   ],
                   SwitchProps: {
                     color: "primary"
-                  }
+                  },
+                  jsonPath: "Employee[0].assignments[0].hod"
                 }
               }
-            },
-            jsonPath: "Employee[0].assignments[0].hod"
+            }
+            //jsonPath: "Employee[0].assignments[0].hod"
           }
         },
         {
