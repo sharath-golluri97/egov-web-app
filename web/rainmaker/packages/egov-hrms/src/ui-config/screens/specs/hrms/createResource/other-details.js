@@ -57,20 +57,9 @@ export const otherDetails = getCommonCard({
                   xs: 12,
                   sm: 4
                 },
+                sourceJsonPath: "createScreenMdmsData.egov-hrms.Degree",
                 props: {
-                  className: "hr-generic-selectfield",
-                  data: [
-                    {
-                      value: "Male",
-                      label: "Male"
-                    },
-                    {
-                      value: "Female",
-                      label: "Female"
-                    }
-                  ],
-                  optionValue: "value",
-                  optionLabel: "label"
+                  jsonPath: "Employee[0].education[0].qualification"
                 }
               })
             },
@@ -107,7 +96,7 @@ export const otherDetails = getCommonCard({
               })
             },
             university: {
-              ...getSelectField({
+              ...getTextField({
                 label: {
                   labelName: "University",
                   labelKey: "HR_UNIVERSITY_LABEL"
@@ -116,26 +105,11 @@ export const otherDetails = getCommonCard({
                   labelName: "Select University",
                   labelKey: "HR_UNIVERSITY_PLACEHOLDER"
                 },
-                jsonPath: "Employee[0].education[0].university",
                 gridDefination: {
                   xs: 12,
                   sm: 4
                 },
-                props: {
-                  className: "hr-generic-selectfield",
-                  data: [
-                    {
-                      value: "Male",
-                      label: "Male"
-                    },
-                    {
-                      value: "Female",
-                      label: "Female"
-                    }
-                  ],
-                  optionValue: "value",
-                  optionLabel: "label"
-                }
+                jsonPath: "Employee[0].education[0].university"
               })
             },
             stream: {
@@ -308,9 +282,9 @@ export const otherDetails = getCommonCard({
                 jsonPath: "Employee[0].tests[0].remarks"
               })
             },
-            uploadFile: getUploadFilesMultiple(
-              "Employee[0].deptTestDetails[0].documents"
-            )
+            // uploadFile: getUploadFilesMultiple(
+            //   "Employee[0].deptTestDetails[0].documents"
+            // )
           },
           {
             style: {

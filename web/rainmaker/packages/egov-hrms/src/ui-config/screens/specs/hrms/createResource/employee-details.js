@@ -197,20 +197,9 @@ export const professionalDetails = getCommonCard({
           },
           required: true,
           jsonPath: "Employee[0].employeeType",
+          sourceJsonPath: "createScreenMdmsData.egov-hrms.EmployeeType",
           props: {
-            className: "hr-generic-selectfield",
-            data: [
-              {
-                value: "PERMANENT",
-                label: "Permanent"
-              },
-              {
-                value: "TEMPORARY",
-                label: "Temporary"
-              }
-            ],
-            optionValue: "value",
-            optionLabel: "label"
+            jsonPath: "Employee[0].employeeType"
           }
         })
       },
@@ -223,21 +212,9 @@ export const professionalDetails = getCommonCard({
           },
           required: true,
           jsonPath: "Employee[0].employeeStatus",
+          sourceJsonPath: "createScreenMdmsData.egov-hrms.EmployeeStatus",
           props: {
-            className: "hr-generic-selectfield",
-            jsonPath: "Employee[0].employeeStatus",
-            data: [
-              {
-                value: "ACTIVE",
-                label: "Active"
-              },
-              {
-                value: "RETIRED",
-                label: "Retired"
-              }
-            ],
-            optionValue: "value",
-            optionLabel: "label"
+            jsonPath: "Employee[0].employeeStatus"
           }
         })
       },
@@ -253,7 +230,7 @@ export const professionalDetails = getCommonCard({
       //     sourceJsonPath: "createScreenMdmsData.ACCESSCONTROL-ROLES.roles"
       //   })
       // },
-      tradeLocMohalla: {
+      role: {
         uiFramework: "custom-containers-local",
         componentPath: "AutosuggestContainer",
         jsonPath: "Employee[0].user.roles",
@@ -277,7 +254,7 @@ export const professionalDetails = getCommonCard({
           inputLabelProps: {
             shrink: true
           },
-          isMulti:true,
+          isMulti: true,
           labelName: "name",
           valueName: "code"
         },
@@ -290,7 +267,7 @@ export const professionalDetails = getCommonCard({
     {
       style: {
         overflow: "visible",
-        paddingBottom: "1000px"
+        paddingBottom: "300px"
       }
     }
   )

@@ -139,6 +139,20 @@ const getMdmsData = async (state, dispatch, tenantId) => {
               filter: "$.*.hierarchyType"
             }
           ]
+        },
+        {
+          moduleName: "egov-hrms",
+          masterDetails: [
+            {
+              name: "Degree"
+            },
+            {
+              name: "EmployeeStatus"
+            },
+            {
+              name: "EmployeeType"
+            }
+          ]
         }
       ]
     }
