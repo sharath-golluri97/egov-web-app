@@ -22,7 +22,7 @@ const screenConfig = {
   name: "view",
   beforeInitScreen: (action, state, dispatch) => {
     let employeeCode = getQueryArg(window.location.href, "employeeID");
-    getEmployeeData(dispatch, employeeCode);
+    getEmployeeData(state, dispatch, employeeCode);
     return action;
   },
   components: {

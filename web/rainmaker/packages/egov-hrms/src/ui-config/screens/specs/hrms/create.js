@@ -167,7 +167,8 @@ const screenConfig = {
     const tenantId = localStorage.getItem("tenant-id");
     getMdmsData(state, dispatch, tenantId);
     let employeeCode = getQueryArg(window.location.href, "employeeCode");
-    employeeCode && getEmployeeData(dispatch, employeeCode);
+    employeeCode &&
+      getEmployeeData(state, dispatch, employeeCode).formwizardFifthStep;
     //   dispatch(prepareFinalObject("Licenses", [{ licenseType: "PERMANENT" }]));
     //   dispatch(prepareFinalObject("LicensesTemp", []));
     //   // getData(action, state, dispatch);

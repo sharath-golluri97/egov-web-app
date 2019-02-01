@@ -7,6 +7,7 @@ import {
   getCommonContainer,
   getPattern
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
+import { getTodaysDateInYMD } from "../../utils";
 
 export const employeeDetails = getCommonCard({
   header: getCommonTitle(
@@ -103,7 +104,12 @@ export const employeeDetails = getCommonCard({
           labelKey: "HR_BIRTH_DATE_PLACEHOLDER"
         },
         pattern: getPattern("Date"),
-        jsonPath: "Employee[0].user.dob"
+        jsonPath: "Employee[0].user.dob",
+        props: {
+          inputProps: {
+            max: getTodaysDateInYMD()
+          }
+        }
       })
     },
     email: {
