@@ -16,5 +16,14 @@ const PaymentRedirectPage = Loadable({
   loader: () => import("./PaymentRedirectPage"),
   loading: () => <Loading />
 });
+const AutosuggestContainer = Loadable({
+  loader: () => import("./AutosuggestContainer"),
+  loading: () => <Loading />
+});
 
-export { CheckboxContainer, DownloadFileContainer, PaymentRedirectPage };
+export {
+  CheckboxContainer,
+  DownloadFileContainer,
+  PaymentRedirectPage,
+  AutosuggestContainer
+};

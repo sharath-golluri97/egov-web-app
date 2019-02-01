@@ -48,6 +48,11 @@ const Switch = Loadable({
   loading: () => <Loading />
 });
 
+const AutoSuggest = Loadable({
+  loader: () => import("./AutoSuggest"),
+  loading: () => <Loading />
+});
+
 export {
   TestAtoms,
   ApplicationNoContainer,
@@ -57,5 +62,6 @@ export {
   MapLocation,
   Asteric,
   MenuButton,
-  Switch
+  Switch,
+  AutoSuggest
 };

@@ -156,100 +156,142 @@ export const professionalDetails = getCommonCard({
       }
     }
   ),
-  employeeDetailsContainer: getCommonContainer({
-    employeeId: {
-      ...getTextField({
-        label: {
-          labelName: "Employee ID",
-          labelKey: "HR_EMPLOYEE_ID_LABEL"
-        },
-        placeholder: {
-          labelName: "Enter Employee ID",
-          labelKey: "HR_EMPLOYEE_ID_PLACEHOLDER"
-        },
-        jsonPath: "Employee[0].code"
-      })
-    },
-    dateOfAppointment: {
-      ...getDateField({
-        label: {
-          labelName: "Date of Appointment",
-          labelKey: "HR_APPOINTMENT_DATE_LABEL"
-        },
-        placeholder: {
-          labelName: "Enter Date of Birth",
-          labelKey: "HR_APPOINTMENT_DATE_PLACEHOLDER"
-        },
-        pattern: getPattern("Date"),
-        jsonPath: "Employee[0].dateOfAppointment"
-      })
-    },
-    employmentType: {
-      ...getSelectField({
-        label: {
-          labelName: "Employement Type",
-          labelKey: "HR_EMPLOYMENT_TYPE_LABEL"
-        },
-        placeholder: {
-          labelName: "Select Employment Type",
-          labelKey: "HR_EMPLOYMENT_TYPE_PLACEHOLDER"
-        },
-        required: true,
-        jsonPath: "Employee[0].employeeType",
-        props: {
-          className: "hr-generic-selectfield",
-          data: [
-            {
-              value: "ACTIVE",
-              label: "Active"
-            },
-            {
-              value: "RETIRED",
-              label: "Retired"
-            }
-          ],
-          optionValue: "value",
-          optionLabel: "label"
-        }
-      })
-    },
-    status: {
-      ...getSelectField({
-        label: { labelName: "Status", labelKey: "HR_STATUS_LABEL" },
-        placeholder: {
-          labelName: "Select Status",
-          labelKey: "HR_STATUS_PLACEHOLDER"
-        },
-        required: true,
-        jsonPath: "Employee[0].employeeStatus",
-        props: {
-          className: "hr-generic-selectfield",
-          data: [
-            {
-              value: "PERMANENT",
-              label: "Permanent"
-            },
-            {
-              value: "TEMPORARY",
-              label: "Temporary"
-            }
-          ],
-          optionValue: "value",
-          optionLabel: "label"
-        }
-      })
-    },
-    role: {
-      ...getSelectField({
-        label: { labelName: "Role", labelKey: "HR_ROLE_LABEL" },
-        placeholder: {
-          labelName: "Select Role",
-          labelKey: "HR_ROLE_PLACEHOLDER"
-        },
-        required: true,
+  employeeDetailsContainer: getCommonContainer(
+    {
+      employeeId: {
+        ...getTextField({
+          label: {
+            labelName: "Employee ID",
+            labelKey: "HR_EMPLOYEE_ID_LABEL"
+          },
+          placeholder: {
+            labelName: "Enter Employee ID",
+            labelKey: "HR_EMPLOYEE_ID_PLACEHOLDER"
+          },
+          jsonPath: "Employee[0].code"
+        })
+      },
+      dateOfAppointment: {
+        ...getDateField({
+          label: {
+            labelName: "Date of Appointment",
+            labelKey: "HR_APPOINTMENT_DATE_LABEL"
+          },
+          placeholder: {
+            labelName: "Enter Date of Birth",
+            labelKey: "HR_APPOINTMENT_DATE_PLACEHOLDER"
+          },
+          pattern: getPattern("Date"),
+          jsonPath: "Employee[0].dateOfAppointment"
+        })
+      },
+      employmentType: {
+        ...getSelectField({
+          label: {
+            labelName: "Employement Type",
+            labelKey: "HR_EMPLOYMENT_TYPE_LABEL"
+          },
+          placeholder: {
+            labelName: "Select Employment Type",
+            labelKey: "HR_EMPLOYMENT_TYPE_PLACEHOLDER"
+          },
+          required: true,
+          jsonPath: "Employee[0].employeeType",
+          props: {
+            className: "hr-generic-selectfield",
+            data: [
+              {
+                value: "PERMANENT",
+                label: "Permanent"
+              },
+              {
+                value: "TEMPORARY",
+                label: "Temporary"
+              }
+            ],
+            optionValue: "value",
+            optionLabel: "label"
+          }
+        })
+      },
+      status: {
+        ...getSelectField({
+          label: { labelName: "Status", labelKey: "HR_STATUS_LABEL" },
+          placeholder: {
+            labelName: "Select Status",
+            labelKey: "HR_STATUS_PLACEHOLDER"
+          },
+          required: true,
+          jsonPath: "Employee[0].employeeStatus",
+          props: {
+            className: "hr-generic-selectfield",
+            jsonPath: "Employee[0].employeeStatus",
+            data: [
+              {
+                value: "ACTIVE",
+                label: "Active"
+              },
+              {
+                value: "RETIRED",
+                label: "Retired"
+              }
+            ],
+            optionValue: "value",
+            optionLabel: "label"
+          }
+        })
+      },
+      // role: {
+      //   ...getSelectField({
+      //     label: { labelName: "Role", labelKey: "HR_ROLE_LABEL" },
+      //     placeholder: {
+      //       labelName: "Select Role",
+      //       labelKey: "HR_ROLE_PLACEHOLDER"
+      //     },
+      //     required: true,
+      //     jsonPath: "Employee[0].user.roles",
+      //     sourceJsonPath: "createScreenMdmsData.ACCESSCONTROL-ROLES.roles"
+      //   })
+      // },
+      tradeLocMohalla: {
+        uiFramework: "custom-containers-local",
+        componentPath: "AutosuggestContainer",
         jsonPath: "Employee[0].user.roles",
-        sourceJsonPath: "createScreenMdmsData.ACCESSCONTROL-ROLES.roles"
-      })
+        required: true,
+        props: {
+          style: {
+            width: "100%",
+            cursor: "pointer"
+          },
+          label: { labelName: "Role", labelKey: "HR_ROLE_LABEL" },
+          placeholder: {
+            labelName: "Select Role",
+            labelKey: "HR_ROLE_PLACEHOLDER"
+          },
+          jsonPath: "Employee[0].user.roles",
+          sourceJsonPath: "createScreenMdmsData.ACCESSCONTROL-ROLES.roles",
+          labelsFromLocalisation: false,
+          suggestions: [],
+          fullwidth: true,
+          required: true,
+          inputLabelProps: {
+            shrink: true
+          },
+          isMulti:true,
+          labelName: "name",
+          valueName: "code"
+        },
+        gridDefination: {
+          xs: 12,
+          sm: 6
+        }
+      }
+    },
+    {
+      style: {
+        overflow: "visible",
+        paddingBottom: "1000px"
+      }
     }
-  })
+  )
 });
