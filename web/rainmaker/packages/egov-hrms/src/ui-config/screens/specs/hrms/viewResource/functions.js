@@ -35,6 +35,23 @@ const setAllDatesInYmdFormat = (obj, values) => {
   });
 };
 
+const setRolesData = obj => {
+  let roles = get(obj, "user.roles", []);
+  let newRolesArray = [];
+  roles.forEach(element => {
+    newRolesArray.push({ label: element.name, value: element.code });
+  });
+  set(obj, "user.roles", newRolesArray);
+};
+
+const returnEmptyArrayIfNull = value => {
+  if (value === null || value === undefined) {
+    return [];
+  } else {
+    return value;
+  }
+};
+
 export const furnishEmployeeData = (state, dispatch) => {
   let employeeObject = get(
     state.screenConfiguration.preparedFinalObject,
@@ -46,6 +63,7 @@ export const furnishEmployeeData = (state, dispatch) => {
     { object: "assignments", values: ["fromDate", "toDate"] },
     { object: "serviceHistory", values: ["serviceFrom", "serviceTo"] }
   ]);
+  setRolesData(employeeObject[0]);
   dispatch(prepareFinalObject("Employee", employeeObject));
 };
 
@@ -56,13 +74,13 @@ export const handleCreateUpdateEmployee = (state, dispatch) => {
     null
   );
   if (uuid) {
-    updateApiCall(state, dispatch);
+    createUpdateEmployee(state, dispatch, "UPDATE");
   } else {
-    createApiCall(state, dispatch);
+    createUpdateEmployee(state, dispatch, "CREATE");
   }
 };
 
-export const createApiCall = async (state, dispatch) => {
+export const createUpdateEmployee = async (state, dispatch, action) => {
   const tenantId = JSON.parse(localStorage.getItem("user-info")).tenantId;
   let queryObject = [
     {
@@ -75,9 +93,21 @@ export const createApiCall = async (state, dispatch) => {
     "Employee",
     []
   );
-  set(employeeObject[0], "tenantId", tenantId);
-  set(employeeObject[0], "user.tenantId", tenantId);
-  set(employeeObject[0], "jurisdictions[0].tenantId", tenantId);
+
+  // SET TENANT IDS IF THEY DO NOT ALREADY EXIST
+  !get(employeeObject[0], "tenantId") &&
+    set(employeeObject[0], "tenantId", tenantId);
+  !get(employeeObject[0], "user.tenantId") &&
+    set(employeeObject[0], "user.tenantId", tenantId);
+
+  //SET TENANT IDS IN ALL NEWLY ADDED JURISDICTIONS, DOESNT CHANGE ALREADY PRESENT
+  let jurisdictions = returnEmptyArrayIfNull(
+    get(employeeObject[0], "jurisdictions", [])
+  );
+  for (let i = 0; i < jurisdictions.length; i++) {
+    set(employeeObject[0], `jurisdictions[${i}].tenantId`, tenantId);
+  }
+
   set(
     employeeObject[0],
     "dateOfAppointment",
@@ -88,46 +118,57 @@ export const createApiCall = async (state, dispatch) => {
     "user.dob",
     convertDateToEpoch(get(employeeObject[0], "user.dob"))
   );
-  set(
-    employeeObject[0],
-    "assignments[0].fromDate",
-    convertDateToEpoch(get(employeeObject[0], "assignments[0].fromDate"))
-  );
-  set(
-    employeeObject[0],
-    "assignments[0].toDate",
-    convertDateToEpoch(get(employeeObject[0], "assignments[0].toDate"))
-  );
-  set(
-    employeeObject[0],
-    "serviceHistory[0].serviceFrom",
-    convertDateToEpoch(get(employeeObject[0], "serviceHistory[0].serviceFrom"))
-  );
-  set(
-    employeeObject[0],
-    "serviceHistory[0].serviceTo",
-    convertDateToEpoch(get(employeeObject[0], "serviceHistory[0].serviceTo"))
-  );
 
-  let response = await createEmployee(queryObject, employeeObject);
-  console.log("Create========", response);
-};
-
-export const updateApiCall = async (state, dispatch) => {
-  const tenantId = JSON.parse(localStorage.getItem("user-info")).tenantId;
-  let queryObject = [
-    {
-      key: "tenantId",
-      value: tenantId
-    }
-  ];
-  let employeeObject = get(
-    state.screenConfiguration.preparedFinalObject,
-    "Employee",
-    []
+  let assignments = returnEmptyArrayIfNull(
+    get(employeeObject[0], "assignments", [])
   );
-  let response = await updateEmployee(queryObject, employeeObject);
-  console.log("Update========", response);
+  for (let i = 0; i < assignments.length; i++) {
+    set(
+      employeeObject[0],
+      `assignments[${i}].fromDate`,
+      convertDateToEpoch(get(employeeObject[0], `assignments[${i}].fromDate`))
+    );
+    set(
+      employeeObject[0],
+      `assignments[${i}].toDate`,
+      convertDateToEpoch(get(employeeObject[0], `assignments[${i}].toDate`))
+    );
+  }
+
+  let serviceHistory = returnEmptyArrayIfNull(
+    get(employeeObject[0], "serviceHistory", [])
+  );
+  for (let i = 0; i < serviceHistory.length; i++) {
+    set(
+      employeeObject[0],
+      `serviceHistory[${i}].serviceFrom`,
+      convertDateToEpoch(
+        get(employeeObject[0], `serviceHistory[${i}].serviceFrom`)
+      )
+    );
+    set(
+      employeeObject[0],
+      `serviceHistory[${i}].serviceTo`,
+      convertDateToEpoch(
+        get(employeeObject[0], `serviceHistory[${i}].serviceTo`)
+      )
+    );
+  }
+
+  // PROCESS ALL ROLES IN REQUIRED FORMAT
+  let roles = get(employeeObject[0], "user.roles", []);
+  let processedRoles = roles.map(item => {
+    return { code: item.value };
+  });
+  set(employeeObject[0], "user.roles", processedRoles);
+
+  if (action === "CREATE") {
+    let response = await createEmployee(queryObject, employeeObject);
+    console.log("Create========", response);
+  } else if (action === "UPDATE") {
+    let response = await updateEmployee(queryObject, employeeObject);
+    console.log("UPDATE========", response);
+  }
 };
 
 export const getEmployeeData = async (state, dispatch, employeeId) => {
