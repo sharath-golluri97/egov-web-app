@@ -4,9 +4,24 @@ import {
   getCommonContainer,
   getLabelWithValue,
   getDivider,
-  getLabel
+  getLabel,
+  getBreak
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 import { changeStep } from "../createResource/footer";
+
+const getHeader = label => {
+  return {
+    uiFramework: "custom-molecules-local",
+    componentPath: "DividerWithLabel",
+    props: {
+      className: "hr-generic-divider-label",
+      labelProps: {},
+      dividerProps: {},
+      label
+    },
+    type: "array"
+  };
+};
 
 export const getEmployeeDetailsView = (isReview = true) => {
   return getCommonGrayCard({
@@ -60,6 +75,8 @@ export const getEmployeeDetailsView = (isReview = true) => {
         }
       }
     },
+    personalDetailsHeader: getHeader("Personal Details"),
+    break1: getBreak(),
     viewOne: getCommonContainer({
       reviewName: getLabelWithValue(
         {
@@ -68,22 +85,48 @@ export const getEmployeeDetailsView = (isReview = true) => {
         },
         { jsonPath: "Employee[0].user.name" }
       ),
-      reviewEmpID: getLabelWithValue(
-        {
-          labelName: "Employee ID",
-          labelKey: "HR_EMP_ID_LABEL"
-        },
-        { jsonPath: "Employee[0].id" }
-      ),
       reviewMobile: getLabelWithValue(
         { labelName: "Mobile No", labelKey: "HR_MOB_NO_LABEL" },
         { jsonPath: "Employee[0].user.mobileNumber" }
+      ),
+      reviewFather: getLabelWithValue(
+        { labelName: "Father/Husband's Name", labelKey: "HR_FATHER_HUSBANDS_NAME_LABEL" },
+        { jsonPath: "Employee[0].user.fatherOrHusbandName" }
       ),
       reviewGender: getLabelWithValue(
         { labelName: "Gender", labelKey: "HR_GENDER_LABEL" },
         {
           jsonPath: "Employee[0].user.gender"
         }
+      ),
+      reviewDob: getLabelWithValue(
+        { labelName: "Date Of Birth", labelKey: "HR_DOB_LABEL" },
+        {
+          jsonPath: "Employee[0].user.dob"
+        }
+      ),
+      reviewEmail: getLabelWithValue(
+        { labelName: "Email", labelKey: "HR_EMAIL_LABEL" },
+        {
+          jsonPath: "Employee[0].user.email"
+        }
+      ),
+      reviewAddress: getLabelWithValue(
+        { labelName: "Correspondence Addres", labelKey: "HR_CORRESPONDENCE_ADDRESS_LABEL" },
+        {
+          jsonPath: "Employee[0].user.correspondenceAddress"
+        }
+      )
+    }),
+    professionalDetailsHeader: getHeader("Professional Details"),
+    break2: getBreak(),
+    viewTwo: getCommonContainer({
+      reviewEmpID: getLabelWithValue(
+        {
+          labelName: "Employee ID",
+          labelKey: "HR_EMP_ID_LABEL"
+        },
+        { jsonPath: "Employee[0].id" }
       ),
       reviewDOA: getLabelWithValue(
         { labelName: "Date of Appointment", labelKey: "HR_APPT_DATE_LABEL" },

@@ -4,7 +4,6 @@ import {
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 
 import { employeeReviewDetails } from "./viewResource/employee-review";
-import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 
 export const header = getCommonContainer({
   header: getCommonHeader({
