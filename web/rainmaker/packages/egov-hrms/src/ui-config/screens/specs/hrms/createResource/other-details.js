@@ -74,22 +74,23 @@ export const otherDetails = getCommonCard({
                   labelKey: "HR_YEAR_PLACEHOLDER"
                 },
                 jsonPath: "Employee[0].education[0].yearOfPassing",
+                sourceJsonPath: "yearsList",
                 gridDefination: {
                   xs: 12,
                   sm: 4
                 },
                 props: {
                   className: "hr-generic-selectfield",
-                  data: [
-                    {
-                      value: "Male",
-                      label: "Male"
-                    },
-                    {
-                      value: "Female",
-                      label: "Female"
-                    }
-                  ],
+                  // data: [
+                  //   {
+                  //     value: "Male",
+                  //     label: "Male"
+                  //   },
+                  //   {
+                  //     value: "Female",
+                  //     label: "Female"
+                  //   }
+                  // ],
                   optionValue: "value",
                   optionLabel: "label"
                 }
@@ -243,22 +244,23 @@ export const otherDetails = getCommonCard({
                   labelKey: "HR_YEAR_PLACEHOLDER"
                 },
                 jsonPath: "Employee[0].tests[0].yearOfPassing",
+                sourceJsonPath: "yearsList",
                 gridDefination: {
                   xs: 12,
                   sm: 4
                 },
                 props: {
                   className: "hr-generic-selectfield",
-                  data: [
-                    {
-                      value: "Male",
-                      label: "Male"
-                    },
-                    {
-                      value: "Female",
-                      label: "Female"
-                    }
-                  ],
+                  // data: [
+                  //   {
+                  //     value: "Male",
+                  //     label: "Male"
+                  //   },
+                  //   {
+                  //     value: "Female",
+                  //     label: "Female"
+                  //   }
+                  // ],
                   optionValue: "value",
                   optionLabel: "label"
                 }

@@ -135,7 +135,7 @@ const getMdmsData = async (state, dispatch, tenantId) => {
           moduleName: "egov-location",
           masterDetails: [
             {
-              name: "TenantBoundary",
+              name: "TenantBoundary"
               // filter: "$.*.hierarchyType"
             }
           ]
@@ -173,6 +173,18 @@ const getMdmsData = async (state, dispatch, tenantId) => {
   }
 };
 
+const getYearsList = (startYear, state, dispatch) => {
+  var currentYear = new Date().getFullYear(),
+    years = [];
+  startYear = startYear || 1980;
+
+  while (startYear <= currentYear) {
+    years.push({ value: startYear++ });
+  }
+
+  dispatch(prepareFinalObject("yearsList", years));
+};
+
 const screenConfig = {
   uiFramework: "material-ui",
   name: "create",
@@ -183,6 +195,7 @@ const screenConfig = {
     let employeeCode = getQueryArg(window.location.href, "employeeCode");
     employeeCode &&
       getEmployeeData(state, dispatch, employeeCode).formwizardFifthStep;
+    getYearsList(1950, state, dispatch);
     //   dispatch(prepareFinalObject("Licenses", [{ licenseType: "PERMANENT" }]));
     //   dispatch(prepareFinalObject("LicensesTemp", []));
     //   // getData(action, state, dispatch);
