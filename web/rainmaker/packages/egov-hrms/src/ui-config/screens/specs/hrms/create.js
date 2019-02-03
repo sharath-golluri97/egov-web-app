@@ -136,7 +136,7 @@ const getMdmsData = async (state, dispatch, tenantId) => {
           masterDetails: [
             {
               name: "TenantBoundary",
-              filter: "$.*.hierarchyType"
+              // filter: "$.*.hierarchyType"
             }
           ]
         },

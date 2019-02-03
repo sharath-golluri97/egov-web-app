@@ -6,6 +6,21 @@ import {
   getCommonContainer
 } from "mihy-ui-framework/ui-config/screens/specs/utils";
 
+import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
+import get from "lodash/get";
+import map from "lodash/map";
+
+const arrayCrawler = (arr, n) => {
+  if (n == 1) {
+    return arr.map(item => {
+      return item.code;
+    });
+  } else
+    return arr.map(item => {
+      return arrayCrawler(item.children, n - 1);
+    });
+};
+
 const jurisdictionDetailsCard = {
   uiFramework: "custom-containers",
   componentPath: "MultiItem",
@@ -22,13 +37,54 @@ const jurisdictionDetailsCard = {
               },
               required: true,
               jsonPath: "Employee[0].jurisdictions[0].hierarchy",
-              sourceJsonPath: "createScreenMdmsData.egov-location.TenantBoundary",
+              sourceJsonPath: "createScreenMdmsData.hierarchyList",
               props: {
                 className: "hr-generic-selectfield",
                 optionValue: "code",
                 optionLabel: "name"
               }
-            })
+            }),
+            beforeFieldChange: (action, state, dispatch) => {
+              let tenantBoundary = get(
+                state.screenConfiguration.preparedFinalObject,
+                `createScreenMdmsData.egov-location.TenantBoundary`,
+                []
+              );
+              let hierarchyList = map(tenantBoundary, "hierarchyType", []);
+              dispatch(
+                prepareFinalObject(
+                  "createScreenMdmsData.hierarchyList",
+                  hierarchyList
+                )
+              );
+
+              // GETTING BOUNDARY DATA FOR SELECTED HIERARCHY
+              let hierarchyIndex = hierarchyList.findIndex(
+                x => x.code == action.value
+              );
+              let selectedBoundaryData = get(
+                state.screenConfiguration.preparedFinalObject,
+                `createScreenMdmsData.egov-location.TenantBoundary[${hierarchyIndex}].boundary`,
+                []
+              );
+
+              // AFTER SELECTION OF HIERARCHY CRAWL BOUNDARY DATA TO GET THE BOUNDARY TYPES
+              let boundaryList = [];
+              let crawlBoundaryData = selectedBoundaryData;
+              while (crawlBoundaryData != null) {
+                // console.log(crawlBoundaryData.label);
+                boundaryList.push({ value: crawlBoundaryData.label });
+                crawlBoundaryData = get(crawlBoundaryData, "children[0]", null);
+              }
+              dispatch(
+                prepareFinalObject(
+                  "createScreenMdmsData.boundaryList",
+                  boundaryList
+                )
+              );
+              // console.log("!!!!!!!ASD", action, hierarchyIndex);
+              // return action;
+            }
           },
           boundaryType: {
             ...getSelectField({
@@ -41,23 +97,102 @@ const jurisdictionDetailsCard = {
                 labelKey: "HR_BOUNDARY_TYPE_PLACEHOLDER"
               },
               required: true,
-              jsonPath: "Employee[0].jurisdictions[0].boundaryType",
+              jsonPath: "Employee[0].jurisdictions[0].boundary",
+              sourceJsonPath: "createScreenMdmsData.boundaryList",
               props: {
                 className: "hr-generic-selectfield",
-                data: [
-                  {
-                    value: "Block",
-                    label: "Block"
-                  },
-                  {
-                    value: "Zone",
-                    label: "Zone"
-                  }
-                ],
+                // data: [
+                //   {
+                //     value: "Block",
+                //     label: "Block"
+                //   },
+                //   {
+                //     value: "Zone",
+                //     label: "Zone"
+                //   }
+                // ],
                 optionValue: "value",
                 optionLabel: "label"
               }
-            })
+            }),
+            beforeFieldChange: (action, state, dispatch) => {
+              // GET COMPLETE EGOV-LOCATION DATA FROM PFO
+              let tenantBoundary = get(
+                state.screenConfiguration.preparedFinalObject,
+                `createScreenMdmsData.egov-location.TenantBoundary`,
+                []
+              );
+              // GET HIERARCHY LIST FROM PFO
+              let hierarchyList = get(
+                state.screenConfiguration.preparedFinalObject,
+                `createScreenMdmsData.hierarchyList`,
+                []
+              );
+              // GET BOUNDARY "TYPE" LIST FROM PFO
+              let boundaryList = get(
+                state.screenConfiguration.preparedFinalObject,
+                `createScreenMdmsData.boundaryList`,
+                []
+              );
+              // GET THE CURRENT CARD NUMBER WHICH IS BEING CHANGED
+              let cardNumber = action.componentJsonpath
+                .match(/\[[0-9]*\]/g)
+                .toString()
+                .replace(/^\[|\]$/g, "");
+              let selectedHierarchy = get(
+                state.screenConfiguration.preparedFinalObject,
+                `Employee[0].jurisdictions[${cardNumber}].hierarchy`,
+                ""
+              );
+              // GET THE INDEX OF CURRENTLY SELECTED HIERARCHY FROM HIERARCHY LIST
+              // SO AS TO GET THE BOUNDARY DATA FOR THAT HIERARCHY FROM tenantBoundary
+              let hierarchyIndex = hierarchyList.findIndex(
+                x => x.code == selectedHierarchy
+              );
+              // GET THE INDEX / LEVEL OF THE BOUNDARY TYPE SO AS TO CRAWL DATA
+              let boundaryIndex = boundaryList.findIndex(
+                x => x.value == action.value
+              );
+              // GET THE SPECIFIC DATA WHICH HAS TO BE CRAWLED
+              let crawlingData = get(
+                tenantBoundary[hierarchyIndex],
+                "boundary.children",
+                []
+              );
+
+              // A RECURSIVE FUNCTION WHICH CRAWLS THE DATA, FLATTENS ARRAY AND RETURNS A LIST
+              // OF PROCESSED BOUNDARY DATA.
+              let processedBoundaryData = [];
+              if (boundaryIndex > 0) {
+                processedBoundaryData = arrayCrawler(
+                  crawlingData,
+                  boundaryIndex
+                )
+                  .flat(boundaryIndex)
+                  .map(item => {
+                    return { value: item };
+                  });
+              } else {
+                processedBoundaryData = [
+                  {
+                    value: get(
+                      tenantBoundary[hierarchyIndex],
+                      "boundary.code",
+                      ""
+                    )
+                  }
+                ];
+              }
+              dispatch(
+                prepareFinalObject(
+                  "createScreenMdmsData.processedBoundaryDataList",
+                  processedBoundaryData
+                )
+              );
+              // console.log(
+              //   arrayCrawler(crawlingData, boundaryIndex).flat(boundaryIndex)
+              // );
+            }
           },
           boundary: {
             ...getSelectField({
@@ -67,19 +202,20 @@ const jurisdictionDetailsCard = {
                 labelKey: "HR_BOUNDARY_PLACEHOLDER"
               },
               required: true,
-              jsonPath: "Employee[0].jurisdictions[0].boundary",
+              jsonPath: "Employee[0].jurisdictions[0].boundaryType",
+              sourceJsonPath: "createScreenMdmsData.processedBoundaryDataList",
               props: {
                 className: "hr-generic-selectfield",
-                data: [
-                  {
-                    value: "B1",
-                    label: "Block 1"
-                  },
-                  {
-                    value: "B2",
-                    label: "Block 2"
-                  }
-                ],
+                // data: [
+                //   {
+                //     value: "B1",
+                //     label: "Block 1"
+                //   },
+                //   {
+                //     value: "B2",
+                //     label: "Block 2"
+                //   }
+                // ],
                 optionValue: "value",
                 optionLabel: "label"
               }
