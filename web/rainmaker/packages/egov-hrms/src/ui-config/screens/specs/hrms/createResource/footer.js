@@ -32,11 +32,16 @@ export const callBackForNext = async (state, dispatch) => {
       dispatch,
       "create"
     );
-    if (!isEmployeeDetailsValid) {
+    const isProfessionalDetailsValid = validateFields(
+      "components.div.children.formwizardFirstStep.children.professionalDetails.children.cardContent.children.employeeDetailsContainer.children",
+      state,
+      dispatch,
+      "create"
+    );
+    if (!(isEmployeeDetailsValid && isProfessionalDetailsValid)) {
       isFormValid = false;
     }
   }
-
   if (activeStep === 1) {
   }
   if (activeStep === 3) {
