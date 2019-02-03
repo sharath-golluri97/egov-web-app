@@ -246,7 +246,7 @@ export const professionalDetails = getCommonCard({
             labelKey: "HR_ROLE_PLACEHOLDER"
           },
           jsonPath: "Employee[0].user.roles",
-          sourceJsonPath: "createScreenMdmsData.ACCESSCONTROL-ROLES.roles",
+          sourceJsonPath: "createScreenMdmsData.furnishedRolesList",
           labelsFromLocalisation: false,
           suggestions: [],
           fullwidth: true,

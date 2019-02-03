@@ -15,6 +15,7 @@ import { serviceDetails } from "./createResource/service-details";
 import { otherDetails } from "./createResource/other-details";
 import set from "lodash/set";
 import get from "lodash/get";
+import map from "lodash/map";
 import { httpRequest } from "../../../../ui-utils";
 import { commonTransform, objectArrayToDropdown } from "../utils";
 import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
@@ -168,6 +169,9 @@ const getMdmsData = async (state, dispatch, tenantId) => {
     dispatch(
       prepareFinalObject("createScreenMdmsData", get(response, "MdmsRes"))
     );
+    setRolesList(state, dispatch);
+    setHierarchyList(state, dispatch);
+    return true;
   } catch (e) {
     console.log(e);
   }
@@ -185,17 +189,48 @@ const getYearsList = (startYear, state, dispatch) => {
   dispatch(prepareFinalObject("yearsList", years));
 };
 
+const setRolesList = (state, dispatch) => {
+  let rolesList = get(
+    state.screenConfiguration.preparedFinalObject,
+    `createScreenMdmsData.ACCESSCONTROL-ROLES.roles`,
+    []
+  );
+  let furnishedRolesList = rolesList.filter(item => {
+    return item.code;
+  });
+  dispatch(
+    prepareFinalObject(
+      "createScreenMdmsData.furnishedRolesList",
+      furnishedRolesList
+    )
+  );
+};
+
+const setHierarchyList = (state, dispatch) => {
+  let tenantBoundary = get(
+    state.screenConfiguration.preparedFinalObject,
+    `createScreenMdmsData.egov-location.TenantBoundary`,
+    []
+  );
+  let hierarchyList = map(tenantBoundary, "hierarchyType", []);
+  dispatch(
+    prepareFinalObject("createScreenMdmsData.hierarchyList", hierarchyList)
+  );
+};
+
 const screenConfig = {
   uiFramework: "material-ui",
   name: "create",
   // hasBeforeInitAsync:true,
   beforeInitScreen: (action, state, dispatch) => {
     const tenantId = localStorage.getItem("tenant-id");
-    getMdmsData(state, dispatch, tenantId);
+    const mdmsDataStatus = getMdmsData(state, dispatch, tenantId);
     let employeeCode = getQueryArg(window.location.href, "employeeCode");
-    employeeCode &&
-      getEmployeeData(state, dispatch, employeeCode).formwizardFifthStep;
+    employeeCode && getEmployeeData(state, dispatch, employeeCode);
     getYearsList(1950, state, dispatch);
+    // if (mdmsDataStatus) {
+    //   setHierarchyList(state, dispatch);
+    // }
     //   dispatch(prepareFinalObject("Licenses", [{ licenseType: "PERMANENT" }]));
     //   dispatch(prepareFinalObject("LicensesTemp", []));
     //   // getData(action, state, dispatch);

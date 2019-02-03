@@ -50,12 +50,10 @@ const jurisdictionDetailsCard = {
                 `createScreenMdmsData.egov-location.TenantBoundary`,
                 []
               );
-              let hierarchyList = map(tenantBoundary, "hierarchyType", []);
-              dispatch(
-                prepareFinalObject(
-                  "createScreenMdmsData.hierarchyList",
-                  hierarchyList
-                )
+              let hierarchyList = get(
+                state.screenConfiguration.preparedFinalObject,
+                `createScreenMdmsData.hierarchyList`,
+                []
               );
 
               // GETTING BOUNDARY DATA FOR SELECTED HIERARCHY
