@@ -172,7 +172,8 @@ const serviceDetailsCard = {
                   ],
                   SwitchProps: {
                     color: "primary"
-                  }
+                  },
+                  jsonPath: "Employee[0].serviceHistory[0].isCurrentPosition"
                 }
               }
             }
