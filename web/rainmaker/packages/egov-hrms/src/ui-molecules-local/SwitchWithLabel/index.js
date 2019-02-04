@@ -50,7 +50,8 @@ class SwitchWithLabel extends Component {
 }
 
 const mapStateToProps = (state, ownprops) => {
-  const { preparedFinalObject } = state;
+  const { screenConfiguration } = state;
+  const { preparedFinalObject } = screenConfiguration;
   const { jsonPath } = ownprops;
   const switchValue = get(preparedFinalObject, jsonPath);
   return { switchValue };
