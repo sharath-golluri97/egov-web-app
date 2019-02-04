@@ -35,6 +35,23 @@ const setAllDatesInYmdFormat = (obj, values) => {
   });
 };
 
+// SET ALL MULTIPLE OBJECT EPOCH DATES YEARS
+const setAllYears = (obj, values) => {
+  values.forEach(element => {
+    let elemObject =
+      get(obj, `${element.object}`, []) === null
+        ? []
+        : get(obj, `${element.object}`, []);
+    for (let i = 0; i < elemObject.length; i++) {
+      element.values.forEach(item => {
+        let ymd = epochToYmdDate(get(obj, `${element.object}[${i}].${item}`));
+        let year = ymd.substring(0, 4);
+        set(obj, `${element.object}[${i}].${item}`, year);
+      });
+    }
+  });
+};
+
 const setRolesData = obj => {
   let roles = get(obj, "user.roles", []);
   let newRolesArray = [];
@@ -62,6 +79,10 @@ export const furnishEmployeeData = (state, dispatch) => {
   setAllDatesInYmdFormat(employeeObject[0], [
     { object: "assignments", values: ["fromDate", "toDate"] },
     { object: "serviceHistory", values: ["serviceFrom", "serviceTo"] }
+  ]);
+  setAllYears(employeeObject[0], [
+    { object: "education", values: ["yearOfPassing"] },
+    { object: "tests", values: ["yearOfPassing"] }
   ]);
   setRolesData(employeeObject[0]);
   dispatch(prepareFinalObject("Employee", employeeObject));
@@ -152,6 +173,36 @@ export const createUpdateEmployee = async (state, dispatch, action) => {
       convertDateToEpoch(
         get(employeeObject[0], `serviceHistory[${i}].serviceTo`)
       )
+    );
+  }
+
+  // FORMAT EDUCATION PASSING DATES TO EPOCH
+  let education = returnEmptyArrayIfNull(
+    get(employeeObject[0], "education", [])
+  );
+  for (let i = 0; i < education.length; i++) {
+    let educationYearOfPassing = get(
+      employeeObject[0],
+      `education[${i}].yearOfPassing`
+    );
+    set(
+      employeeObject[0],
+      `education[${i}].yearOfPassing`,
+      convertDateToEpoch(`${educationYearOfPassing}-01-01`)
+    );
+  }
+
+  // FORMAT TESTS PASSING DATES TO EPOCH
+  let tests = returnEmptyArrayIfNull(get(employeeObject[0], "tests", []));
+  for (let i = 0; i < tests.length; i++) {
+    let testsYearOfPassing = get(
+      employeeObject[0],
+      `tests[${i}].yearOfPassing`
+    );
+    set(
+      employeeObject[0],
+      `tests[${i}].yearOfPassing`,
+      convertDateToEpoch(`${testsYearOfPassing}-01-01`)
     );
   }
 

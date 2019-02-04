@@ -183,7 +183,7 @@ const getYearsList = (startYear, state, dispatch) => {
   startYear = startYear || 1980;
 
   while (startYear <= currentYear) {
-    years.push({ value: startYear++ });
+    years.push({ value: (startYear++).toString() });
   }
 
   dispatch(prepareFinalObject("yearsList", years));
