@@ -216,20 +216,17 @@ export const createUpdateEmployee = async (state, dispatch, action) => {
   if (action === "CREATE") {
     try {
       let response = await createEmployee(queryObject, employeeObject);
-      let employeeId = get(response, "Employee[0].code");
+      let employeeId = get(response, "Employees[0].code");
       window.location.href = `/mihy-ui-framework/hrms/acknowledgement?purpose=create&status=success&applicationNumber=${employeeId}`;
-      // console.log("Create========", "SUCCESS");
     } catch (error) {
-      // console.log("Create========", "ERROR");
       furnishEmployeeData(state, dispatch);
     }
   } else if (action === "UPDATE") {
     try {
       let response = await updateEmployee(queryObject, employeeObject);
-      let employeeId = get(response, "Employee[0].code");
-      window.location.href = `/mihy-ui-framework/hrms/acknowledgement?purpose=create&status=success&applicationNumber=${employeeId}`;
+      let employeeId = response && get(response, "Employees[0].code");
+      window.location.href = `/mihy-ui-framework/hrms/acknowledgement?purpose=update&status=success&applicationNumber=${employeeId}`;
     } catch (error) {
-      // console.log("UPDATE========", "ERROR");
       furnishEmployeeData(state, dispatch);
     }
   }

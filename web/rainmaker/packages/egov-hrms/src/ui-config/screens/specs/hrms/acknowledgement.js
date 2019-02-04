@@ -140,6 +140,40 @@ const getAcknowledgementCard = (
       },
       goToHome
     };
+  } else if (purpose === "update" && status === "success") {
+    return {
+      header: getCommonContainer({
+        header: getCommonHeader({
+          labelName: `Update Employee`
+          // labelKey: "TL_TRADE_APPLICATION"
+        })
+      }),
+      applicationSuccessCard: {
+        uiFramework: "custom-atoms",
+        componentPath: "Div",
+        children: {
+          card: acknowledgementCard({
+            icon: "done",
+            backgroundColor: "#39CB74",
+            header: {
+              labelName: "Employee Updated Successfully",
+              labelKey: "HR_UPDATE_SUCCESS_MESSAGE"
+            },
+            body: {
+              labelName:
+                "A notification has been sent to the updated Employee at registered Mobile No.",
+              labelKey: "HR_UPDATE_SUCCESS_SUBHEADER"
+            },
+            tailText: {
+              labelName: "Employee ID",
+              labelKey: "HR_EMP_ID_LABEL"
+            },
+            number: applicationNumber
+          })
+        }
+      },
+      goToHome
+    };
   } else if (purpose === "approve" && status === "success") {
     loadReceiptGenerationData(applicationNumber, tenant);
     return {
