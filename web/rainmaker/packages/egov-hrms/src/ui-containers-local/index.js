@@ -20,10 +20,15 @@ const AutosuggestContainer = Loadable({
   loader: () => import("./AutosuggestContainer"),
   loading: () => <Loading />
 });
+const DialogContainer = Loadable({
+  loader: () => import("./DialogContainer"),
+  loading: () => <Loading />
+});
 
 export {
   CheckboxContainer,
   DownloadFileContainer,
   PaymentRedirectPage,
-  AutosuggestContainer
+  AutosuggestContainer,
+  DialogContainer
 };

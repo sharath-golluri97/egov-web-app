@@ -7,6 +7,8 @@ import { employeeReviewDetails } from "./viewResource/employee-review";
 import { hrViewFooter } from "./viewResource/footer";
 import { getEmployeeData } from "./viewResource/functions";
 import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
+import { deactivateEmployee } from "./viewResource/deactivate-employee";
+import { showHideAdhocPopup } from "../utils";
 
 export const header = getCommonContainer({
   header: getCommonHeader({
@@ -23,6 +25,7 @@ const screenConfig = {
   beforeInitScreen: (action, state, dispatch) => {
     let employeeCode = getQueryArg(window.location.href, "employeeID");
     getEmployeeData(state, dispatch, employeeCode);
+    showHideAdhocPopup(state, dispatch);
     return action;
   },
   components: {
@@ -50,13 +53,25 @@ const screenConfig = {
         footer: hrViewFooter()
       }
     },
-    deactivateEmployee: {
-      uiFramework: "custom-molecules-local",
-      componentPath: "ActionDialog",
+    // deactivateEmployee: {
+    //   uiFramework: "custom-molecules-local",
+    //   componentPath: "ActionDialog",
+    //   props: {
+    //     open: false
+    //   },
+    //   type: "array"
+    // },
+    adhocDialog: {
+      uiFramework: "custom-containers-local",
+      componentPath: "DialogContainer",
       props: {
-        open: false
+        open: false,
+        maxWidth: "sm",
+        screenKey: "view"
       },
-      type: "array"
+      children: {
+        popup: deactivateEmployee
+      }
     }
   }
 };

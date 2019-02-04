@@ -1,6 +1,6 @@
 import { getLabel } from "mihy-ui-framework/ui-config/screens/specs/utils";
 import { ifUserRoleExists } from "../../utils";
-import { toggleDeactivateDialog } from "../../utils";
+import { showHideAdhocPopup } from "../../utils";
 import { handleCreateUpdateEmployee } from "./functions";
 import { getQueryArg } from "mihy-ui-framework/ui-utils/commons";
 
@@ -64,7 +64,7 @@ export const hrViewFooter = () => {
       },
       onClickDefination: {
         action: "condition",
-        callBack: toggleDeactivateDialog
+        callBack: showHideAdhocPopup
       }
     },
     editDetails: {

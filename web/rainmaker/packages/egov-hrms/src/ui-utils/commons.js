@@ -112,6 +112,7 @@ export const updateEmployee = async (queryObject, payload) => {
     return response;
   } catch (error) {
     store.dispatch(toggleSnackbarAndSetText(true, error.message, "error"));
+    throw error;
   }
 };
 

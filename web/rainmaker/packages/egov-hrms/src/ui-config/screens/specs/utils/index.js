@@ -413,11 +413,11 @@ export const getIconStyle = key => {
 
 export const showHideAdhocPopup = (state, dispatch) => {
   let toggle = get(
-    state.screenConfiguration.screenConfig["pay"],
+    state.screenConfiguration.screenConfig["view"],
     "components.adhocDialog.props.open",
     false
   );
-  dispatch(handleField("pay", "components.adhocDialog", "props.open", !toggle));
+  dispatch(handleField("view", "components.adhocDialog", "props.open", !toggle));
 };
 
 export const getButtonVisibility = (status, button) => {

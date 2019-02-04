@@ -5,7 +5,11 @@ import {
   updateEmployee,
   getSearchResults
 } from "../../../../..//ui-utils/commons";
-import { convertDateToEpoch } from "../../utils";
+import {
+  convertDateToEpoch,
+  toggleDeactivateDialog,
+  showHideAdhocPopup
+} from "../../utils";
 import { prepareFinalObject } from "mihy-ui-framework/ui-redux/screen-configuration/actions";
 import { epochToYmdDate } from "../../utils";
 
@@ -229,6 +233,37 @@ export const createUpdateEmployee = async (state, dispatch, action) => {
     } catch (error) {
       furnishEmployeeData(state, dispatch);
     }
+  }
+};
+
+export const deactivateEmployeeApiCall = async (state, dispatch) => {
+  const tenantId = JSON.parse(localStorage.getItem("user-info")).tenantId;
+  let queryObject = [
+    {
+      key: "tenantId",
+      value: tenantId
+    }
+  ];
+  let employeeObject = get(
+    state.screenConfiguration.preparedFinalObject,
+    "Employee",
+    []
+  );
+  set(employeeObject[0], "isActive", false);
+  set(
+    employeeObject[0],
+    `deactivationDetails[0].effectiveFrom`,
+    convertDateToEpoch(
+      get(employeeObject[0], `deactivationDetails[0].effectiveFrom`)
+    )
+  );
+  try {
+    let response = await updateEmployee(queryObject, employeeObject);
+    let employeeId = response && get(response, "Employees[0].code");
+    window.location.href = `/mihy-ui-framework/hrms/acknowledgement?purpose=deactivate&status=success&applicationNumber=${employeeId}`;
+    showHideAdhocPopup(state, dispatch);
+  } catch (error) {
+    // furnishEmployeeData(state, dispatch);
   }
 };
 
