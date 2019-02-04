@@ -123,7 +123,7 @@ const employeeSearchAndResult = {
               },
               roleDefination: {
                 rolePath: "user-info.roles",
-                roles: ["TL_CEMP", "DGRO"]
+                roles: ["SUPERUSER"]
               }
             }
           }
