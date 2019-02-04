@@ -16,74 +16,72 @@ const assignmentDetailsCard = {
     scheama: getCommonGrayCard({
       asmtDetailsCardContainer: getCommonContainer(
         {
-          asmtDateContainer: getCommonContainer({
-            assignFromDate: {
-              ...getDateField({
-                label: {
-                  labelName: "Assigned From Date",
-                  labelKey: "HR_ASMT_FROM_DATE_LABEL"
-                },
-                placeholder: {
-                  labelName: "Assigned From Date",
-                  labelKey: "HR_ASMT_FROM_DATE_PLACEHOLDER"
-                },
-                pattern: getPattern("Date"),
-                jsonPath: "Employee[0].assignments[0].fromDate",
-                props: {
-                  // inputProps: {
-                  //   min: getTodaysDateInYMD(),
-                  //   max: getFinancialYearDates("yyyy-mm-dd").endDate
-                  // }
-                }
-              })
-            },
-            assignToDate: {
-              ...getDateField({
-                label: {
-                  labelName: "Assigned To Date",
-                  labelKey: "HR_ASMT_TO_DATE_LABEL"
-                },
-                placeholder: {
-                  labelName: "Assigned To Date",
-                  labelKey: "HR_ASMT_TO_DATE_PLACEHOLDER"
-                },
-                pattern: getPattern("Date"),
-                jsonPath: "Employee[0].assignments[0].toDate",
-                props: {
-                  // inputProps: {
-                  //   min: getTodaysDateInYMD(),
-                  //   max: getFinancialYearDates("yyyy-mm-dd").endDate
-                  // }
-                }
-              })
-            },
-            dummyDiv: {
-              uiFramework: "custom-atoms",
-              componentPath: "Div",
-              gridDefination: {
-                xs: 12,
-                sm: 6
+          assignFromDate: {
+            ...getDateField({
+              label: {
+                labelName: "Assigned From Date",
+                labelKey: "HR_ASMT_FROM_DATE_LABEL"
               },
-
-              children: {}
-            },
-            currentAssignment: {
-              uiFramework: "custom-molecules-local",
-              componentPath: "SwitchWithLabel",
+              placeholder: {
+                labelName: "Assigned From Date",
+                labelKey: "HR_ASMT_FROM_DATE_PLACEHOLDER"
+              },
+              pattern: getPattern("Date"),
+              jsonPath: "Employee[0].assignments[0].fromDate",
               props: {
-                items: [
-                  {
-                    label: "Currently Assigned Here"
-                  }
-                ],
-                SwitchProps: {
-                  color: "primary"
-                },
-                jsonPath: "Employee[0].assignments[0].isCurrentAssignment"
+                // inputProps: {
+                //   min: getTodaysDateInYMD(),
+                //   max: getFinancialYearDates("yyyy-mm-dd").endDate
+                // }
               }
-              // jsonPath: "Employee[0].assignments[0].isCurrentAssignment"
+            })
+          },
+          assignToDate: {
+            ...getDateField({
+              label: {
+                labelName: "Assigned To Date",
+                labelKey: "HR_ASMT_TO_DATE_LABEL"
+              },
+              placeholder: {
+                labelName: "Assigned To Date",
+                labelKey: "HR_ASMT_TO_DATE_PLACEHOLDER"
+              },
+              pattern: getPattern("Date"),
+              jsonPath: "Employee[0].assignments[0].toDate",
+              props: {
+                // inputProps: {
+                //   min: getTodaysDateInYMD(),
+                //   max: getFinancialYearDates("yyyy-mm-dd").endDate
+                // }
+              }
+            })
+          },
+          dummyDiv: {
+            uiFramework: "custom-atoms",
+            componentPath: "Div",
+            gridDefination: {
+              xs: 12,
+              sm: 6
+            },
+
+            children: {}
+          },
+          currentAssignment: {
+            uiFramework: "custom-molecules-local",
+            componentPath: "SwitchWithLabel",
+            props: {
+              items: [
+                {
+                  label: "Currently Assigned Here"
+                }
+              ],
+              SwitchProps: {
+                color: "primary"
+              },
+              jsonPath: "Employee[0].assignments[0].isCurrentAssignment"
             }
-          }),
+            // jsonPath: "Employee[0].assignments[0].isCurrentAssignment"
+          },
           department: {
             ...getSelectField({
               label: {
@@ -135,38 +133,20 @@ const assignmentDetailsCard = {
               jsonPath: "Employee[0].assignments[0].reportingTo"
             })
           },
-          headOfDepartmentCont: {
-            uiFramework: "custom-atoms",
-            componentPath: "Div",
-            gridDefination: {
-              xs: 12,
-              sm: 6
-            },
+          headOfDepartment: {
+            uiFramework: "custom-molecules-local",
+            componentPath: "SwitchWithLabel",
             props: {
-              style: {
-                display: "flex",
-                alignItems: "flex-end",
-                height: "100%"
-              }
-            },
-            children: {
-              headOfDepartment: {
-                uiFramework: "custom-molecules-local",
-                componentPath: "SwitchWithLabel",
-                props: {
-                  items: [
-                    {
-                      label: "Head Of Department"
-                    }
-                  ],
-                  SwitchProps: {
-                    color: "primary"
-                  },
-                  jsonPath: "Employee[0].assignments[0].isHod"
+              items: [
+                {
+                  label: "Head Of Department"
                 }
-              }
+              ],
+              SwitchProps: {
+                color: "primary"
+              },
+              jsonPath: "Employee[0].assignments[0].isHod"
             }
-            //jsonPath: "Employee[0].assignments[0].isHod"
           }
         },
         {
@@ -178,12 +158,12 @@ const assignmentDetailsCard = {
     }),
     items: [],
     addItemLabel: "ADD ASSIGNMENT",
-    headerName: "Jurisdiction",
+    headerName: "Assignment",
     headerJsonPath:
       "children.cardContent.children.header.children.head.children.Accessories.props.label",
     sourceJsonPath: "Employee[0].assignments",
     prefixSourceJsonPath:
-      "children.cardContent.children.tradeUnitCardContainer.children"
+      "children.cardContent.children.asmtDetailsCardContainer.children"
   },
   type: "array"
 };

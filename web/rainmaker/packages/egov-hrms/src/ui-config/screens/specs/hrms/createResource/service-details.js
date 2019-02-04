@@ -14,7 +14,7 @@ const serviceDetailsCard = {
   componentPath: "MultiItem",
   props: {
     scheama: getCommonGrayCard({
-      serDetailsCardContainer: getCommonContainer(
+      serviceDetailsCardContainer: getCommonContainer(
         {
           status: {
             ...getSelectField({
@@ -33,6 +33,7 @@ const serviceDetailsCard = {
               },
               props: {
                 className: "hr-generic-selectfield",
+                jsonPath: "Employee[0].serviceHistory[0].serviceStatus",
                 data: [
                   {
                     value: "Value 1",
@@ -65,6 +66,7 @@ const serviceDetailsCard = {
                 sm: 4
               },
               props: {
+                jsonPath: "Employee[0].serviceHistory[0].serviceFrom"
                 // inputProps: {
                 //   min: getTodaysDateInYMD(),
                 //   max: getFinancialYearDates("yyyy-mm-dd").endDate
@@ -89,6 +91,7 @@ const serviceDetailsCard = {
                 sm: 4
               },
               props: {
+                jsonPath: "Employee[0].serviceHistory[0].serviceTo"
                 // inputProps: {
                 //   min: getTodaysDateInYMD(),
                 //   max: getFinancialYearDates("yyyy-mm-dd").endDate
@@ -113,6 +116,7 @@ const serviceDetailsCard = {
               },
               props: {
                 className: "hr-generic-selectfield",
+                jsonPath: "Employee[0].serviceHistory[0].location",
                 data: [
                   {
                     value: "Value 1",
@@ -139,43 +143,30 @@ const serviceDetailsCard = {
                 labelKey: "HR_ORDER_NO_PLACEHOLDER"
               },
               pattern: getPattern("TradeName") || null,
-              jsonPath: "Employee[0].serviceHistory[0].orderNo"
+              jsonPath: "Employee[0].serviceHistory[0].orderNo",
+              props: {
+                jsonPath: "Employee[0].serviceHistory[0].orderNo"
+              }
             }),
             gridDefination: {
               xs: 12,
               sm: 4
             }
           },
-          currentWorkCont: {
-            uiFramework: "custom-atoms",
-            componentPath: "Div",
-            gridDefination: {
-              xs: 12,
-              sm: 4
-            },
+          currentlyWorkingHere: {
+            uiFramework: "custom-molecules-local",
+            componentPath: "SwitchWithLabel",
+            jsonPath: "Employee[0].serviceHistory[0].isCurrentPosition",
             props: {
-              style: {
-                display: "flex",
-                alignItems: "flex-end",
-                height: "100%"
-              }
-            },
-            children: {
-              currentlyWorkingHere: {
-                uiFramework: "custom-molecules-local",
-                componentPath: "SwitchWithLabel",
-                props: {
-                  items: [
-                    {
-                      label: "Currently Working Here"
-                    }
-                  ],
-                  SwitchProps: {
-                    color: "primary"
-                  },
-                  jsonPath: "Employee[0].serviceHistory[0].isCurrentPosition"
+              items: [
+                {
+                  label: "Currently Working Here"
                 }
-              }
+              ],
+              SwitchProps: {
+                color: "primary"
+              },
+              jsonPath: "Employee[0].serviceHistory[0].isCurrentPosition"
             }
           }
         },
@@ -191,9 +182,9 @@ const serviceDetailsCard = {
     headerName: "Service",
     headerJsonPath:
       "children.cardContent.children.header.children.head.children.Accessories.props.label",
-    sourceJsonPath: "Employee[0].serviceDetails",
+    sourceJsonPath: "Employee[0].serviceHistory",
     prefixSourceJsonPath:
-      "children.cardContent.children.tradeUnitCardContainer.children"
+      "children.cardContent.children.serviceDetailsCardContainer.children"
   },
   type: "array"
 };

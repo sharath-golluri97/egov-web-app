@@ -234,7 +234,7 @@ const jurisdictionDetailsCard = {
       "children.cardContent.children.header.children.head.children.Accessories.props.label",
     sourceJsonPath: "Employee[0].jurisdictions",
     prefixSourceJsonPath:
-      "children.cardContent.children.tradeUnitCardContainer.children"
+      "children.cardContent.children.jnDetailsCardContainer.children"
   },
   type: "array"
 };

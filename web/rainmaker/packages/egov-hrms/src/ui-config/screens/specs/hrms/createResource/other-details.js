@@ -40,7 +40,7 @@ export const otherDetails = getCommonCard({
             }
           }
         ),
-        serDetailsCardContainer: getCommonContainer(
+        eduDetailsCardContainer: getCommonContainer(
           {
             degree: {
               ...getSelectField({
@@ -178,9 +178,8 @@ export const otherDetails = getCommonCard({
         "children.cardContent.children.header.children.head.children.Accessories.props.label",
       sourceJsonPath: "Employee[0].education",
       prefixSourceJsonPath:
-        "children.cardContent.children.tradeUnitCardContainer.children"
+        "children.cardContent.children.eduDetailsCardContainer.children"
     },
-
     type: "array"
   },
   departmentDetails: {
@@ -199,7 +198,7 @@ export const otherDetails = getCommonCard({
             }
           }
         ),
-        serDetailsCardContainer: getCommonContainer(
+        testsDetailsCardContainer: getCommonContainer(
           {
             testName: {
               ...getSelectField({
@@ -220,12 +219,12 @@ export const otherDetails = getCommonCard({
                   className: "hr-generic-selectfield",
                   data: [
                     {
-                      value: "Male",
-                      label: "Male"
+                      value: "Arts",
+                      label: "Arts"
                     },
                     {
-                      value: "Female",
-                      label: "Female"
+                      value: "Science",
+                      label: "Science"
                     }
                   ],
                   optionValue: "value",
@@ -302,7 +301,7 @@ export const otherDetails = getCommonCard({
         "children.cardContent.children.header.children.head.children.Accessories.props.label",
       sourceJsonPath: "Employee[0].tests",
       prefixSourceJsonPath:
-        "children.cardContent.children.tradeUnitCardContainer.children"
+        "children.cardContent.children.testsDetailsCardContainer.children"
     },
     type: "array"
   }
