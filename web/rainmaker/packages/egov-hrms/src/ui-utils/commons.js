@@ -32,6 +32,7 @@ export const updateTradeDetails = async requestBody => {
     return payload;
   } catch (error) {
     store.dispatch(toggleSnackbarAndSetText(true, error.message, "error"));
+    throw error;
   }
 };
 
@@ -94,6 +95,7 @@ export const createEmployee = async (queryObject, payload) => {
     return response;
   } catch (error) {
     store.dispatch(toggleSnackbarAndSetText(true, error.message, "error"));
+    throw error;
   }
 };
 

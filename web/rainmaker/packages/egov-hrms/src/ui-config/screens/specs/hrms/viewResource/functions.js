@@ -45,8 +45,8 @@ const setAllYears = (obj, values) => {
     for (let i = 0; i < elemObject.length; i++) {
       element.values.forEach(item => {
         let ymd = epochToYmdDate(get(obj, `${element.object}[${i}].${item}`));
-        let year = ymd.substring(0, 4);
-        set(obj, `${element.object}[${i}].${item}`, year);
+        let year = ymd ? ymd.substring(0, 4) : null;
+        year && set(obj, `${element.object}[${i}].${item}`, year);
       });
     }
   });
@@ -214,11 +214,24 @@ export const createUpdateEmployee = async (state, dispatch, action) => {
   set(employeeObject[0], "user.roles", processedRoles);
 
   if (action === "CREATE") {
-    let response = await createEmployee(queryObject, employeeObject);
-    console.log("Create========", response);
+    try {
+      let response = await createEmployee(queryObject, employeeObject);
+      let employeeId = get(response, "Employee[0].code");
+      window.location.href = `/mihy-ui-framework/hrms/acknowledgement?purpose=create&status=success&applicationNumber=${employeeId}`;
+      // console.log("Create========", "SUCCESS");
+    } catch (error) {
+      // console.log("Create========", "ERROR");
+      furnishEmployeeData(state, dispatch);
+    }
   } else if (action === "UPDATE") {
-    let response = await updateEmployee(queryObject, employeeObject);
-    console.log("UPDATE========", response);
+    try {
+      let response = await updateEmployee(queryObject, employeeObject);
+      let employeeId = get(response, "Employee[0].code");
+      window.location.href = `/mihy-ui-framework/hrms/acknowledgement?purpose=create&status=success&applicationNumber=${employeeId}`;
+    } catch (error) {
+      // console.log("UPDATE========", "ERROR");
+      furnishEmployeeData(state, dispatch);
+    }
   }
 };
 
