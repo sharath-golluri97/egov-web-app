@@ -63,7 +63,6 @@ const assignmentDetailsCard = {
               xs: 12,
               sm: 6
             },
-
             children: {}
           },
           currentAssignment: {

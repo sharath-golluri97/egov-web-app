@@ -1,17 +1,18 @@
-import {
-  getLabel,
-  dispatchMultipleFieldChangeAction
-} from "mihy-ui-framework/ui-config/screens/specs/utils";
 import get from "lodash/get";
-import some from "lodash/some";
+import {
+  dispatchMultipleFieldChangeAction,
+  getLabel
+} from "mihy-ui-framework/ui-config/screens/specs/utils";
+import {
+  setRoute,
+  toggleSnackbarAndSetText
+} from "mihy-ui-framework/ui-redux/app/actions";
 import {
   getButtonVisibility,
   getCommonApplyFooter,
-  validateFields,
-  ifUserRoleExists
+  ifUserRoleExists,
+  validateFields
 } from "../../utils";
-import { setRoute } from "mihy-ui-framework/ui-redux/app/actions";
-import { toggleSnackbarAndSetText } from "mihy-ui-framework/ui-redux/app/actions";
 import "./index.css";
 
 const moveToReview = dispatch => {
@@ -43,8 +44,56 @@ export const callBackForNext = async (state, dispatch) => {
     }
   }
   if (activeStep === 1) {
+    let jurisdictionDetailsPath =
+      "components.div.children.formwizardSecondStep.children.jurisdictionDetails.children.cardContent.children.jurisdictionDetailsCard.props.items";
+    let jurisdictionDetailsItems = get(
+      state.screenConfiguration.screenConfig.create,
+      jurisdictionDetailsPath,
+      []
+    );
+    let isJurisdictionDetailsValid = true;
+    for (var j = 0; j < jurisdictionDetailsItems.length; j++) {
+      if (
+        (jurisdictionDetailsItems[j].isDeleted === undefined ||
+          jurisdictionDetailsItems[j].isDeleted !== false) &&
+        !validateFields(
+          `${jurisdictionDetailsPath}[${j}].item${j}.children.cardContent.children.jnDetailsCardContainer.children`,
+          state,
+          dispatch,
+          "create"
+        )
+      )
+        isJurisdictionDetailsValid = false;
+    }
+    if (!isJurisdictionDetailsValid) {
+      isFormValid = false;
+    }
   }
-  if (activeStep === 3) {
+  if (activeStep === 2) {
+    let assignmentDetailsPath =
+      "components.div.children.formwizardThirdStep.children.assignmentDetails.children.cardContent.children.assignmentDetailsCard.props.items";
+    let assignmentDetailsItems = get(
+      state.screenConfiguration.screenConfig.create,
+      assignmentDetailsPath,
+      []
+    );
+    let isAssignmentDetailsValid = true;
+    for (var j = 0; j < assignmentDetailsItems.length; j++) {
+      if (
+        (assignmentDetailsItems[j].isDeleted === undefined ||
+          assignmentDetailsItems[j].isDeleted !== false) &&
+        !validateFields(
+          `${assignmentDetailsPath}[${j}].item${j}.children.cardContent.children.asmtDetailsCardContainer.children`,
+          state,
+          dispatch,
+          "create"
+        )
+      )
+        isAssignmentDetailsValid = false;
+    }
+    if (!isAssignmentDetailsValid) {
+      isFormValid = false;
+    }
   }
   if (activeStep === 4) {
     moveToReview(dispatch);
