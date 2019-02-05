@@ -31,7 +31,7 @@ const generatePdfAndDownload = (
   var iframe = document.createElement("iframe");
   iframe.src =
     window.origin +
-    `/web-hrms/mihy-ui-framework/hrms/search-preview?applicationNumber=${applicationNumber}&tenantId=${tenant}`;
+    `/hrms/mihy-ui-framework/hrms/search-preview?applicationNumber=${applicationNumber}&tenantId=${tenant}`;
   var hasIframeLoaded = false,
     hasEstimateLoaded = false;
   iframe.onload = function(e) {

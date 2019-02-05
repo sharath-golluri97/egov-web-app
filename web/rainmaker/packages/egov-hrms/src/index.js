@@ -16,7 +16,7 @@ const theme = createMuiTheme(themeObject);
 
 // move it to a env file
 window.basename =
-  process.env.NODE_ENV === "production" ? "/web-hrms" : "";
+  process.env.NODE_ENV === "production" ? "/hrms" : "";
 // hardcoded the base; to be changed soon!!!!!
 
 ReactDOM.render(

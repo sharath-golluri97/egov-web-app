@@ -1985,7 +1985,7 @@ export const applyForm = (state, dispatch) => {
     window.location.href =
       process.env.NODE_ENV === "development"
         ? `/mihy-ui-framework/tradelicense-citizen/apply?tenantId=${tenantId}`
-        : `/web-hrms/mihy-ui-framework/tradelicense-citizen/apply?tenantId=${tenantId}`;
+        : `/hrms/mihy-ui-framework/tradelicense-citizen/apply?tenantId=${tenantId}`;
   }
 };
 

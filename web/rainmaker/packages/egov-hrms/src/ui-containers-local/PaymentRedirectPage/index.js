@@ -19,11 +19,11 @@ class PaymentRedirect extends Component {
       let tenantId = get(pgUpdateResponse, "Transaction[0].tenantId");
       //let txnAmount = get(pgUpdateResponse, "Transaction[0].txnAmount");
       if (get(pgUpdateResponse, "Transaction[0].txnStatus") === "FAILURE") {
-        window.location.href = `/web-hrms/mihy-ui-framework/hrms/acknowledgement?purpose=${"pay"}&status=${"failure"}&applicationNumber=${moduleId}&tenantId=${tenantId}`;
+        window.location.href = `/hrms/mihy-ui-framework/hrms/acknowledgement?purpose=${"pay"}&status=${"failure"}&applicationNumber=${moduleId}&tenantId=${tenantId}`;
       } else {
         let transactionId = get(pgUpdateResponse, "Transaction[0].txnId");
 
-        window.location.href = `/web-hrms/mihy-ui-framework/hrms/acknowledgement?purpose=${"pay"}&status=${"success"}&applicationNumber=${moduleId}&tenantId=${tenantId}&secondNumber=${transactionId}`;
+        window.location.href = `/hrms/mihy-ui-framework/hrms/acknowledgement?purpose=${"pay"}&status=${"success"}&applicationNumber=${moduleId}&tenantId=${tenantId}&secondNumber=${transactionId}`;
       }
     } catch (e) {
       alert(e);
