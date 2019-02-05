@@ -226,11 +226,7 @@ const screenConfig = {
     const tenantId = localStorage.getItem("tenant-id");
     const mdmsDataStatus = getMdmsData(state, dispatch, tenantId);
     let employeeCode = getQueryArg(window.location.href, "employeeCode");
-    if (employeeCode) {
-      getEmployeeData(state, dispatch, employeeCode);
-    } else {
-      dispatch(prepareFinalObject("Employee", []));
-    }
+    employeeCode && getEmployeeData(state, dispatch, employeeCode);
     getYearsList(1950, state, dispatch);
     // if (mdmsDataStatus) {
     //   setHierarchyList(state, dispatch);

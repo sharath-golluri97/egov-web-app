@@ -60,7 +60,10 @@ const setRolesData = obj => {
   let roles = get(obj, "user.roles", []);
   let newRolesArray = [];
   roles.forEach(element => {
-    newRolesArray.push({ label: element.name, value: element.code });
+    newRolesArray.push({
+      label: element.name,
+      value: element.code
+    });
   });
   set(obj, "user.roles", newRolesArray);
 };
@@ -213,7 +216,10 @@ export const createUpdateEmployee = async (state, dispatch, action) => {
   // PROCESS ALL ROLES IN REQUIRED FORMAT
   let roles = get(employeeObject[0], "user.roles", []);
   let processedRoles = roles.map(item => {
-    return { code: item.value };
+    return {
+      code: item.value,
+      name: item.label
+    };
   });
   set(employeeObject[0], "user.roles", processedRoles);
 
