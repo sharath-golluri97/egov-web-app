@@ -304,7 +304,7 @@ export const footerReview = (
   const roleExists = ifUserRoleExists("CITIZEN");
   const redirectionURL = roleExists
     ? "/mihy-ui-framework/tradelicense-citizen"
-    : "/mihy-ui-framework/tradelicence";
+    : "/mihy-ui-framework/hrms";
 
   return getCommonApplyFooter({
     container: {
@@ -334,7 +334,7 @@ export const footerReview = (
               },
               onClickDefination: {
                 action: "page_change",
-                path: `/mihy-ui-framework/tradelicence/approve?purpose=reject&applicationNumber=${applicationNumber}&tenantId=${tenantId}`
+                path: `/mihy-ui-framework/hrms/approve?purpose=reject&applicationNumber=${applicationNumber}&tenantId=${tenantId}`
               },
               visible: getButtonVisibility(status, "REJECT"),
               roleDefination: {
@@ -361,7 +361,7 @@ export const footerReview = (
               },
               onClickDefination: {
                 action: "page_change",
-                path: `/mihy-ui-framework/tradelicence/approve?applicationNumber=${applicationNumber}&tenantId=${tenantId}`
+                path: `/mihy-ui-framework/hrms/approve?applicationNumber=${applicationNumber}&tenantId=${tenantId}`
               },
               visible: getButtonVisibility(status, "APPROVE"),
               roleDefination: {
@@ -415,7 +415,7 @@ export const footerReview = (
               },
               onClickDefination: {
                 action: "page_change",
-                path: `/mihy-ui-framework/tradelicence/approve?purpose=cancel&applicationNumber=${applicationNumber}&tenantId=${tenantId}`
+                path: `/mihy-ui-framework/hrms/approve?purpose=cancel&applicationNumber=${applicationNumber}&tenantId=${tenantId}`
               },
               visible: getButtonVisibility(status, "CANCEL TRADE LICENSE"),
               roleDefination: {

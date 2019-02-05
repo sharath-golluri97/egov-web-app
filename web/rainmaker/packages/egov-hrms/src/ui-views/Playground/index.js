@@ -17,7 +17,7 @@ import ReactJson from "react-json-view";
 import { screenHoc } from "mihy-ui-framework/ui-hocs";
 import CommonView from "mihy-ui-framework/ui-molecules/CommonView";
 import defaultScreenConfig from "ui-config/screens/specs/hrms/create";
-// import defaultScreenConfig from "ui-config/screens/specs/tradelicence/apply";
+// import defaultScreenConfig from "ui-config/screens/specs/hrms/apply";
 
 const initScreenConfig = defaultScreenConfig;
 

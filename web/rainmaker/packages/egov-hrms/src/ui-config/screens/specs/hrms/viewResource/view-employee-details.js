@@ -67,10 +67,8 @@ export const getEmployeeDetailsView = (isReview = true) => {
             })
           },
           onClickDefination: {
-            action: "condition",
-            callBack: (state, dispatch) => {
-              changeStep(state, dispatch, "", 0);
-            }
+            action: "page_change",
+            path: "/mihy-ui-framework/hrms/create"
           }
         }
       }
@@ -90,7 +88,10 @@ export const getEmployeeDetailsView = (isReview = true) => {
         { jsonPath: "Employee[0].user.mobileNumber" }
       ),
       reviewFather: getLabelWithValue(
-        { labelName: "Father/Husband's Name", labelKey: "HR_FATHER_HUSBANDS_NAME_LABEL" },
+        {
+          labelName: "Father/Husband's Name",
+          labelKey: "HR_FATHER_HUSBANDS_NAME_LABEL"
+        },
         { jsonPath: "Employee[0].user.fatherOrHusbandName" }
       ),
       reviewGender: getLabelWithValue(
@@ -112,7 +113,10 @@ export const getEmployeeDetailsView = (isReview = true) => {
         }
       ),
       reviewAddress: getLabelWithValue(
-        { labelName: "Correspondence Addres", labelKey: "HR_CORRESPONDENCE_ADDRESS_LABEL" },
+        {
+          labelName: "Correspondence Addres",
+          labelKey: "HR_CORRESPONDENCE_ADDRESS_LABEL"
+        },
         {
           jsonPath: "Employee[0].user.correspondenceAddress"
         }

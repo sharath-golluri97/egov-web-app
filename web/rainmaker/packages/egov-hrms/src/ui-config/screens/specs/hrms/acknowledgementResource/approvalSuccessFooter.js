@@ -32,7 +32,7 @@ export const approvalSuccessFooter = getCommonApplyFooter({
     },
     onClickDefination: {
       action: "page_change",
-      path: `/mihy-ui-framework/tradelicence/search`
+      path: `/mihy-ui-framework/hrms/search`
     }
   },
   downloadLicenseButton: {

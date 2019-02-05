@@ -31,7 +31,7 @@ const generatePdfAndDownload = (
   var iframe = document.createElement("iframe");
   iframe.src =
     window.origin +
-    `/employee-tradelicence/mihy-ui-framework/tradelicence/search-preview?applicationNumber=${applicationNumber}&tenantId=${tenant}`;
+    `/web-hrms/mihy-ui-framework/hrms/search-preview?applicationNumber=${applicationNumber}&tenantId=${tenant}`;
   var hasIframeLoaded = false,
     hasEstimateLoaded = false;
   iframe.onload = function(e) {
@@ -124,7 +124,7 @@ export const applicationSuccessFooter = (
   const roleExists = ifUserRoleExists("CITIZEN");
   const redirectionURL = roleExists
     ? "/mihy-ui-framework/tradelicense-citizen/home"
-    : "/mihy-ui-framework/tradelicence/search";
+    : "/mihy-ui-framework/hrms/search";
   return getCommonApplyFooter({
     gotoHome: {
       componentPath: "Button",
@@ -227,7 +227,7 @@ export const applicationSuccessFooter = (
       },
       onClickDefination: {
         action: "page_change",
-        path: `/mihy-ui-framework/tradelicence/pay?applicationNumber=${applicationNumber}&tenantId=${tenant}&businessService=TL`
+        path: `/mihy-ui-framework/hrms/pay?applicationNumber=${applicationNumber}&tenantId=${tenant}&businessService=TL`
       },
       roleDefination: {
         rolePath: "user-info.roles",

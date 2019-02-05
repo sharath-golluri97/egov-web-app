@@ -16,7 +16,7 @@ export const paymentFailureFooter = (applicationNumber, tenant) => {
   const roleExists = ifUserRoleExists("CITIZEN");
   const redirectionURL = roleExists
     ? "/mihy-ui-framework/tradelicense-citizen"
-    : "/mihy-ui-framework/tradelicence";
+    : "/mihy-ui-framework/hrms";
 
   return getCommonApplyFooter({
     gotoHome: {

@@ -356,11 +356,11 @@ export const onClickNextButton = (
 ) => {
   switch (queryValue) {
     case "reject":
-      return `/mihy-ui-framework/tradelicence/acknowledgement?purpose=application&status=rejected&applicationNumber=${applicationNumber}&secondNumber=${secondNumber}&tenantId=${tenantId}`;
+      return `/mihy-ui-framework/hrms/acknowledgement?purpose=application&status=rejected&applicationNumber=${applicationNumber}&secondNumber=${secondNumber}&tenantId=${tenantId}`;
     case "cancel":
-      return `/mihy-ui-framework/tradelicence/acknowledgement?purpose=application&status=cancelled&applicationNumber=${applicationNumber}&secondNumber=${secondNumber}&tenantId=${tenantId}`;
+      return `/mihy-ui-framework/hrms/acknowledgement?purpose=application&status=cancelled&applicationNumber=${applicationNumber}&secondNumber=${secondNumber}&tenantId=${tenantId}`;
     default:
-      return `/mihy-ui-framework/tradelicence/acknowledgement?purpose=approve&status=success&applicationNumber=${applicationNumber}&secondNumber=${secondNumber}&tenantId=${tenantId}`;
+      return `/mihy-ui-framework/hrms/acknowledgement?purpose=approve&status=success&applicationNumber=${applicationNumber}&secondNumber=${secondNumber}&tenantId=${tenantId}`;
   }
 };
 
@@ -371,11 +371,11 @@ export const onClickPreviousButton = (
 ) => {
   switch (queryValue) {
     case "reject":
-      return `/mihy-ui-framework/tradelicence/search-preview?role=approver&status=pending_approval&applicationNumber=${applicationNumber}&tenantId=${tenantId}`;
+      return `/mihy-ui-framework/hrms/search-preview?role=approver&status=pending_approval&applicationNumber=${applicationNumber}&tenantId=${tenantId}`;
     case "cancel":
-      return `/mihy-ui-framework/tradelicence/search-preview?role=approver&status=approved&applicationNumber=${applicationNumber}&tenantId=${tenantId}`;
+      return `/mihy-ui-framework/hrms/search-preview?role=approver&status=approved&applicationNumber=${applicationNumber}&tenantId=${tenantId}`;
     default:
-      return `/mihy-ui-framework/tradelicence/search-preview?role=approver&status=pending_approval&applicationNumber=${applicationNumber}&tenantId=${tenantId}`;
+      return `/mihy-ui-framework/hrms/search-preview?role=approver&status=pending_approval&applicationNumber=${applicationNumber}&tenantId=${tenantId}`;
   }
 };
 export const getFeesEstimateCard = props => {
@@ -1225,7 +1225,7 @@ export const getFinancialYearDates = (format, et) => {
 
 export const getBaseURL = () => {
   if (process.env.REACT_APP_NAME !== "Citizen") {
-    return "/mihy-ui-framework/tradelicence";
+    return "/mihy-ui-framework/hrms";
   } else {
     return "/mihy-ui-framework/tradelicense-citizen";
   }
@@ -1985,7 +1985,7 @@ export const applyForm = (state, dispatch) => {
     window.location.href =
       process.env.NODE_ENV === "development"
         ? `/mihy-ui-framework/tradelicense-citizen/apply?tenantId=${tenantId}`
-        : `/employee-tradelicence/mihy-ui-framework/tradelicense-citizen/apply?tenantId=${tenantId}`;
+        : `/web-hrms/mihy-ui-framework/tradelicense-citizen/apply?tenantId=${tenantId}`;
   }
 };
 
