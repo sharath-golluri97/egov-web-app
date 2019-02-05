@@ -27,6 +27,7 @@ const serviceDetailsCard = {
                 labelKey: "HR_STATUS_PLACEHOLDER"
               },
               jsonPath: "Employee[0].serviceHistory[0].serviceStatus",
+              sourceJsonPath: "createScreenMdmsData.egov-hrms.EmployeeStatus",
               gridDefination: {
                 xs: 12,
                 sm: 4
@@ -34,18 +35,18 @@ const serviceDetailsCard = {
               props: {
                 className: "hr-generic-selectfield",
                 jsonPath: "Employee[0].serviceHistory[0].serviceStatus",
-                data: [
-                  {
-                    value: "Value 1",
-                    label: "Value 1"
-                  },
-                  {
-                    value: "Value 2",
-                    label: "Value 2"
-                  }
-                ],
-                optionValue: "value",
-                optionLabel: "label"
+                // data: [
+                //   {
+                //     value: "Value 1",
+                //     label: "Value 1"
+                //   },
+                //   {
+                //     value: "Value 2",
+                //     label: "Value 2"
+                //   }
+                // ],
+                // optionValue: "value",
+                // optionLabel: "label"
               }
             })
           },
@@ -119,12 +120,8 @@ const serviceDetailsCard = {
                 jsonPath: "Employee[0].serviceHistory[0].location",
                 data: [
                   {
-                    value: "Value 1",
-                    label: "Value 1"
-                  },
-                  {
-                    value: "Value 2",
-                    label: "Value 2"
+                    value: "pb.amritsar",
+                    label: "Amritsar"
                   }
                 ],
                 optionValue: "value",
